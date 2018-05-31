@@ -80,15 +80,12 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/style.css */ "./src/style.css");
-/* harmony import */ var _src_style_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_style_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _src_index_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/index.html */ "./src/index.html");
-/* harmony import */ var _src_index_html__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_src_index_html__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user */ "./js/user.js");
+/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user */ "./js/user.js");
+/* harmony import */ var _monster__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./monster */ "./js/monster.js");
 
 
-
-
+// import "../src/style.css";
+// import "../src/index.html";
 
 
 class Game {
@@ -96,8 +93,61 @@ class Game {
 
     }
 
-    newGameCreate() {}
+    newGameCreate() {
+
+    }
 }
+
+const newGame = new Game();
+
+/***/ }),
+
+/***/ "./js/monster.js":
+/*!***********************!*\
+  !*** ./js/monster.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Monster; });
+
+
+class Monster {
+    constructor(name, body, health) {
+        this.name = name;
+        this.body = body;
+        this.health = health;
+    }
+    magicShooting() {
+
+    }
+
+    monsterRender(spritesImgNumber) {
+        const characterSprite = document.querySelector('#monsterSprite');
+        characterSprite.src = `../sprites/zombie-sprite/male/Attack(${spritesImgNumber}).png`
+    }
+    attack() {
+        this.spritesImgNumber = 1;
+        this.characterSprite = document.querySelector('#monsterSprite');
+        this.spriteActive = setInterval(() => {
+            this.characterSprite.src = `../sprites/zombie-sprite/male/Attack(${this.spritesImgNumber}).png`
+            if (this.spritesImgNumber == 8) {
+                this.spritesImgNumber = 1
+            } else {
+                this.spritesImgNumber += 1;
+            }
+        }, 70)
+        setTimeout(() => {
+            clearInterval(this.spriteActive)
+        }, 1400)
+    }
+}
+
+const monster = new Monster();
+monster.monsterRender(1);
+// monster.attack();
 
 /***/ }),
 
@@ -120,54 +170,43 @@ class User {
         this.fullName = this.firstName + " " + this.lastName;
     }
 
-    userCharacterMaking(userCharacterSprite, spriteWidth, spriteHeight) {
-        this.userCharacterImg = new Image()
-        this.userCharacterImg.width = spriteWidth;
-        this.userCharacterImg.height = spriteHeight;
-        this.userCharacterImg.src = `../sprites/UserSprites/${userCharacterSprite}.png`;
-        document.body.appendChild(this.userCharacterImg);
+    characterRender(spritesImgNumber) {
+        this.characterSprite = document.querySelector('#userSprite');
+        this.characterName = document.querySelector('#characterName');
+        this.characterName.innerHTML = this.fullName;
+        this.characterSprite.src = `../sprites/UserSprites/Attack__00${spritesImgNumber}.png`;
+
     }
-    userCharacterAttack(spritesImgNumber) {
-        this.spritesImgNumber = spritesImgNumber;
+    attack() {
+        this.spritesImgNumber = 0;
+        this.characterSprite = document.querySelector('#userSprite');
         this.spriteActive = setInterval(() => {
-            this.userCharacterImg.src = `../sprites/UserSprites/Attack__00${this.spritesImgNumber}.png`;
+            this.characterSprite.src = `../sprites/UserSprites/Attack__00${this.spritesImgNumber}.png`
             if (this.spritesImgNumber == 9) {
                 this.spritesImgNumber = 0
             } else {
                 this.spritesImgNumber += 1;
             }
-        }, 80)
-        setInterval(() => {
+        }, 70)
+        setTimeout(() => {
             clearInterval(this.spriteActive)
-        }, 1600)
+        }, 700)
+    }
+
+    healhChanging() {
+        const userHealthPoints = document.querySelector('#userHealthPoints');
+        let hpNumber = 100;
+        setTimeout(() => {
+            userHealthPoints.innerHTML = `${hpNumber - 10}hp`;
+            hpNumber -= 10;
+        }, 1000)
     }
 }
 
 const newUser = new User('Denis', 'Kozyrev');
-newUser.userCharacterMaking("Attack__000", 300, 300);
-newUser.userCharacterAttack(1);
-
-/***/ }),
-
-/***/ "./src/index.html":
-/*!************************!*\
-  !*** ./src/index.html ***!
-  \************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<!DOCTYPE html>\n<html>\n\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Rss-Prodigy-Game</title>\n  <link href=\"style.css\" rel=\"stylesheet\">\n</head>\n\n<body>\n\n  <script src=\"../node_modules/lodash/lodash.min.js\"></script>\n  <script type=\"text/javascript\" src=\"../dist/bundle.js\"></script>\n</body>\n\n</html>";
-
-/***/ }),
-
-/***/ "./src/style.css":
-/*!***********************!*\
-  !*** ./src/style.css ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
+newUser.characterRender(9)
+newUser.attack();
+newUser.healhChanging()
 
 /***/ })
 

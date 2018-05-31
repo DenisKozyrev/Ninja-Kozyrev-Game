@@ -3,13 +3,50 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Rss-Prodigy-Game</title>
-  <link href="style.css" rel="stylesheet">
+  <title>Ninja Kozyrev Game</title>
+  <link href="../src/style.css" rel="stylesheet">
 </head>
 
 <body>
 
-  <script src="../node_modules/lodash/lodash.min.js"></script>
+  <div id="contentWrapper" class="content-wrapper">
+    <div class="profile-page">
+      <h2 class="game-heading">Ninja-Kozyrev
+        <br /> Game</h2>
+      <div class="checkin-block">
+        <p class="checkin-paragraph">Please enter your information</p>
+        <form onsubmit="return false">
+          <div class="profile-input-box">
+            <label class="profile-label">First Name</label>
+            <br />
+            <input id="profileFirstName" class="profile-input" name="first" required>
+          </div>
+          <div class="profile-input-box">
+            <label class="profile-label">Last Name</label>
+            <br />
+            <input id="profileLastName" class="profile-input" name="last" required>
+          </div>
+          <button type="submit" id="newGameButton" class="new-game-button">New Game</button>
+        </form>
+      </div>
+      <div id="landingPage" class="landing-page">
+        <button type="text" id="startButton" class="new-game-button">Let's Start</button>
+      </div>
+    </div>
+
+    <div id="charactersBlock" class="character-block">
+      <div class="character">
+        <h2 id="characterName" class="character-info"></h2>
+        <p id="userHealthPoints" class="character-info">100hp</p>
+        <img id="userSprite" class="character-sprite" width="280px" heigth="280px" />
+      </div>
+      <div class="character">
+        <h2 id="characterName" class="character-info">Monster</h2>
+        <p id="userHealthPoints" class="character-info">100hp</p>
+        <img id="monsterSprite" class="monster-sprite" width="210px" heigth="210px">
+      </div>
+    </div>
+  </div>
   <script type="text/javascript" src="../dist/bundle.js"></script>
 </body>
 
