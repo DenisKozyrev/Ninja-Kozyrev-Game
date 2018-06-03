@@ -8,39 +8,48 @@ export default class User {
     }
 
     characterRender(spritesImgNumber) {
-        this.characterSprite = document.querySelector('#userSprite');
-        this.characterName = document.querySelector('#characterName');
-        this.characterName.innerHTML = this.fullName;
-        this.characterSprite.src = `../sprites/UserSprites/Attack__00${spritesImgNumber}.png`;
-
+        this.canvas = document.getElementById("myCanvas");
+        this.ctx = this.canvas.getContext("2d");
+        this.hp = 100
+        this.ctx.font = "30px Arial";
+        this.ctx.fillStyle = "#7f1691";
+        this.ctx.fillText(`${this.fullName}`, 150, 80);
+        this.a = this.ctx.fillText(`${this.hp}hp`, 200, 120);
+        this.userSprite = new Image();
+        this.userSprite.src = "../sprites/ninja-sprites/attack-sprites.png";
+        this.userSprite.addEventListener('load', () => {
+            this.ctx.drawImage(this.userSprite, 0, 0, 556, 495, 100, 350, 300, 300)
+        })
     }
+
     attack() {
-        this.spritesImgNumber = 0;
-        this.characterSprite = document.querySelector('#userSprite');
-        this.spriteActive = setInterval(() => {
-            this.characterSprite.src = `../sprites/UserSprites/Attack__00${this.spritesImgNumber}.png`
-            if (this.spritesImgNumber == 9) {
-                this.spritesImgNumber = 0
-            } else {
-                this.spritesImgNumber += 1;
-            }
-        }, 70)
+        this.spriteXCoordinate = 556;
+        this.canvasXCoordinate = 230;
+        this.clearRXCoordinate = 100;
+        this.g = setInterval(() => {
+            this.ctx.clearRect(this.clearRXCoordinate, 350, 556, 495);
+            this.ctx.drawImage(this.userSprite, this.spriteXCoordinate, 0, 556, 495, this.canvasXCoordinate, 350, 300, 300);
+            this.spriteXCoordinate += 556;
+            this.canvasXCoordinate += 130;
+            this.clearRXCoordinate += 100;
+        }, 40)
+
         setTimeout(() => {
-            clearInterval(this.spriteActive)
-        }, 700)
+            clearInterval(this.g)
+            this.ctx.clearRect(this.clearRXCoordinate, 350, 556, 495);
+            this.ctx.drawImage(this.userSprite, 0, 0, 556, 495, 100, 350, 300, 300)
+            this.healhChanging()
+        }, 240)
     }
 
     healhChanging() {
-        const userHealthPoints = document.querySelector('#userHealthPoints');
-        let hpNumber = 100;
-        setTimeout(() => {
-            userHealthPoints.innerHTML = `${hpNumber - 10}hp`;
-            hpNumber -= 10;
-        }, 1000)
+        this.hp -= 10;
+        this.ctx.clearRect(200, 130, 100, -40);
+        this.ctx.fillText(`${this.hp}hp`, 200, 120);
     }
 }
-
-const newUser = new User('Denis', 'Kozyrev');
-newUser.characterRender(9)
-newUser.attack();
-newUser.healhChanging()
+const newUser = new User("Denis", "Kozyrev");
+newUser.characterRender(9);
+setTimeout(() => {
+    newUser.attack()
+}, 1000)

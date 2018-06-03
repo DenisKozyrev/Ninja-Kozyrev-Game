@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Ninja Kozyrev Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ninja-Kozyrev Game</title>
   <link href="../src/style.css" rel="stylesheet">
 </head>
 
@@ -13,7 +14,7 @@
     <div class="profile-page">
       <h2 class="game-heading">Ninja-Kozyrev
         <br /> Game</h2>
-      <div class="checkin-block">
+      <div id="checkinBlock" class="checkin-block">
         <p class="checkin-paragraph">Please enter your information</p>
         <form onsubmit="return false">
           <div class="profile-input-box">
@@ -26,26 +27,28 @@
             <br />
             <input id="profileLastName" class="profile-input" name="last" required>
           </div>
-          <button type="submit" id="newGameButton" class="new-game-button">New Game</button>
+          <button type="submit" class="game-button">Let`s Start</button>
         </form>
       </div>
-      <div id="landingPage" class="landing-page">
-        <button type="text" id="startButton" class="new-game-button">Let's Start</button>
+      <div id="newGameButtons" class="new-game-buttons-block">
+        <button type="button" class="game-button">
+          <a class="new-game-link" href="../src/Ninja-Kozyrev-landingPage.html" target="_blank">About</a>
+        </button>
+        <button type="button" id="newGameButton" class="game-button">New Game</button>
       </div>
     </div>
-
-    <div id="charactersBlock" class="character-block">
-      <div class="character">
-        <h2 id="characterName" class="character-info"></h2>
-        <p id="userHealthPoints" class="character-info">100hp</p>
-        <img id="userSprite" class="character-sprite" width="280px" heigth="280px" />
-      </div>
-      <div class="character">
-        <h2 id="characterName" class="character-info">Monster</h2>
-        <p id="userHealthPoints" class="character-info">100hp</p>
-        <img id="monsterSprite" class="monster-sprite" width="210px" heigth="210px">
-      </div>
-    </div>
+    <canvas id="myCanvas" class="game-canvas" width="1440" height="805">
+      <!-- <div id=" charactersBlock" class="character-block">
+        <div class="character">
+          <h2 id="characterName" class="character-info"></h2>
+          <p id="userHealthPoints" class="character-info">100hp</p>
+        </div>
+        <div class="character">
+          <h2 id="characterName" class="character-info">Monster</h2>
+          <p id="userHealthPoints" class="character-info">100hp</p>
+        </div>
+      </div> -->
+    </canvas>
   </div>
   <script type="text/javascript" src="../dist/bundle.js"></script>
 </body>

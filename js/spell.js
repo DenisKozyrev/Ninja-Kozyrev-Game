@@ -4,7 +4,8 @@ class Spell {
     constructor(name) {
         this.name = name;
     }
-    spellSelection() {
+    spellRender() {
 
     }
+
 }

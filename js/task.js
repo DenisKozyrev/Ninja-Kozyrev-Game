@@ -1,6 +1,6 @@
 "use strict";
 
-class Task {
+export default class Task {
     constructor() {
 
     }
