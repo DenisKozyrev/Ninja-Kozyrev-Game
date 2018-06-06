@@ -33,6 +33,33 @@
         <button type="button" id="newGameButton" class="game-button">New Game</button>
       </div>
     </div>
+    <div id="gameFild" class="game-fild">
+      <div class="game-fild-content">
+        <div class="character-info-block">
+          <div class="character-info">
+            <h3 class="character-name">Denis Kozyrev</h3>
+            <p class="character-health-points">100hp</p>
+            <div class="hp-red-line">
+              <div class="hp-green-line"></div>
+            </div>
+          </div>
+          <div class="rounds">
+            <h3 class="round-number">Round 1</h3>
+          </div>
+          <div class="character-info">
+            <h3 class="character-name">Monster</h3>
+            <p class="character-health-points">100hp</p>
+            <div class="hp-red-line">
+              <div class="hp-green-line"></div>
+            </div>
+          </div>
+        </div>
+        <div id=" charactersBlock" class="character-block">
+          <div id="playerBlock" class="character"></div>
+          <div id="monsterBlock" class="character monster"></div>
+        </div>
+      </div>
+    </div>
     <div id="spellWindowConteiner" class="spell-window-conteiner">
       <div id="spellWindow" class="spell-window">
         <h3 class="spell-heading">Choose Your Spell</h3>
@@ -58,20 +85,8 @@
         </form>
       </div>
     </div>
-    <canvas id="myCanvas" class="game-canvas" width="1440" height="760">
-      <!-- <div id=" charactersBlock" class="character-block">
-        <div class="character">
-          <h2 id="characterName" class="character-info"></h2>
-          <p id="userHealthPoints" class="character-info">100hp</p>
-        </div>
-        <div class="character">
-          <h2 id="characterName" class="character-info">Monster</h2>
-          <p id="userHealthPoints" class="character-info">100hp</p>
-        </div>
-      </div> -->
-    </canvas>
-  </div>
-  <script type="text/javascript" src="../dist/bundle.js"></script>
+    <!-- <canvas id="myCanvas" class="game-canvas" width="1440" height="760"></canvas> -->
+    <script type="text/javascript" src="../dist/bundle.js"></script>
 </body>
 
 </html>

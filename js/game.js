@@ -19,7 +19,8 @@ class Game {
         this.profileForm = document.getElementById('profileForm');
         this.playerFirstName = document.getElementById('playerFirstName');
         this.playerLastName = document.getElementById('playerLastName');
-        this.myCanvas = document.getElementById('myCanvas');
+        // this.myCanvas = document.getElementById('myCanvas');
+        this.gameFild = document.getElementById('gameFild');
         this.spellWindowConteiner = document.getElementById('spellWindowConteiner');
         this.attackSpellButton = document.getElementById('attackSpell');
         this.healingSpell = document.getElementById('healingSpell');
@@ -57,9 +58,9 @@ class Game {
     }
     startGame() {
         this.playerProfilePage.style.display = "none";
-        this.myCanvas.style.display = "block";
+        this.gameFild.style.display = "flex";
         this.player.playerRender();
-        this.monster.monsterRender();
+        this.monster.monsterRender()
         setTimeout(() => {
             this.spell.spellRender();
         }, 2000)
