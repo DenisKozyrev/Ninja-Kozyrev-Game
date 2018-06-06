@@ -11,23 +11,19 @@
 <body>
 
   <div id="contentWrapper" class="content-wrapper">
-    <div class="profile-page">
+    <div id="playerProfilePage" class="profile-page">
       <h2 class="game-heading">Ninja-Kozyrev
         <br /> Game</h2>
       <div id="checkinBlock" class="checkin-block">
         <p class="checkin-paragraph">Please enter your information</p>
-        <form onsubmit="return false">
+        <form id="profileForm">
           <div class="profile-input-box">
-            <label class="profile-label">First Name</label>
-            <br />
-            <input id="profileFirstName" class="profile-input" name="first" required>
+            <input id="playerFirstName" class="profile-input" name="first" value="denis" placeholder="First name*" required>
           </div>
           <div class="profile-input-box">
-            <label class="profile-label">Last Name</label>
-            <br />
-            <input id="profileLastName" class="profile-input" name="last" required>
+            <input id="playerLastName" class="profile-input" name="last" value="kozyrev" placeholder="Last name*" required>
           </div>
-          <button type="submit" class="game-button">Let`s Start</button>
+          <button id="startButton" type="submit" class="game-button">Let`s Start</button>
         </form>
       </div>
       <div id="newGameButtons" class="new-game-buttons-block">
@@ -37,7 +33,32 @@
         <button type="button" id="newGameButton" class="game-button">New Game</button>
       </div>
     </div>
-    <canvas id="myCanvas" class="game-canvas" width="1440" height="805">
+    <div id="spellWindowConteiner" class="spell-window-conteiner">
+      <div id="spellWindow" class="spell-window">
+        <h3 class="spell-heading">Choose Your Spell</h3>
+        <div class="spell-buttons-block">
+          <button id="healingSpell" class="spell-button" type="button">
+            <img class="spell-img" src="../images/healing-spell.png ">
+          </button>
+          <button id="attackSpell" class="spell-button" type="button">
+            <img class="spell-img" src="../images/rage-spell.png ">
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="taskWindowConteiner" class="task-window-conteiner">
+      <div id="taskWindow" class="task-window">
+        <h3 id="taskHeading" class="task-heading"></h3>
+        <form id="taskForm" class="task-form">
+          <input type="text" class="task-input" id="taskInput" placeholder="answer*" required>
+          <div class="task-buttons">
+            <button id="taskButton" class="task-button" type="submit">Answer</button>
+            <!-- <button class="task-button" type="button">Cancel</button> -->
+          </div>
+        </form>
+      </div>
+    </div>
+    <canvas id="myCanvas" class="game-canvas" width="1440" height="760">
       <!-- <div id=" charactersBlock" class="character-block">
         <div class="character">
           <h2 id="characterName" class="character-info"></h2>

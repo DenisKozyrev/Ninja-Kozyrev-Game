@@ -1,11 +1,13 @@
 "use strict";
 
-class Spell {
-    constructor(name) {
-        this.name = name;
+import Task from "./task";
+
+export default class Spell {
+    constructor() {
+        this.spellWindowConteiner = document.getElementById('spellWindowConteiner');
     }
     spellRender() {
-
+        this.spellWindowConteiner.style.display = "flex";
     }
 
 }
