@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ninja-Kozyrev Game</title>
   <link href="../src/style.css" rel="stylesheet">
+  <link href="../src/animation.css" rel="stylesheet">
 </head>
 
 <body>
@@ -37,26 +38,27 @@
       <div class="game-fild-content">
         <div class="character-info-block">
           <div class="character-info">
-            <h3 class="character-name">Denis Kozyrev</h3>
-            <p class="character-health-points">100hp</p>
-            <div class="hp-red-line">
-              <div class="hp-green-line"></div>
+            <h3 id="playerName" class="character-name"></h3>
+            <p id="playerHealthPoints" class="character-health-points"></p>
+            <div class="player-hp-red-line">
+              <div id="playerHpGreenLine" class="hp-green-line"></div>
             </div>
           </div>
           <div class="rounds">
             <h3 class="round-number">Round 1</h3>
+            <button id="chooseSpellButton" type="button" class="choose-spell-button">Choose Your Spell</button>
           </div>
           <div class="character-info">
-            <h3 class="character-name">Monster</h3>
-            <p class="character-health-points">100hp</p>
-            <div class="hp-red-line">
-              <div class="hp-green-line"></div>
+            <h3 id="monsterName" class="character-name"></h3>
+            <p id="monsterHealthPoints" class="character-health-points"></p>
+            <div class="monster-hp-red-line">
+              <div id="monsterHpGreenLine" class="hp-green-line"></div>
             </div>
           </div>
         </div>
         <div id=" charactersBlock" class="character-block">
           <div id="playerBlock" class="character"></div>
-          <div id="monsterBlock" class="character monster"></div>
+          <div id="monsterBlock" class="character"></div>
         </div>
       </div>
     </div>

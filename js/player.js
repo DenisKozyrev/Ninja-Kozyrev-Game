@@ -1,17 +1,24 @@
 "use strict";
+
 import Monster from "./monster";
 
 export default class Player {
   constructor() {
     this.firstName = document.getElementById('playerFirstName');
     this.lastName = document.getElementById('playerLastName');
+    this.fullNameBlock = document.getElementById('playerName');
     this.playerBlock = document.getElementById('playerBlock');
-    this.monster = new Monster();
+    this.healthPointsBlock = document.getElementById('playerHealthPoints');
+    this.hpGreenLine = document.getElementById('playerHpGreenLine');
     this.healthPoints = 100;
-
+    this.healthPointsLine = 250;
+    this.monster = new Monster();
   }
 
   playerRender() {
+    this.fullNameBlock.innerHTML = this.firstName.value + " " + this.lastName.value;
+    this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+    this.hpGreenLine.classList.add('character-health-render');
     this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
     this.playerBlock.classList.remove('player-attack');
     this.playerBlock.classList.add('player-idle');
@@ -26,17 +33,19 @@ export default class Player {
     }, 1500)
   }
 
-
   death() {}
 
-  healhDecrease() {
+  healthDecrease() {
     this.healthPoints -= 20;
-
-
-    this.monster.monsterRender();
+    this.healthPointsLine -= 50;
+    this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+    this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
   }
 
-  healhIncrease() {
+  healthIncrease() {
     this.healthPoints += 20;
+    this.healthPointsLine += 50;
+    this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+    this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
   }
 }

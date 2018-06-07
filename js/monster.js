@@ -1,13 +1,30 @@
 "use strict";
 
+const _ = require('lodash');
+
 export default class Monster {
     constructor() {
+        this.fullNameBlock = document.getElementById('monsterName');
+        this.nameCollection = [
+            ['Slyunyavyiy', 'Moydodyirnyiy', 'Zlovonnyiy', 'Podmyishachnyiy', 'Podnozhnyiy'],
+            ['Giperslizen', 'Kamnezmey', 'Tigrokruis', 'Svinozayats', 'Zloboglaz'],
+            ['Artem', 'Denis', 'Andrey', 'Yura', 'Vanya']
+        ];
+        this.healthPointsBlock = document.getElementById('monsterHealthPoints');
         this.healthPoints = 100;
+        this.healthPointsLine = 250;
+        this.hpGreenLine = document.getElementById('monsterHpGreenLine');
         this.monsterBlock = document.getElementById('monsterBlock');
+        this.monsterSpritesCollection = ['robot', 'dino', 'freeknight', 'cowgirl', 'jack'];
     }
 
     monsterRender() {
-        this.monsterBlock.style.backgroundImage = "url('../images/zombie-sprite/zombie_sprite-attack.png')"
+        this.fullNameBlock.innerHTML = this.nameCollection[0][_.random(0, this.nameCollection[0].length - 1)] + " " + this.nameCollection[1][_.random(0, this.nameCollection[1].length - 1)]; //+ " " + this.nameCollection[2][_.random(0, this.nameCollection[2].length - 1)]
+        this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+        this.hpGreenLine.classList.add('character-health-render');
+        this.monsterSprite = this.monsterSpritesCollection[_.random(0, this.monsterSpritesCollection.length - 1)];
+        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprite/${this.monsterSprite}-idle.png')`;
+        this.monsterBlock.classList.add('monster-idle');
     }
 
     attack() {}
@@ -16,15 +33,17 @@ export default class Monster {
 
     }
 
-    healhDecrease() {
+    healthDecrease() {
         this.healthPoints -= 20;
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.fillText(`${this.healthPoints}hp`, 1160, 140);
+        this.healthPointsLine -= 50;
+        this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+        this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
     }
 
-    healhIncrease() {
+    healthIncrease() {
         this.healthPoints += 20;
-        this.ctx.clearRect(1160, 155, 100, -40);
-        this.ctx.fillText(`${this.healthPoints}hp`, 1160, 140);
+        this.healthPointsLine += 50;
+        this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+        this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
     }
 }
