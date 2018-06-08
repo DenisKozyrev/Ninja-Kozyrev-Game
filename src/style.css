@@ -31,8 +31,7 @@
 .game-heading {
     color: #ffd890;
     font-size: 50px;
-    margin-bottom: 60px;
-    margin-top: 40px;
+    margin: 7% 0;
 }
 
 .checkin-block {
@@ -317,4 +316,34 @@
     padding-left: 10px;
     margin: 10% 0;
     color: #757575;
+}
+
+.game-score-table-block {
+    width: 85%;
+    height: 85%;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    background-color: rgba(75, 30, 158, 0.7);
+}
+
+.game-score-table {
+    border-collapse: collapse;
+    text-align: center;
+    width: 70%;
+    margin-bottom: 10%;
+}
+
+.table,
+th,
+td {
+    border: 2px solid #fed98f;
+    border-collapse: collapse;
+    padding: 3%;
+    font-size: 25px;
+    color: #fed98f;
+    font-family: Montresor;
+    letter-spacing: 1px;
 }

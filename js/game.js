@@ -4,6 +4,7 @@ import Player from "./player";
 import Monster from "./monster";
 import Spell from "./spell";
 import Task from "./task";
+import Score from "./score";
 
 class Game {
     constructor() {
@@ -11,6 +12,7 @@ class Game {
         this.monster = new Monster();
         this.spell = new Spell();
         this.task = new Task();
+        this.score = new Score();
         this.newGameButton = document.querySelector('#newGameButton');
         this.newGameButtons = document.querySelector('#newGameButtons');
         this.checkinBlock = document.querySelector('#checkinBlock');
@@ -32,6 +34,7 @@ class Game {
         this.taskAnswerButton = document.getElementById('taskButton');
         this.taskForm = document.getElementById('taskForm');
         this.taskWindow = document.getElementById('taskWindowConteiner');
+        this.tableWindow = document.getElementById('tableWindow')
     }
 
     newGameCreate() {
@@ -74,11 +77,10 @@ class Game {
     }
 
     newRound() {
-        this.roundCounter += 1;
         this.monster.healthPoints = 100;
         this.monster.healthPointsLine = 250;
         this.monster.hpGreenLine.style.width = '250px'
-        this.roundHeading.innerHTML = `Round ${this.roundCounter}`
+        this.roundHeading.innerHTML = `Round ${this.roundCounter + 1}`
         this.monsterSprite = this.monster.monsterSpritesCollection[_.random(0, this.monster.monsterSpritesCollection.length - 1)];
         this.monsterName = this.monster.nameCollection[0][_.random(0, this.monster.nameCollection[0].length - 1)] + " " + this.monster.nameCollection[1][_.random(0, this.monster.nameCollection[1].length - 1)]; //+ " " + this.nameCollection[2][_.random(0, this.nameCollection[2].length - 1)]
         this.monster.render(this.monsterSprite, this.monsterName);
@@ -99,6 +101,7 @@ class Game {
             this.monster.attack();
             setTimeout(() => {
                 this.player.healthDecrease()
+                this.healthCheck()
             }, 1500)
         };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value == this.taskExpressionResult) {
@@ -116,6 +119,9 @@ class Game {
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
         };
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML === "100hp") {
+            this.taskWindow.style.display = "none";
+        }
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
             setTimeout(() => {
@@ -127,7 +133,38 @@ class Game {
     healthCheck() {
         if (this.monster.healthPoints === 0) {
             this.newRound();
+            this.roundCounter += 1;
         };
+        if (this.player.healthPoints === 0) {
+            this.showScorePage();
+            this.roundCounter = 0;
+        };
+    }
+
+    showScorePage() {
+        this.gameFild.style.display = "none";
+        this.tableWindow.style.display = "flex";
+        if (
+            localStorage.hasOwnProperty(
+                this.playerFirstName.value + " " + this.playerLastName.value
+            )
+        ) {
+            if (
+                this.roundCounter >=
+                localStorage[this.playerFirstName.value + " " + this.playerLastName.value]
+            ) {
+                localStorage.setItem(
+                    this.playerFirstName.value + " " + this.playerLastName.value,
+                    this.roundCounter
+                );
+            }
+        } else {
+            localStorage.setItem(
+                this.playerFirstName.value + " " + this.playerLastName.value,
+                this.roundCounter
+            );
+        }
+        this.score.render();
     }
 
 }
