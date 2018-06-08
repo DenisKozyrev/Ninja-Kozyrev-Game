@@ -134,7 +134,7 @@
 
 .rounds {
     text-align: center;
-    margin-left: 7%;
+    margin-left: 6.5%;
 }
 
 .round-number {
@@ -154,7 +154,7 @@
 .hp-green-line {
     height: 25px;
     width: 250px;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #0ca40c;
     margin-top: 0;
 }
@@ -164,7 +164,7 @@
     justify-content: flex-end;
     display: flex;
     width: 250px;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-top: 10px;
     background-color: #c40000;
 }
@@ -174,7 +174,7 @@
     justify-content: flex-start;
     display: flex;
     width: 250px;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-top: 10px;
     background-color: red;
 }
@@ -249,7 +249,7 @@
     font-weight: bold;
     border-radius: 5px;
     padding: 10px 15px;
-    margin-bottom: 55px;
+    margin-top: 10%;
     background-color: #5a3b96;
     border: 0;
     outline: none;

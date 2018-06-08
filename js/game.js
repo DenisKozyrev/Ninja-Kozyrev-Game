@@ -19,6 +19,8 @@ class Game {
         this.playerFirstName = document.getElementById('playerFirstName');
         this.playerLastName = document.getElementById('playerLastName');
         this.gameFild = document.getElementById('gameFild');
+        this.roundHeading = document.getElementById('roundHeading');
+        this.roundCounter = 0;
         this.spellType = "";
         this.chooseSpellButton = document.getElementById('chooseSpellButton');
         this.spellWindowConteiner = document.getElementById('spellWindowConteiner');
@@ -58,7 +60,7 @@ class Game {
         });
         this.taskForm.addEventListener('submit', () => {
             if (this.taskInput.value !== "") {
-                this.taskSolve();
+                this.taskSolveCheck();
             }
             event.preventDefault();
         })
@@ -67,22 +69,34 @@ class Game {
     startGame() {
         this.playerProfilePage.style.display = "none";
         this.gameFild.style.display = "flex";
-        this.player.playerRender();
-        this.monster.monsterRender();
+        this.player.render();
+        this.newRound()
     }
 
-    taskSolve() {
+    newRound() {
+        this.roundCounter += 1;
+        this.monster.healthPoints = 100;
+        this.monster.healthPointsLine = 250;
+        this.monster.hpGreenLine.style.width = '250px'
+        this.roundHeading.innerHTML = `Round ${this.roundCounter}`
+        this.monsterSprite = this.monster.monsterSpritesCollection[_.random(0, this.monster.monsterSpritesCollection.length - 1)];
+        this.monsterName = this.monster.nameCollection[0][_.random(0, this.monster.nameCollection[0].length - 1)] + " " + this.monster.nameCollection[1][_.random(0, this.monster.nameCollection[1].length - 1)]; //+ " " + this.nameCollection[2][_.random(0, this.nameCollection[2].length - 1)]
+        this.monster.render(this.monsterSprite, this.monsterName);
+    }
+
+    taskSolveCheck() {
         this.taskExpressionResult = this.task.getTaskResult();
         if (this.spellType === "attack" && this.taskInput.value == this.taskExpressionResult) {
             this.taskWindow.style.display = "none";
             this.player.attack();
             setTimeout(() => {
-                this.monster.healthDecrease()
+                this.monster.healthDecrease();
+                this.healthCheck()
             }, 1500);
         };
         if (this.spellType === "attack" && this.taskInput.value != this.taskExpressionResult) {
             this.taskWindow.style.display = "none";
-            // this.monster.attack();
+            this.monster.attack();
             setTimeout(() => {
                 this.player.healthDecrease()
             }, 1500)
@@ -93,19 +107,26 @@ class Game {
                 this.player.healthIncrease()
             }, 1500);
         };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints !== "100hp") {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
             setTimeout(() => {
                 this.monster.healthIncrease()
             }, 1500);
         };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp") {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
         };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskInput.value != this.taskExpressionResult) {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML !== "100hp") {
+            this.taskWindow.style.display = "none";
             setTimeout(() => {
                 this.monster.healthIncrease()
             }, 1500);
+        };
+    }
+
+    healthCheck() {
+        if (this.monster.healthPoints === 0) {
+            this.newRound();
         };
     }
 

@@ -11,23 +11,34 @@ export default class Monster {
             ['Artem', 'Denis', 'Andrey', 'Yura', 'Vanya']
         ];
         this.healthPointsBlock = document.getElementById('monsterHealthPoints');
-        this.healthPoints = 100;
-        this.healthPointsLine = 250;
+        this.healthPoints = 0;
+        this.healthPointsLine = 0;
         this.hpGreenLine = document.getElementById('monsterHpGreenLine');
         this.monsterBlock = document.getElementById('monsterBlock');
         this.monsterSpritesCollection = ['robot', 'dino', 'freeknight', 'cowgirl', 'jack'];
     }
 
-    monsterRender() {
-        this.fullNameBlock.innerHTML = this.nameCollection[0][_.random(0, this.nameCollection[0].length - 1)] + " " + this.nameCollection[1][_.random(0, this.nameCollection[1].length - 1)]; //+ " " + this.nameCollection[2][_.random(0, this.nameCollection[2].length - 1)]
+    render(monsterSprite, monsterName) {
+        this.monsterName = monsterName;
+        this.monsterSprite = monsterSprite;
+        this.fullNameBlock.innerHTML = this.monsterName;
         this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
-        this.hpGreenLine.classList.add('character-health-render');
-        this.monsterSprite = this.monsterSpritesCollection[_.random(0, this.monsterSpritesCollection.length - 1)];
-        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprite/${this.monsterSprite}-idle.png')`;
+        if (this.healthPoints === 100) {
+            this.hpGreenLine.classList.add('character-health-render');
+        }
+        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
+        this.monsterBlock.classList.remove('monster-attack');
         this.monsterBlock.classList.add('monster-idle');
     }
 
-    attack() {}
+    attack() {
+        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-attack.png')`;
+        this.monsterBlock.classList.remove('monster-idle');
+        this.monsterBlock.classList.add('monster-attack');
+        setTimeout(() => {
+            this.render(this.monsterSprite, this.monsterName);
+        }, 1500)
+    }
 
     death() {
 
@@ -38,6 +49,7 @@ export default class Monster {
         this.healthPointsLine -= 50;
         this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
         this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
+        this.hpGreenLine.classList.remove('character-health-render');
     }
 
     healthIncrease() {
@@ -46,4 +58,5 @@ export default class Monster {
         this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
         this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
     }
+
 }

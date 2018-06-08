@@ -15,7 +15,7 @@ export default class Player {
     this.monster = new Monster();
   }
 
-  playerRender() {
+  render() {
     this.fullNameBlock.innerHTML = this.firstName.value + " " + this.lastName.value;
     this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
     this.hpGreenLine.classList.add('character-health-render');
@@ -29,7 +29,7 @@ export default class Player {
     this.playerBlock.classList.remove('player-idle');
     this.playerBlock.classList.add('player-attack');
     setTimeout(() => {
-      this.playerRender();
+      this.render();
     }, 1500)
   }
 
