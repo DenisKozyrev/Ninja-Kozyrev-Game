@@ -14,6 +14,8 @@ export default class Task {
         this.mathOperationsCollectionIndex = _.random(0, this.mathOperationsCollection.length - 1);
         if (this.mathOperationsCollectionIndex === 3) {
             this.taskExpression = (_.random(0, 50) + _.random(0, 50)) + " " + "/" + " " + 2;
+        } else if (this.mathOperationsCollectionIndex === 2) {
+            this.taskExpression = _.random(0, 50) + " " + "*" + " " + 3;
         } else {
             this.taskExpression = _.random(0, 50) + " " + this.mathOperationsCollection[this.mathOperationsCollectionIndex] + " " + _.random(0, 50);
         }

@@ -15,7 +15,7 @@ export default class Monster {
         this.healthPointsLine = 0;
         this.hpGreenLine = document.getElementById('monsterHpGreenLine');
         this.monsterBlock = document.getElementById('monsterBlock');
-        this.monsterSpritesCollection = ['robot', 'dino', 'freeknight', 'cowgirl', 'jack'];
+        this.monsterSpritesCollection = ['robot', 'dino', 'freeknight', 'jack', 'dog', 'cat'];
     }
 
     render(monsterSprite, monsterName) {
@@ -28,20 +28,23 @@ export default class Monster {
         }
         this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
         this.monsterBlock.classList.remove('monster-attack');
+        this.monsterBlock.classList.remove('monster-dead');
         this.monsterBlock.classList.add('monster-idle');
     }
 
     attack() {
-        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-attack.png')`;
-        this.monsterBlock.classList.remove('monster-idle');
         this.monsterBlock.classList.add('monster-attack');
+        this.monsterBlock.classList.remove('monster-idle');
+        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-attack.png')`;
         setTimeout(() => {
             this.render(this.monsterSprite, this.monsterName);
         }, 1500)
     }
 
-    death() {
-
+    dead() {
+        this.monsterBlock.classList.add('monster-dead');
+        this.monsterBlock.classList.remove('monster-idle');
+        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-dead.png')`;
     }
 
     healthDecrease() {

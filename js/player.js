@@ -20,6 +20,7 @@ export default class Player {
     this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
     this.hpGreenLine.classList.add('character-health-render');
     this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
+    this.playerBlock.classList.remove('player-damage');
     this.playerBlock.classList.remove('player-attack');
     this.playerBlock.classList.add('player-idle');
   }
@@ -33,7 +34,21 @@ export default class Player {
     }, 1500)
   }
 
-  death() {}
+  damage() {
+    this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-damage.png')";
+    this.playerBlock.classList.remove('player-idle');
+    this.playerBlock.classList.add('player-damage');
+    setTimeout(() => {
+      this.render();
+    }, 470)
+  }
+
+  dead() {
+    this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-dead.png')";
+    this.playerBlock.classList.add('player-dead');
+    this.playerBlock.classList.remove('player-damage');
+    this.playerBlock.classList.remove('player-idle');
+  }
 
   healthDecrease() {
     this.healthPoints -= 20;

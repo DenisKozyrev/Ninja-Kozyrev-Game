@@ -32,6 +32,7 @@ class Game {
         this.monsterHealthPoints = document.getElementById('monsterHealthPoints');
         this.taskInput = document.getElementById('taskInput');
         this.taskAnswerButton = document.getElementById('taskButton');
+        this.cancelTaskButton = document.getElementById('cancelTaskButton');
         this.taskForm = document.getElementById('taskForm');
         this.taskWindow = document.getElementById('taskWindowConteiner');
         this.tableWindow = document.getElementById('tableWindow')
@@ -64,8 +65,13 @@ class Game {
         this.taskForm.addEventListener('submit', () => {
             if (this.taskInput.value !== "") {
                 this.taskSolveCheck();
+                this.taskInput.value = "";
             }
             event.preventDefault();
+        })
+        this.cancelTaskButton.addEventListener('click', () => {
+            this.taskWindow.style.display = "none";
+            this.spellWindowConteiner.style.display = "flex";
         })
     }
 
@@ -94,7 +100,7 @@ class Game {
             setTimeout(() => {
                 this.monster.healthDecrease();
                 this.healthCheck()
-            }, 1500);
+            }, 1150);
         };
         if (this.spellType === "attack" && this.taskInput.value != this.taskExpressionResult) {
             this.taskWindow.style.display = "none";
@@ -102,7 +108,7 @@ class Game {
             setTimeout(() => {
                 this.player.healthDecrease()
                 this.healthCheck()
-            }, 1500)
+            }, 1150)
         };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value == this.taskExpressionResult) {
             this.taskWindow.style.display = "none";
@@ -132,12 +138,20 @@ class Game {
 
     healthCheck() {
         if (this.monster.healthPoints === 0) {
-            this.newRound();
-            this.roundCounter += 1;
+            this.monster.dead();
+            setTimeout(() => {
+                this.roundCounter += 1;
+                this.newRound();
+            }, 900)
         };
         if (this.player.healthPoints === 0) {
-            this.showScorePage();
-            this.roundCounter = 0;
+            this.player.dead();
+            setTimeout(() => {
+                this.roundCounter = 0;
+                this.showScorePage();
+            }, 900);
+        } else {
+            this.player.damage();
         };
     }
 

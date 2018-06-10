@@ -1,3 +1,66 @@
+@-webkit-keyframes characterIdle {
+    0.001% {
+        background-position-x: 0px;
+    }
+    0% {
+        background-position-x: 0px;
+    }
+    10% {
+        background-position-x: 0px;
+    }
+    10.001% {
+        background-position-x: -550px;
+    }
+    20% {
+        background-position-x: -550px;
+    }
+    20.001% {
+        background-position-x: -1100px;
+    }
+    30% {
+        background-position-x: -1100px;
+    }
+    30.001% {
+        background-position-x: -1650px;
+    }
+    40% {
+        background-position-x: -1650px;
+    }
+    40.001% {
+        background-position-x: -2200px;
+    }
+    50% {
+        background-position-x: -2200px;
+    }
+    50.001% {
+        background-position-x: -2750px;
+    }
+    60% {
+        background-position-x: -2750px;
+    }
+    60.001% {
+        background-position-x: -3300px;
+    }
+    70% {
+        background-position-x: -3300px;
+    }
+    70.001% {
+        background-position-x: -3850px;
+    }
+    80% {
+        background-position-x: -3850px;
+    }
+    80.001% {
+        background-position-x: -4400px;
+    }
+    99.999% {
+        background-position-x: -4400px;
+    }
+    100% {
+        background-position-x: 0px;
+    }
+}
+
 @-webkit-keyframes playerAttack {
     0% {
         background-position-x: 0px;
@@ -338,10 +401,7 @@
     }
 }
 
-@-webkit-keyframes playerIdle {
-    0.001% {
-        background-position-x: 0px;
-    }
+@-webkit-keyframes characterDead {
     0% {
         background-position-x: 0px;
     }
@@ -397,11 +457,41 @@
         background-position-x: -4400px;
     }
     100% {
-        background-position-x: 0px;
+        background-position-x: -4400px;
     }
 }
 
-@-webkit-keyframes character-health-render {
+@-webkit-keyframes characterDamage {
+    0% {
+        background-position-x: 0px;
+    }
+    25% {
+        background-position-x: 0px;
+    }
+    25.001% {
+        background-position-x: -550px;
+        left: -1%;
+    }
+    50% {
+        background-position-x: -550px;
+    }
+    50.001% {
+        background-position-x: -1100px;
+        left: -2%;
+    }
+    75% {
+        background-position-x: -1100px;
+    }
+    75.001% {
+        background-position-x: -1650px;
+        left: -3%;
+    }
+    100% {
+        background-position-x: -1650px;
+    }
+}
+
+@-webkit-keyframes characterHealthRender {
     0% {
         width: 0px
     }
@@ -437,36 +527,58 @@
     }
 }
 
-.player-attack {
-    background-position-y: -75px;
-    position: absolute;
-    left: 0px;
-    background-repeat: no-repeat;
-    top: 33%;
-    transform: scale(0.7);
-    background-repeat: no-repeat;
-    -webkit-animation-name: playerAttack;
-    -webkit-animation-duration: 1500ms;
-}
-
 .player-idle {
     position: absolute;
     left: -75px;
     background-repeat: no-repeat;
     top: 30%;
-    transform: scale(0.7);
-    -webkit-animation-name: playerIdle;
+    transform: scale(0.65);
+    -webkit-animation-name: characterIdle;
     -webkit-animation-duration: 430ms;
     animation-iteration-count: infinite;
     background-position-y: -100px;
 }
 
-.monster-idle {
+.player-attack {
+    background-position-y: -75px;
     position: absolute;
-    right: -10px;
+    left: -5%;
+    background-repeat: no-repeat;
     top: 33%;
     transform: scale(0.65);
-    -webkit-animation-name: playerIdle;
+    background-repeat: no-repeat;
+    -webkit-animation-name: playerAttack;
+    -webkit-animation-duration: 1500ms;
+}
+
+.player-dead {
+    position: absolute;
+    left: 0;
+    background-repeat: no-repeat;
+    top: 35%;
+    transform: scale(0.65);
+    -webkit-animation-name: characterDead;
+    -webkit-animation-duration: 900ms;
+    background-position-y: -40px;
+}
+
+.player-damage {
+    position: absolute;
+    left: -5%;
+    background-repeat: no-repeat;
+    top: 35%;
+    transform: scale(0.65);
+    -webkit-animation-name: characterDamage;
+    -webkit-animation-duration: 470ms;
+    background-position-y: -50px;
+}
+
+.monster-idle {
+    position: absolute;
+    right: 10px;
+    top: 32.5%;
+    transform: scale(0.65);
+    -webkit-animation-name: characterIdle;
     -webkit-animation-duration: 430ms;
     animation-iteration-count: infinite;
     background-repeat: no-repeat;
@@ -474,15 +586,25 @@
 
 .monster-attack {
     position: absolute;
-    right: -10px;
-    top: 33%;
+    right: 10px;
+    top: 32.5%;
     transform: scale(0.6);
     background-repeat: no-repeat;
     -webkit-animation-name: monsterAttack;
     -webkit-animation-duration: 1500ms;
 }
 
+.monster-dead {
+    position: absolute;
+    right: -50px;
+    top: 37%;
+    transform: scale(0.7);
+    -webkit-animation-name: characterDead;
+    -webkit-animation-duration: 900ms;
+    background-repeat: no-repeat;
+}
+
 .character-health-render {
-    animation-name: character-health-render;
+    animation-name: characterHealthRender;
     animation-duration: 1000ms;
 }
