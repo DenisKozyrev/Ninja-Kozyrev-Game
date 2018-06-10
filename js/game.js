@@ -22,7 +22,7 @@ class Game {
         this.playerLastName = document.getElementById('playerLastName');
         this.gameFild = document.getElementById('gameFild');
         this.roundHeading = document.getElementById('roundHeading');
-        this.roundCounter = 0;
+        this.roundCounter;
         this.spellType = "";
         this.chooseSpellButton = document.getElementById('chooseSpellButton');
         this.spellWindowConteiner = document.getElementById('spellWindowConteiner');
@@ -35,7 +35,8 @@ class Game {
         this.cancelTaskButton = document.getElementById('cancelTaskButton');
         this.taskForm = document.getElementById('taskForm');
         this.taskWindow = document.getElementById('taskWindowConteiner');
-        this.tableWindow = document.getElementById('tableWindow')
+        this.tableWindow = document.getElementById('tableWindow');
+        this.startAgainButton = document.getElementById('startAgainButton');
     }
 
     newGameCreate() {
@@ -69,15 +70,24 @@ class Game {
             }
             event.preventDefault();
         })
+
         this.cancelTaskButton.addEventListener('click', () => {
             this.taskWindow.style.display = "none";
             this.spellWindowConteiner.style.display = "flex";
+        })
+        this.startAgainButton.addEventListener('click', () => {
+            this.tableWindow.style.display = "none";
+            this.startGame();
         })
     }
 
     startGame() {
         this.playerProfilePage.style.display = "none";
         this.gameFild.style.display = "flex";
+        this.roundCounter = 0;
+        this.player.healthPoints = 100;
+        this.player.healthPointsLine = 250;
+        this.player.hpGreenLine.style.width = '250px'
         this.player.render();
         this.newRound()
     }
@@ -99,16 +109,16 @@ class Game {
             this.player.attack();
             setTimeout(() => {
                 this.monster.healthDecrease();
-                this.healthCheck()
-            }, 1150);
+                this.monsterHealthCheck()
+            }, 1100);
         };
         if (this.spellType === "attack" && this.taskInput.value != this.taskExpressionResult) {
             this.taskWindow.style.display = "none";
             this.monster.attack();
             setTimeout(() => {
                 this.player.healthDecrease()
-                this.healthCheck()
-            }, 1150)
+                this.playerHealthCheck()
+            }, 1100)
         };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value == this.taskExpressionResult) {
             this.taskWindow.style.display = "none";
@@ -136,22 +146,27 @@ class Game {
         };
     }
 
-    healthCheck() {
-        if (this.monster.healthPoints === 0) {
-            this.monster.dead();
-            setTimeout(() => {
-                this.roundCounter += 1;
-                this.newRound();
-            }, 900)
-        };
+    playerHealthCheck() {
         if (this.player.healthPoints === 0) {
             this.player.dead();
             setTimeout(() => {
-                this.roundCounter = 0;
                 this.showScorePage();
             }, 900);
         } else {
             this.player.damage();
+        };
+    }
+
+    monsterHealthCheck() {
+        if (this.monster.healthPoints === 0) {
+            this.monster.dead();
+            setTimeout(() => {
+                this.roundCounter += 1;
+                console.log(this.roundCounter)
+                this.newRound();
+            }, 900)
+        } else {
+            this.monster.damage();
         };
     }
 

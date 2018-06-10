@@ -10,16 +10,19 @@ export default class Player {
     this.playerBlock = document.getElementById('playerBlock');
     this.healthPointsBlock = document.getElementById('playerHealthPoints');
     this.hpGreenLine = document.getElementById('playerHpGreenLine');
-    this.healthPoints = 100;
-    this.healthPointsLine = 250;
+    this.healthPoints = 0;
+    this.healthPointsLine = 0;
     this.monster = new Monster();
   }
 
   render() {
     this.fullNameBlock.innerHTML = this.firstName.value + " " + this.lastName.value;
     this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
-    this.hpGreenLine.classList.add('character-health-render');
+    if (this.healthPoints === 100) {
+      this.hpGreenLine.classList.add('character-health-render');
+    }
     this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
+    this.playerBlock.classList.remove('player-dead');
     this.playerBlock.classList.remove('player-damage');
     this.playerBlock.classList.remove('player-attack');
     this.playerBlock.classList.add('player-idle');
@@ -40,7 +43,7 @@ export default class Player {
     this.playerBlock.classList.add('player-damage');
     setTimeout(() => {
       this.render();
-    }, 470)
+    }, 200)
   }
 
   dead() {

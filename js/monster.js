@@ -27,6 +27,7 @@ export default class Monster {
             this.hpGreenLine.classList.add('character-health-render');
         }
         this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
+        this.monsterBlock.classList.remove('monster-damage');
         this.monsterBlock.classList.remove('monster-attack');
         this.monsterBlock.classList.remove('monster-dead');
         this.monsterBlock.classList.add('monster-idle');
@@ -39,6 +40,15 @@ export default class Monster {
         setTimeout(() => {
             this.render(this.monsterSprite, this.monsterName);
         }, 1500)
+    }
+
+    damage() {
+        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-damage.png')`;
+        this.monsterBlock.classList.remove('monster-idle');
+        this.monsterBlock.classList.add('monster-damage');
+        setTimeout(() => {
+            this.render(this.monsterSprite, this.monsterName);
+        }, 200)
     }
 
     dead() {

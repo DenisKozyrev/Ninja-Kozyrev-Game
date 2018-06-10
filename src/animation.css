@@ -305,28 +305,28 @@
     }
     35.001% {
         background-position-x: -4400px;
-        right: 24%
+        right: 25%
     }
     40% {
         background-position-x: -4400px;
     }
     40.001% {
         background-position-x: -4950px;
-        right: 27%
+        right: 28%
     }
     45% {
         background-position-x: -4950px;
     }
     45.001% {
         background-position-x: -5500px;
-        right: 30%
+        right: 31%
     }
     50% {
         background-position-x: -5500px;
     }
     50.001% {
         background-position-x: -6050px;
-        right: 33%
+        right: 34%
     }
     55% {
         background-position-x: -6050px;
@@ -340,58 +340,58 @@
     }
     60.001% {
         background-position-x: -7150px;
-        right: 41%
+        right: 40%
     }
     65% {
         background-position-x: -7150px;
     }
     65.001% {
         background-position-x: -7700px;
-        right: 45%
+        right: 43%
     }
     70% {
         background-position-x: -7700px;
     }
     70.001% {
         background-position-x: -8250px;
-        right: 49%
+        right: 46%
     }
     75% {
         background-position-x: -8250px;
     }
     75.001% {
         background-position-x: -8800px;
-        right: 52%
+        right: 49%
     }
     80% {
         background-position-x: -8800px;
     }
     80.001% {
         background-position-x: -9350px;
-        right: 53%
+        right: 51%
     }
     85% {
         background-position-x: -9350px;
     }
     85.001% {
         background-position-x: -9900px;
-        right: 53%
+        right: 54%
     }
     90% {
         background-position-x: -9900px;
-        right: 53%
+        right: 54%
     }
     90.001% {
         background-position-x: -10450px;
-        right: 53%
+        right: 54%
     }
     95% {
         background-position-x: -10450px;
-        right: 53%
+        right: 54%
     }
     95.001% {
         background-position-x: -10450px;
-        right: 53%
+        right: 54%
     }
     99.999% {
         background-position-x: -10450px;
@@ -461,33 +461,33 @@
     }
 }
 
-@-webkit-keyframes characterDamage {
+@-webkit-keyframes playerDamage {
     0% {
         background-position-x: 0px;
     }
-    25% {
+    50% {
         background-position-x: 0px;
     }
-    25.001% {
-        background-position-x: -550px;
-        left: -1%;
-    }
-    50% {
-        background-position-x: -550px;
-    }
     50.001% {
-        background-position-x: -1100px;
-        left: -2%;
-    }
-    75% {
-        background-position-x: -1100px;
-    }
-    75.001% {
-        background-position-x: -1650px;
-        left: -3%;
+        background-position-x: -550px;
     }
     100% {
-        background-position-x: -1650px;
+        background-position-x: -550px;
+    }
+}
+
+@-webkit-keyframes monsterDamage {
+    0% {
+        background-position-x: 0px;
+    }
+    50% {
+        background-position-x: 0px;
+    }
+    50.001% {
+        background-position-x: -550px;
+    }
+    100% {
+        background-position-x: -550px;
     }
 }
 
@@ -529,7 +529,7 @@
 
 .player-idle {
     position: absolute;
-    left: -75px;
+    left: -5%;
     background-repeat: no-repeat;
     top: 30%;
     transform: scale(0.65);
@@ -564,18 +564,18 @@
 
 .player-damage {
     position: absolute;
-    left: -5%;
+    left: -5;
     background-repeat: no-repeat;
     top: 35%;
     transform: scale(0.65);
-    -webkit-animation-name: characterDamage;
-    -webkit-animation-duration: 470ms;
+    -webkit-animation-name: playerDamage;
+    -webkit-animation-duration: 200ms;
     background-position-y: -50px;
 }
 
 .monster-idle {
     position: absolute;
-    right: 10px;
+    right: 0;
     top: 32.5%;
     transform: scale(0.65);
     -webkit-animation-name: characterIdle;
@@ -586,7 +586,7 @@
 
 .monster-attack {
     position: absolute;
-    right: 10px;
+    right: 0;
     top: 32.5%;
     transform: scale(0.6);
     background-repeat: no-repeat;
@@ -596,11 +596,21 @@
 
 .monster-dead {
     position: absolute;
-    right: -50px;
+    right: -5%;
     top: 37%;
     transform: scale(0.7);
     -webkit-animation-name: characterDead;
     -webkit-animation-duration: 900ms;
+    background-repeat: no-repeat;
+}
+
+.monster-damage {
+    position: absolute;
+    right: 0;
+    top: 37%;
+    transform: scale(0.7);
+    -webkit-animation-name: monsterDamage;
+    -webkit-animation-duration: 200ms;
     background-repeat: no-repeat;
 }
 
