@@ -256,142 +256,142 @@
     }
     0.001% {
         background-position-x: -550px;
-        right: 3%;
+        right: 4%;
     }
     5% {
         background-position-x: -550px;
     }
     5.001% {
         background-position-x: -1100px;
-        right: 6%
+        right: 8%
     }
     10% {
         background-position-x: -1100px;
     }
     10.001% {
         background-position-x: -1650px;
-        right: 9%
+        right: 12%
     }
     15% {
         background-position-x: -1650px;
     }
     15.001% {
         background-position-x: -2200px;
-        right: 12%
+        right: 16%
     }
     20% {
         background-position-x: -2200px;
     }
     20.001% {
         background-position-x: -2750px;
-        right: 15%
+        right: 20%
     }
     25% {
         background-position-x: -2750px;
     }
     25.001% {
         background-position-x: -3300px;
-        right: 18%
+        right: 24%
     }
     30% {
         background-position-x: -3300px;
     }
     30.001% {
         background-position-x: -3850px;
-        right: 21%
+        right: 28%
     }
     35% {
         background-position-x: -3850px;
     }
     35.001% {
         background-position-x: -4400px;
-        right: 25%
+        right: 32%
     }
     40% {
         background-position-x: -4400px;
     }
     40.001% {
         background-position-x: -4950px;
-        right: 28%
+        right: 36%
     }
     45% {
         background-position-x: -4950px;
     }
     45.001% {
         background-position-x: -5500px;
-        right: 31%
+        right: 40%
     }
     50% {
         background-position-x: -5500px;
     }
     50.001% {
         background-position-x: -6050px;
-        right: 34%
+        right: 42%
     }
     55% {
         background-position-x: -6050px;
     }
     55.001% {
         background-position-x: -6600px;
-        right: 37%
+        right: 44%
     }
     60% {
         background-position-x: -6600px;
     }
     60.001% {
         background-position-x: -7150px;
-        right: 40%
+        right: 46%
     }
     65% {
         background-position-x: -7150px;
     }
     65.001% {
         background-position-x: -7700px;
-        right: 43%
+        right: 48%
     }
     70% {
         background-position-x: -7700px;
     }
     70.001% {
         background-position-x: -8250px;
-        right: 46%
+        right: 50%
     }
     75% {
         background-position-x: -8250px;
     }
     75.001% {
         background-position-x: -8800px;
-        right: 49%
+        right: 52%
     }
     80% {
         background-position-x: -8800px;
     }
     80.001% {
         background-position-x: -9350px;
-        right: 51%
+        right: 55%
     }
     85% {
         background-position-x: -9350px;
     }
     85.001% {
         background-position-x: -9900px;
-        right: 54%
+        right: 55%
     }
     90% {
         background-position-x: -9900px;
-        right: 54%
+        right: 55%
     }
     90.001% {
         background-position-x: -10450px;
-        right: 54%
+        right: 55%
     }
     95% {
         background-position-x: -10450px;
-        right: 54%
+        right: 55%
     }
     95.001% {
         background-position-x: -10450px;
-        right: 54%
+        right: 55%
     }
     99.999% {
         background-position-x: -10450px;
@@ -558,7 +558,7 @@
     top: 35%;
     transform: scale(0.65);
     -webkit-animation-name: characterDead;
-    -webkit-animation-duration: 900ms;
+    -webkit-animation-duration: 1000ms;
     background-position-y: -40px;
 }
 
@@ -600,7 +600,7 @@
     top: 37%;
     transform: scale(0.7);
     -webkit-animation-name: characterDead;
-    -webkit-animation-duration: 900ms;
+    -webkit-animation-duration: 1000ms;
     background-repeat: no-repeat;
 }
 

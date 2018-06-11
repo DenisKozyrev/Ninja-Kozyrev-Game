@@ -89,7 +89,7 @@ class Game {
         this.player.healthPointsLine = 250;
         this.player.hpGreenLine.style.width = '250px'
         this.player.render();
-        this.newRound()
+        this.newRound();
     }
 
     newRound() {
@@ -107,6 +107,7 @@ class Game {
         if (this.spellType === "attack" && this.taskInput.value == this.taskExpressionResult) {
             this.taskWindow.style.display = "none";
             this.player.attack();
+            this.spell.attackSpellAudioPlay();
             setTimeout(() => {
                 this.monster.healthDecrease();
                 this.monsterHealthCheck()
@@ -115,6 +116,7 @@ class Game {
         if (this.spellType === "attack" && this.taskInput.value != this.taskExpressionResult) {
             this.taskWindow.style.display = "none";
             this.monster.attack();
+            this.spell.attackSpellAudioPlay();
             setTimeout(() => {
                 this.player.healthDecrease()
                 this.playerHealthCheck()
@@ -122,15 +124,13 @@ class Game {
         };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value == this.taskExpressionResult) {
             this.taskWindow.style.display = "none";
-            setTimeout(() => {
-                this.player.healthIncrease()
-            }, 1500);
+            this.spell.healthAudioPlay();
+            this.player.healthIncrease();
         };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
-            setTimeout(() => {
-                this.monster.healthIncrease()
-            }, 1500);
+            this.spell.healthAudioPlay();
+            this.monster.healthIncrease();
         };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
@@ -140,18 +140,18 @@ class Game {
         }
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
-            setTimeout(() => {
-                this.monster.healthIncrease()
-            }, 1500);
+            this.spell.healthAudioPlay();
+            this.monster.healthIncrease()
         };
     }
 
     playerHealthCheck() {
         if (this.player.healthPoints === 0) {
             this.player.dead();
+            this.spell.deadAudioPlay()
             setTimeout(() => {
                 this.showScorePage();
-            }, 900);
+            }, 1000);
         } else {
             this.player.damage();
         };
@@ -160,11 +160,11 @@ class Game {
     monsterHealthCheck() {
         if (this.monster.healthPoints === 0) {
             this.monster.dead();
+            this.spell.deadAudioPlay()
             setTimeout(() => {
                 this.roundCounter += 1;
-                console.log(this.roundCounter)
                 this.newRound();
-            }, 900)
+            }, 1000)
         } else {
             this.monster.damage();
         };

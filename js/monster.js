@@ -38,7 +38,10 @@ export default class Monster {
         this.monsterBlock.classList.remove('monster-idle');
         this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-attack.png')`;
         setTimeout(() => {
-            this.render(this.monsterSprite, this.monsterName);
+            // this.render(this.monsterSprite, this.monsterName);
+            this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
+            this.monsterBlock.classList.remove('monster-attack');
+            this.monsterBlock.classList.add('monster-idle');
         }, 1500)
     }
 
