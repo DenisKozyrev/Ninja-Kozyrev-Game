@@ -164,9 +164,7 @@ class Game {
         });
         this.startAgainButton.addEventListener('click', () => {
             this.tableWindow.style.display = "none";
-            window.addEventListener('load', () => {
-                this.startGame();
-            });
+            this.startGame();
         });
     }
 
@@ -287,7 +285,10 @@ class Game {
 
 const newGame = new Game();
 
-newGame.newGameCreate();
+window.addEventListener('load', () => {
+    newGame.newGameCreate();
+    console.log(34);
+});
 
 /***/ }),
 
@@ -329,39 +330,47 @@ class Monster {
         if (this.healthPoints === 100) {
             this.hpGreenLine.classList.add('character-health-render');
         }
-        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
-        this.monsterBlock.classList.remove('monster-damage');
-        this.monsterBlock.classList.remove('monster-attack');
-        this.monsterBlock.classList.remove('monster-dead');
-        this.monsterBlock.classList.add('monster-idle');
+        this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.remove('monster-damage-animation');
+        this.monsterBlock.classList.remove('monster-attack-animation');
+        this.monsterBlock.classList.remove('monster-dead-animation');
+        this.monsterBlock.classList.add('monster-idle-animation');
     }
 
     attack() {
-        this.monsterBlock.classList.add('monster-attack');
-        this.monsterBlock.classList.remove('monster-idle');
-        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-attack.png')`;
+        this.monsterBlock.classList.add('monster-attack-animation');
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-attack-sprite`);
         setTimeout(() => {
-            this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
-            this.monsterBlock.classList.remove('monster-attack');
-            this.monsterBlock.classList.add('monster-idle');
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-attack-sprite`);
+            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+            this.monsterBlock.classList.remove('monster-attack-animation');
+            this.monsterBlock.classList.add('monster-idle-animation');
         }, 1500)
     }
 
     damage() {
-        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-damage.png')`;
-        this.monsterBlock.classList.remove('monster-idle');
-        this.monsterBlock.classList.add('monster-damage');
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-damage-sprite`);
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.add('monster-damage-animation');
         setTimeout(() => {
-            this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
-            this.monsterBlock.classList.remove('monster-damage');
-            this.monsterBlock.classList.add('monster-idle');
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-damage-sprite`);
+            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+            this.monsterBlock.classList.remove('monster-damage-animation');
+            this.monsterBlock.classList.add('monster-idle-animation');
         }, 200)
     }
 
     dead() {
-        this.monsterBlock.classList.add('monster-dead');
-        this.monsterBlock.classList.remove('monster-idle');
-        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-dead.png')`;
+        this.monsterBlock.classList.add('monster-dead-animation');
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-dead-sprite`);
+        setTimeout(() => {
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-dead-sprite`);
+        }, 1000)
     }
 
     healthDecrease() {
@@ -417,40 +426,46 @@ class Player {
     if (this.healthPoints === 100) {
       this.hpGreenLine.classList.add('character-health-render');
     }
-    this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
-    this.playerBlock.classList.remove('player-dead');
-    this.playerBlock.classList.remove('player-damage');
-    this.playerBlock.classList.remove('player-attack');
-    this.playerBlock.classList.add('player-idle');
+    this.playerBlock.classList.remove('player-dead-sprite');
+    this.playerBlock.classList.add('player-idle-sprite');
+    this.playerBlock.classList.remove('player-dead-animation');
+    this.playerBlock.classList.remove('player-damage-animation');
+    this.playerBlock.classList.remove('player-attack-animation');
+    this.playerBlock.classList.add('player-idle-animation');
   }
 
   attack() {
-    this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-attack.png')";
-    this.playerBlock.classList.remove('player-idle');
-    this.playerBlock.classList.add('player-attack');
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-attack-sprite');
+    this.playerBlock.classList.remove('player-idle-animation');
+    this.playerBlock.classList.add('player-attack-animation');
     setTimeout(() => {
-      this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
-      this.playerBlock.classList.remove('player-attack');
-      this.playerBlock.classList.add('player-idle');
+      this.playerBlock.classList.remove('player-attack-sprite');
+      this.playerBlock.classList.add('player-idle-sprite');
+      this.playerBlock.classList.remove('player-attack-animation');
+      this.playerBlock.classList.add('player-idle-animation');
     }, 1500)
   }
 
   damage() {
-    this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-damage.png')";
-    this.playerBlock.classList.remove('player-idle');
-    this.playerBlock.classList.add('player-damage');
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-damage-sprite');
+    this.playerBlock.classList.remove('player-idle-animation');
+    this.playerBlock.classList.add('player-damage-animation');
     setTimeout(() => {
-      this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
-      this.playerBlock.classList.remove('player-damage');
-      this.playerBlock.classList.add('player-idle');
+      this.playerBlock.classList.remove('player-damage-sprite');
+      this.playerBlock.classList.add('player-idle-sprite');
+      this.playerBlock.classList.remove('player-damage-animation');
+      this.playerBlock.classList.add('player-idle-animation');
     }, 200)
   }
 
   dead() {
-    this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-dead.png')";
-    this.playerBlock.classList.add('player-dead');
-    this.playerBlock.classList.remove('player-damage');
-    this.playerBlock.classList.remove('player-idle');
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-dead-sprite');
+    this.playerBlock.classList.add('player-dead-animation');
+    this.playerBlock.classList.remove('player-damage-animation');
+    this.playerBlock.classList.remove('player-idle-animation');
   }
 
   healthDecrease() {
@@ -567,18 +582,21 @@ class Spell {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Task; });
-/* harmony import */ var _wordLibraru__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./wordLibraru */ "./js/wordLibraru.js");
+/* harmony import */ var _wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./wordTranslateLibrary */ "./js/wordTranslateLibrary.js");
+/* harmony import */ var _wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./wordListeningLibrary */ "./js/wordListeningLibrary.js");
 
 
 const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 
+
 class Task {
     constructor() {
-        this.taskWindow = document.getElementById('taskWindowConteiner');
+        this.taskWindowConteiner = document.getElementById('taskWindowConteiner');
+        this.mediaBlock = document.getElementById('mediaBlock');
         this.task = document.getElementById('taskHeading');
         this.mathOperationsCollection = ['+', '-', '*', '/'];
-        this.taskCollection = [this.mathTask, this.transateTask];
+        this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask];
     }
 
     random() {
@@ -587,7 +605,8 @@ class Task {
     }
 
     mathTask() {
-        this.taskWindow.style.display = "flex";
+        this.mediaBlock.innerHTML = "";
+        this.taskWindowConteiner.style.display = "flex";
         this.mathOperationsCollectionIndex = _.random(0, this.mathOperationsCollection.length - 1);
         if (this.mathOperationsCollectionIndex === 3) {
             this.taskExpression = (_.random(0, 50) + _.random(0, 50)) + " " + "/" + " " + 2;
@@ -601,10 +620,23 @@ class Task {
     }
 
     transateTask() {
-        this.taskWindow.style.display = "flex";
-        this.randomWord = Object.keys(_wordLibraru__WEBPACK_IMPORTED_MODULE_0__["translateWordLibraru"])[_.random(0, Object.keys(_wordLibraru__WEBPACK_IMPORTED_MODULE_0__["translateWordLibraru"]).length - 1)];
+        this.mediaBlock.innerHTML = "";
+        this.taskWindowConteiner.style.display = "flex";
+        this.randomWord = Object.keys(_wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"])[_.random(0, Object.keys(_wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"]).length - 1)];
         this.task.innerHTML = "Translate the word: " + '\"' + this.randomWord + '\"';
-        this.transateTaskResult = _wordLibraru__WEBPACK_IMPORTED_MODULE_0__["translateWordLibraru"][this.randomWord];
+        this.transateTaskResult = _wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"][this.randomWord];
+    }
+
+    listeningTask() {
+        this.mediaBlock.innerHTML = "";
+        this.taskWindowConteiner.style.display = "flex";
+        this.task.innerHTML = '\"' + "Type what you heard" + '\"';
+        this.audioWordBlock = document.createElement('audio');
+        this.audioWordBlock.setAttribute('controls', '');
+        this.mediaBlock.appendChild(this.audioWordBlock);
+        this.randomAudioWord = Object.keys(_wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"])[_.random(0, Object.keys(_wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"]).length - 1)];
+        this.audioWordBlock.src = this.randomAudioWord;
+        this.listeningTaskResult = _wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"][this.randomAudioWord];
     }
 
 
@@ -614,6 +646,8 @@ class Task {
             return this.taskExpressionResult;
         } else if (this.taskRandomResult === this.transateTask) {
             return this.transateTaskResult;
+        } else if (this.taskRandomResult === this.listeningTask) {
+            return this.listeningTaskResult;
         }
     }
 
@@ -621,19 +655,46 @@ class Task {
 
 /***/ }),
 
-/***/ "./js/wordLibraru.js":
-/*!***************************!*\
-  !*** ./js/wordLibraru.js ***!
-  \***************************/
-/*! exports provided: translateWordLibraru */
+/***/ "./js/wordListeningLibrary.js":
+/*!************************************!*\
+  !*** ./js/wordListeningLibrary.js ***!
+  \************************************/
+/*! exports provided: listeningWordLibrary */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "translateWordLibraru", function() { return translateWordLibraru; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "listeningWordLibrary", function() { return listeningWordLibrary; });
 
 
-const translateWordLibraru = {
+const listeningWordLibrary = {
+    '../audio/listeningTaskAudio/word(flower).mp3': ['flower'],
+    '../audio/listeningTaskAudio/word(dictionary).mp3': ['dictionary'],
+    '../audio/listeningTaskAudio/word(environment).mp3': ['environment'],
+    '../audio/listeningTaskAudio/word(horror).mp3': ['horror'],
+    '../audio/listeningTaskAudio/word(lucky).mp3': ['lucky'],
+    '../audio/listeningTaskAudio/word(activity).mp3': ['activity'],
+    '../audio/listeningTaskAudio/word(message).mp3': ['message'],
+    '../audio/listeningTaskAudio/word(blind).mp3': ['blind'],
+    '../audio/listeningTaskAudio/word(inspiration).mp3': ['inspiration'],
+    '../audio/listeningTaskAudio/word(mysterious).mp3': ['mysterious']
+}
+
+/***/ }),
+
+/***/ "./js/wordTranslateLibrary.js":
+/*!************************************!*\
+  !*** ./js/wordTranslateLibrary.js ***!
+  \************************************/
+/*! exports provided: translateWordLibrary */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "translateWordLibrary", function() { return translateWordLibrary; });
+
+
+const translateWordLibrary = {
     dog: ['собака', 'пес', 'собачка'],
     restaurant: ['ресторан'],
     nickname: ['прозвище', 'кличка'],
@@ -644,14 +705,14 @@ const translateWordLibraru = {
     activity: ['активность', 'деятельность', 'энергия'],
     amount: ['количество', 'сумма', 'итог'],
     blind: ['слепой', 'слепить', 'штора'],
-    cartoon: ['мультфильм', 'карикатура', 'комикс'],
+    cartoon: ['мультфильм', 'карикатура', 'комикс', 'мультик'],
     congratulate: ['поздравлять', 'поздравить'],
     dictionary: ['словарь'],
     environment: ['окружающая среда', 'окружение', 'среда'],
     famous: ['известный', 'знаменитый', 'замечательный'],
     horror: ['ужас', 'ужастик'],
     inspiration: ['вдохновение', 'воодушевление', 'вдох'],
-    jealous: ['завистливый', 'ревнивый', 'заботливый', 'зависть'],
+    jealous: ['завистливый', 'ревнивый', 'заботливый', 'зависть', 'ревность'],
     lucky: ['счастливый', 'везучий', 'удачливый'],
     message: ['сообщение', 'послание', 'письмо'],
     mysterious: ['загадочный', 'таинственный', 'непостижимый'],

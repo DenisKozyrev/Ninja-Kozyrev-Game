@@ -26,39 +26,47 @@ export default class Monster {
         if (this.healthPoints === 100) {
             this.hpGreenLine.classList.add('character-health-render');
         }
-        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
-        this.monsterBlock.classList.remove('monster-damage');
-        this.monsterBlock.classList.remove('monster-attack');
-        this.monsterBlock.classList.remove('monster-dead');
-        this.monsterBlock.classList.add('monster-idle');
+        this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.remove('monster-damage-animation');
+        this.monsterBlock.classList.remove('monster-attack-animation');
+        this.monsterBlock.classList.remove('monster-dead-animation');
+        this.monsterBlock.classList.add('monster-idle-animation');
     }
 
     attack() {
-        this.monsterBlock.classList.add('monster-attack');
-        this.monsterBlock.classList.remove('monster-idle');
-        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-attack.png')`;
+        this.monsterBlock.classList.add('monster-attack-animation');
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-attack-sprite`);
         setTimeout(() => {
-            this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
-            this.monsterBlock.classList.remove('monster-attack');
-            this.monsterBlock.classList.add('monster-idle');
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-attack-sprite`);
+            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+            this.monsterBlock.classList.remove('monster-attack-animation');
+            this.monsterBlock.classList.add('monster-idle-animation');
         }, 1500)
     }
 
     damage() {
-        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-damage.png')`;
-        this.monsterBlock.classList.remove('monster-idle');
-        this.monsterBlock.classList.add('monster-damage');
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-damage-sprite`);
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.add('monster-damage-animation');
         setTimeout(() => {
-            this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
-            this.monsterBlock.classList.remove('monster-damage');
-            this.monsterBlock.classList.add('monster-idle');
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-damage-sprite`);
+            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+            this.monsterBlock.classList.remove('monster-damage-animation');
+            this.monsterBlock.classList.add('monster-idle-animation');
         }, 200)
     }
 
     dead() {
-        this.monsterBlock.classList.add('monster-dead');
-        this.monsterBlock.classList.remove('monster-idle');
-        this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-dead.png')`;
+        this.monsterBlock.classList.add('monster-dead-animation');
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-dead-sprite`);
+        setTimeout(() => {
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-dead-sprite`);
+        }, 1000)
     }
 
     healthDecrease() {

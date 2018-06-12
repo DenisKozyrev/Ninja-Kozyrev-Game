@@ -77,9 +77,7 @@ class Game {
         });
         this.startAgainButton.addEventListener('click', () => {
             this.tableWindow.style.display = "none";
-            window.addEventListener('load', () => {
-                this.startGame();
-            });
+            this.startGame();
         });
     }
 
@@ -200,4 +198,7 @@ class Game {
 
 const newGame = new Game();
 
-newGame.newGameCreate();
+window.addEventListener('load', () => {
+    newGame.newGameCreate();
+    console.log(34);
+});

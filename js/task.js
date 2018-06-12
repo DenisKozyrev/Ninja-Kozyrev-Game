@@ -2,15 +2,19 @@
 
 const _ = require('lodash');
 import {
-    translateWordLibraru
-} from "./wordLibraru";
+    translateWordLibrary
+} from "./wordTranslateLibrary";
+import {
+    listeningWordLibrary
+} from "./wordListeningLibrary";
 
 export default class Task {
     constructor() {
-        this.taskWindow = document.getElementById('taskWindowConteiner');
+        this.taskWindowConteiner = document.getElementById('taskWindowConteiner');
+        this.mediaBlock = document.getElementById('mediaBlock');
         this.task = document.getElementById('taskHeading');
         this.mathOperationsCollection = ['+', '-', '*', '/'];
-        this.taskCollection = [this.mathTask, this.transateTask];
+        this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask];
     }
 
     random() {
@@ -19,7 +23,8 @@ export default class Task {
     }
 
     mathTask() {
-        this.taskWindow.style.display = "flex";
+        this.mediaBlock.innerHTML = "";
+        this.taskWindowConteiner.style.display = "flex";
         this.mathOperationsCollectionIndex = _.random(0, this.mathOperationsCollection.length - 1);
         if (this.mathOperationsCollectionIndex === 3) {
             this.taskExpression = (_.random(0, 50) + _.random(0, 50)) + " " + "/" + " " + 2;
@@ -33,10 +38,23 @@ export default class Task {
     }
 
     transateTask() {
-        this.taskWindow.style.display = "flex";
-        this.randomWord = Object.keys(translateWordLibraru)[_.random(0, Object.keys(translateWordLibraru).length - 1)];
+        this.mediaBlock.innerHTML = "";
+        this.taskWindowConteiner.style.display = "flex";
+        this.randomWord = Object.keys(translateWordLibrary)[_.random(0, Object.keys(translateWordLibrary).length - 1)];
         this.task.innerHTML = "Translate the word: " + '\"' + this.randomWord + '\"';
-        this.transateTaskResult = translateWordLibraru[this.randomWord];
+        this.transateTaskResult = translateWordLibrary[this.randomWord];
+    }
+
+    listeningTask() {
+        this.mediaBlock.innerHTML = "";
+        this.taskWindowConteiner.style.display = "flex";
+        this.task.innerHTML = '\"' + "Type what you heard" + '\"';
+        this.audioWordBlock = document.createElement('audio');
+        this.audioWordBlock.setAttribute('controls', '');
+        this.mediaBlock.appendChild(this.audioWordBlock);
+        this.randomAudioWord = Object.keys(listeningWordLibrary)[_.random(0, Object.keys(listeningWordLibrary).length - 1)];
+        this.audioWordBlock.src = this.randomAudioWord;
+        this.listeningTaskResult = listeningWordLibrary[this.randomAudioWord];
     }
 
 
@@ -46,6 +64,8 @@ export default class Task {
             return this.taskExpressionResult;
         } else if (this.taskRandomResult === this.transateTask) {
             return this.transateTaskResult;
+        } else if (this.taskRandomResult === this.listeningTask) {
+            return this.listeningTaskResult;
         }
     }
 

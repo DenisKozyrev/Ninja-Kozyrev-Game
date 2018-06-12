@@ -21,40 +21,46 @@ export default class Player {
     if (this.healthPoints === 100) {
       this.hpGreenLine.classList.add('character-health-render');
     }
-    this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
-    this.playerBlock.classList.remove('player-dead');
-    this.playerBlock.classList.remove('player-damage');
-    this.playerBlock.classList.remove('player-attack');
-    this.playerBlock.classList.add('player-idle');
+    this.playerBlock.classList.remove('player-dead-sprite');
+    this.playerBlock.classList.add('player-idle-sprite');
+    this.playerBlock.classList.remove('player-dead-animation');
+    this.playerBlock.classList.remove('player-damage-animation');
+    this.playerBlock.classList.remove('player-attack-animation');
+    this.playerBlock.classList.add('player-idle-animation');
   }
 
   attack() {
-    this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-attack.png')";
-    this.playerBlock.classList.remove('player-idle');
-    this.playerBlock.classList.add('player-attack');
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-attack-sprite');
+    this.playerBlock.classList.remove('player-idle-animation');
+    this.playerBlock.classList.add('player-attack-animation');
     setTimeout(() => {
-      this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
-      this.playerBlock.classList.remove('player-attack');
-      this.playerBlock.classList.add('player-idle');
+      this.playerBlock.classList.remove('player-attack-sprite');
+      this.playerBlock.classList.add('player-idle-sprite');
+      this.playerBlock.classList.remove('player-attack-animation');
+      this.playerBlock.classList.add('player-idle-animation');
     }, 1500)
   }
 
   damage() {
-    this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-damage.png')";
-    this.playerBlock.classList.remove('player-idle');
-    this.playerBlock.classList.add('player-damage');
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-damage-sprite');
+    this.playerBlock.classList.remove('player-idle-animation');
+    this.playerBlock.classList.add('player-damage-animation');
     setTimeout(() => {
-      this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
-      this.playerBlock.classList.remove('player-damage');
-      this.playerBlock.classList.add('player-idle');
+      this.playerBlock.classList.remove('player-damage-sprite');
+      this.playerBlock.classList.add('player-idle-sprite');
+      this.playerBlock.classList.remove('player-damage-animation');
+      this.playerBlock.classList.add('player-idle-animation');
     }, 200)
   }
 
   dead() {
-    this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-dead.png')";
-    this.playerBlock.classList.add('player-dead');
-    this.playerBlock.classList.remove('player-damage');
-    this.playerBlock.classList.remove('player-idle');
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-dead-sprite');
+    this.playerBlock.classList.add('player-dead-animation');
+    this.playerBlock.classList.remove('player-damage-animation');
+    this.playerBlock.classList.remove('player-idle-animation');
   }
 
   healthDecrease() {

@@ -7,12 +7,12 @@
   <title>Ninja-Kozyrev Game</title>
   <link href="../src/style.css" rel="stylesheet">
   <link href="../src/animation.css" rel="stylesheet">
+  <link href="../src/backgroundImages.css" rel="stylesheet">
 </head>
 
 <body>
 
   <div id="contentWrapper" class="content-wrapper">
-    <div id="preloadedImages"></div>
     <div id="playerProfilePage" class="profile-page">
       <h2 class="game-heading">Ninja-Kozyrev
         <br /> Game</h2>
@@ -30,12 +30,12 @@
       </div>
       <div id="newGameButtons" class="new-game-buttons-block">
         <button type="button" class="game-button">
-          <a class="new-game-link" href="../index.html" target="_blank">About</a>
+          <a class="new-game-link" href="../index.html">About</a>
         </button>
         <button type="button" id="newGameButton" class="game-button">New Game</button>
       </div>
     </div>
-    <div id="gameFild" class="game-fild">
+    <div id="gameFild" class="game-fild game-fild-background">
       <div class="game-fild-content">
         <div class="character-info-block">
           <div class="character-info">
@@ -78,11 +78,12 @@
     </div>
     <div id="taskWindowConteiner" class="task-window-conteiner">
       <div id="taskWindow" class="task-window">
+        <div id="mediaBlock" class="media-block"></div>
         <h3 id="taskHeading" class="task-heading"></h3>
         <form id="taskForm" class="task-form">
           <input type="text" class="task-input" id="taskInput" placeholder="answer*" autocomplete="off" autofocus required>
           <div class="task-buttons">
-            <button id="cancelTaskButton" class="task-button" type="button">Cancel</button>
+            <button id="cancelTaskButton" class="task-button" type="button">Back</button>
             <button id="taskButton" class="task-button" type="submit">Answer</button>
           </div>
         </form>
