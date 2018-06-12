@@ -33,7 +33,9 @@ export default class Player {
     this.playerBlock.classList.remove('player-idle');
     this.playerBlock.classList.add('player-attack');
     setTimeout(() => {
-      this.render();
+      this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
+      this.playerBlock.classList.remove('player-attack');
+      this.playerBlock.classList.add('player-idle');
     }, 1500)
   }
 
@@ -42,7 +44,9 @@ export default class Player {
     this.playerBlock.classList.remove('player-idle');
     this.playerBlock.classList.add('player-damage');
     setTimeout(() => {
-      this.render();
+      this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
+      this.playerBlock.classList.remove('player-damage');
+      this.playerBlock.classList.add('player-idle');
     }, 200)
   }
 

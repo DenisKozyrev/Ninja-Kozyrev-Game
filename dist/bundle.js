@@ -86,7 +86,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./task */ "./js/task.js");
 /* harmony import */ var _score__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./score */ "./js/score.js");
 
-
+const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 
 
@@ -143,12 +143,12 @@ class Game {
         this.attackSpellButton.addEventListener('click', () => {
             this.spellWindowConteiner.style.display = "none";
             this.spellType = "attack";
-            this.task.mathTask();
+            this.task.random();
         });
         this.healingSpell.addEventListener('click', () => {
             this.spellWindowConteiner.style.display = "none";
             this.spellType = "health";
-            this.task.mathTask();
+            this.task.random();
         });
         this.taskForm.addEventListener('submit', () => {
             if (this.taskInput.value !== "") {
@@ -161,11 +161,13 @@ class Game {
         this.cancelTaskButton.addEventListener('click', () => {
             this.taskWindow.style.display = "none";
             this.spellWindowConteiner.style.display = "flex";
-        })
+        });
         this.startAgainButton.addEventListener('click', () => {
             this.tableWindow.style.display = "none";
-            this.startGame();
-        })
+            window.addEventListener('load', () => {
+                this.startGame();
+            });
+        });
     }
 
     startGame() {
@@ -184,14 +186,12 @@ class Game {
         this.monster.healthPointsLine = 250;
         this.monster.hpGreenLine.style.width = '250px'
         this.roundHeading.innerHTML = `Round ${this.roundCounter + 1}`
-        this.monsterSprite = this.monster.monsterSpritesCollection[_.random(0, this.monster.monsterSpritesCollection.length - 1)];
-        this.monsterName = this.monster.nameCollection[0][_.random(0, this.monster.nameCollection[0].length - 1)] + " " + this.monster.nameCollection[1][_.random(0, this.monster.nameCollection[1].length - 1)]; //+ " " + this.nameCollection[2][_.random(0, this.nameCollection[2].length - 1)]
-        this.monster.render(this.monsterSprite, this.monsterName);
+        this.monster.render();
     }
 
     taskSolveCheck() {
         this.taskExpressionResult = this.task.getTaskResult();
-        if (this.spellType === "attack" && this.taskInput.value == this.taskExpressionResult) {
+        if (this.spellType === "attack" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
             this.taskWindow.style.display = "none";
             this.player.attack();
             this.spell.attackSpellAudioPlay();
@@ -200,7 +200,7 @@ class Game {
                 this.monsterHealthCheck()
             }, 1100);
         };
-        if (this.spellType === "attack" && this.taskInput.value != this.taskExpressionResult) {
+        if (this.spellType === "attack" && this.taskExpressionResult.includes(this.taskInput.value) === false) {
             this.taskWindow.style.display = "none";
             this.monster.attack();
             this.spell.attackSpellAudioPlay();
@@ -209,12 +209,12 @@ class Game {
                 this.playerHealthCheck()
             }, 1100)
         };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value == this.taskExpressionResult) {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.player.healthIncrease();
         };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML !== "100hp") {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.monster.healthIncrease();
@@ -222,10 +222,10 @@ class Game {
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
         };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML === "100hp") {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
         }
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML !== "100hp") {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.monster.healthIncrease()
@@ -321,9 +321,9 @@ class Monster {
         this.monsterSpritesCollection = ['robot', 'dino', 'freeknight', 'jack', 'dog', 'cat'];
     }
 
-    render(monsterSprite, monsterName) {
-        this.monsterName = monsterName;
-        this.monsterSprite = monsterSprite;
+    render() {
+        this.monsterSprite = this.monsterSpritesCollection[_.random(0, this.monsterSpritesCollection.length - 1)];
+        this.monsterName = this.nameCollection[0][_.random(0, this.nameCollection[0].length - 1)] + " " + this.nameCollection[1][_.random(0, this.nameCollection[1].length - 1)] + " " + this.nameCollection[2][_.random(0, this.nameCollection[2].length - 1)];
         this.fullNameBlock.innerHTML = this.monsterName;
         this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
         if (this.healthPoints === 100) {
@@ -341,7 +341,6 @@ class Monster {
         this.monsterBlock.classList.remove('monster-idle');
         this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-attack.png')`;
         setTimeout(() => {
-            // this.render(this.monsterSprite, this.monsterName);
             this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
             this.monsterBlock.classList.remove('monster-attack');
             this.monsterBlock.classList.add('monster-idle');
@@ -353,7 +352,9 @@ class Monster {
         this.monsterBlock.classList.remove('monster-idle');
         this.monsterBlock.classList.add('monster-damage');
         setTimeout(() => {
-            this.render(this.monsterSprite, this.monsterName);
+            this.monsterBlock.style.backgroundImage = `url('../images/monster-sprites/${this.monsterSprite}-idle.png')`;
+            this.monsterBlock.classList.remove('monster-damage');
+            this.monsterBlock.classList.add('monster-idle');
         }, 200)
     }
 
@@ -428,7 +429,9 @@ class Player {
     this.playerBlock.classList.remove('player-idle');
     this.playerBlock.classList.add('player-attack');
     setTimeout(() => {
-      this.render();
+      this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
+      this.playerBlock.classList.remove('player-attack');
+      this.playerBlock.classList.add('player-idle');
     }, 1500)
   }
 
@@ -437,7 +440,9 @@ class Player {
     this.playerBlock.classList.remove('player-idle');
     this.playerBlock.classList.add('player-damage');
     setTimeout(() => {
-      this.render();
+      this.playerBlock.style.backgroundImage = "url('../images/ninja-sprites/player-idle.png')";
+      this.playerBlock.classList.remove('player-damage');
+      this.playerBlock.classList.add('player-idle');
     }, 200)
   }
 
@@ -562,15 +567,23 @@ class Spell {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Task; });
+/* harmony import */ var _wordLibraru__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./wordLibraru */ "./js/wordLibraru.js");
 
 
 const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
 
 class Task {
     constructor() {
         this.taskWindow = document.getElementById('taskWindowConteiner');
         this.task = document.getElementById('taskHeading');
         this.mathOperationsCollection = ['+', '-', '*', '/'];
+        this.taskCollection = [this.mathTask, this.transateTask];
+    }
+
+    random() {
+        this.taskRandomResult = this.taskCollection[_.random(0, this.taskCollection.length - 1)];
+        this.taskRandomResult.call(this);
     }
 
     mathTask() {
@@ -584,14 +597,66 @@ class Task {
             this.taskExpression = _.random(0, 50) + " " + this.mathOperationsCollection[this.mathOperationsCollectionIndex] + " " + _.random(0, 50);
         }
         this.task.innerHTML = "Solve The Task: " + '\"' + this.taskExpression + '\"';
+        this.taskExpressionResult = [String(eval(this.taskExpression))];
     }
 
+    transateTask() {
+        this.taskWindow.style.display = "flex";
+        this.randomWord = Object.keys(_wordLibraru__WEBPACK_IMPORTED_MODULE_0__["translateWordLibraru"])[_.random(0, Object.keys(_wordLibraru__WEBPACK_IMPORTED_MODULE_0__["translateWordLibraru"]).length - 1)];
+        this.task.innerHTML = "Translate the word: " + '\"' + this.randomWord + '\"';
+        this.transateTaskResult = _wordLibraru__WEBPACK_IMPORTED_MODULE_0__["translateWordLibraru"][this.randomWord];
+    }
+
+
+
     getTaskResult() {
-        this.taskExpressionResult = eval(this.taskExpression);
-        return this.taskExpressionResult;
+        if (this.taskRandomResult === this.mathTask) {
+            return this.taskExpressionResult;
+        } else if (this.taskRandomResult === this.transateTask) {
+            return this.transateTaskResult;
+        }
     }
 
 }
+
+/***/ }),
+
+/***/ "./js/wordLibraru.js":
+/*!***************************!*\
+  !*** ./js/wordLibraru.js ***!
+  \***************************/
+/*! exports provided: translateWordLibraru */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "translateWordLibraru", function() { return translateWordLibraru; });
+
+
+const translateWordLibraru = {
+    dog: ['собака', 'пес', 'собачка'],
+    restaurant: ['ресторан'],
+    nickname: ['прозвище', 'кличка'],
+    flower: ['цветок', 'цвет', 'цветение'],
+    shoes: ['обувь'],
+    skirt: ['юбка', 'подол', 'край'],
+    coat: ['пальто', 'слой', 'пиджак'],
+    activity: ['активность', 'деятельность', 'энергия'],
+    amount: ['количество', 'сумма', 'итог'],
+    blind: ['слепой', 'слепить', 'штора'],
+    cartoon: ['мультфильм', 'карикатура', 'комикс'],
+    congratulate: ['поздравлять', 'поздравить'],
+    dictionary: ['словарь'],
+    environment: ['окружающая среда', 'окружение', 'среда'],
+    famous: ['известный', 'знаменитый', 'замечательный'],
+    horror: ['ужас', 'ужастик'],
+    inspiration: ['вдохновение', 'воодушевление', 'вдох'],
+    jealous: ['завистливый', 'ревнивый', 'заботливый', 'зависть'],
+    lucky: ['счастливый', 'везучий', 'удачливый'],
+    message: ['сообщение', 'послание', 'письмо'],
+    mysterious: ['загадочный', 'таинственный', 'непостижимый'],
+    realize: ['реализовать', 'понимать', 'осуществлять']
+};
 
 /***/ }),
 

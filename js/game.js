@@ -1,5 +1,5 @@
 "use strict";
-
+const _ = require('lodash');
 import Player from "./player";
 import Monster from "./monster";
 import Spell from "./spell";
@@ -56,12 +56,12 @@ class Game {
         this.attackSpellButton.addEventListener('click', () => {
             this.spellWindowConteiner.style.display = "none";
             this.spellType = "attack";
-            this.task.mathTask();
+            this.task.random();
         });
         this.healingSpell.addEventListener('click', () => {
             this.spellWindowConteiner.style.display = "none";
             this.spellType = "health";
-            this.task.mathTask();
+            this.task.random();
         });
         this.taskForm.addEventListener('submit', () => {
             if (this.taskInput.value !== "") {
@@ -74,11 +74,13 @@ class Game {
         this.cancelTaskButton.addEventListener('click', () => {
             this.taskWindow.style.display = "none";
             this.spellWindowConteiner.style.display = "flex";
-        })
+        });
         this.startAgainButton.addEventListener('click', () => {
             this.tableWindow.style.display = "none";
-            this.startGame();
-        })
+            window.addEventListener('load', () => {
+                this.startGame();
+            });
+        });
     }
 
     startGame() {
@@ -97,14 +99,12 @@ class Game {
         this.monster.healthPointsLine = 250;
         this.monster.hpGreenLine.style.width = '250px'
         this.roundHeading.innerHTML = `Round ${this.roundCounter + 1}`
-        this.monsterSprite = this.monster.monsterSpritesCollection[_.random(0, this.monster.monsterSpritesCollection.length - 1)];
-        this.monsterName = this.monster.nameCollection[0][_.random(0, this.monster.nameCollection[0].length - 1)] + " " + this.monster.nameCollection[1][_.random(0, this.monster.nameCollection[1].length - 1)]; //+ " " + this.nameCollection[2][_.random(0, this.nameCollection[2].length - 1)]
-        this.monster.render(this.monsterSprite, this.monsterName);
+        this.monster.render();
     }
 
     taskSolveCheck() {
         this.taskExpressionResult = this.task.getTaskResult();
-        if (this.spellType === "attack" && this.taskInput.value == this.taskExpressionResult) {
+        if (this.spellType === "attack" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
             this.taskWindow.style.display = "none";
             this.player.attack();
             this.spell.attackSpellAudioPlay();
@@ -113,7 +113,7 @@ class Game {
                 this.monsterHealthCheck()
             }, 1100);
         };
-        if (this.spellType === "attack" && this.taskInput.value != this.taskExpressionResult) {
+        if (this.spellType === "attack" && this.taskExpressionResult.includes(this.taskInput.value) === false) {
             this.taskWindow.style.display = "none";
             this.monster.attack();
             this.spell.attackSpellAudioPlay();
@@ -122,12 +122,12 @@ class Game {
                 this.playerHealthCheck()
             }, 1100)
         };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value == this.taskExpressionResult) {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.player.healthIncrease();
         };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML !== "100hp") {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.monster.healthIncrease();
@@ -135,10 +135,10 @@ class Game {
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
         };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML === "100hp") {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
         }
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskInput.value != this.taskExpressionResult && this.monsterHealthPoints.innerHTML !== "100hp") {
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.monster.healthIncrease()

@@ -17,6 +17,17 @@
     background-color: rgba(124, 121, 129);
 }
 
+#preloadedImages {
+    width: 0px;
+    height: 0px;
+    display: inline;
+    background-repeat: no-repeat;
+    /* monster sprites */
+    background-image: url(../images/monster-sprites/robot-idle.png), url(../images/monster-sprites/dino-idle.png), url(../images/monster-sprites/freeknight-idle.png), url(../images/monster-sprites/jack-idle.png), url(../images/monster-sprites/cat-idle.png), url(../images/monster-sprites/dog-idle.png), url(../images/monster-sprites/dog-attack.png), url(../images/monster-sprites/robot-attack.png), url(../images/monster-sprites/dino-attack.png), url(../images/monster-sprites/freeknight-attack.png), url(../images/monster-sprites/jack-attack.png), url(../images/monster-sprites/cat-attack.png), url(../images/monster-sprites/robot-damage.png), url(../images/monster-sprites/dino-damage.png), url(../images/monster-sprites/freeknight-damage.png), url(../images/monster-sprites/jack-damage.png), url(../images/monster-sprites/dog-damage.png), url(../images/monster-sprites/cat-damage.png), url(../images/monster-sprites/robot-dead.png), url(../images/monster-sprites/dino-dead.png), url(../images/monster-sprites/freeknight-dead.png), url(../images/monster-sprites/jack-dead.png), url(../images/monster-sprites/dog-dead.png), url(../images/monster-sprites/cat-dead.png), /* player sprites */
+    url(../images/ninja-sprites/player-idle.png), url(../images/ninja-sprites/player-attack.png), url(../images/ninja-sprites/player-damage.png), url(../images/ninja-sprites/player-dead.png), /* game background */
+    url(../images/game-background.png);
+}
+
 .profile-page {
     text-align: center;
     width: 85%;
@@ -310,7 +321,7 @@
 }
 
 .task-input {
-    width: 50%;
+    width: 70%;
     font-size: 40px;
     border-radius: 5px;
     padding-left: 10px;
