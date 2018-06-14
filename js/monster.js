@@ -59,6 +59,19 @@ export default class Monster {
         }, 200)
     }
 
+    health() {
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-health-sprite`);
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.add('monster-health-animation');
+        setTimeout(() => {
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-health-sprite`);
+            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+            this.monsterBlock.classList.remove('monster-health-animation');
+            this.monsterBlock.classList.add('monster-idle-animation');
+        }, 2100)
+    }
+
     dead() {
         this.monsterBlock.classList.add('monster-dead-animation');
         this.monsterBlock.classList.remove('monster-idle-animation');

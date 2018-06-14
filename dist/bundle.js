@@ -71,6 +71,26 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./js/dragDropLibrary.js":
+/*!*******************************!*\
+  !*** ./js/dragDropLibrary.js ***!
+  \*******************************/
+/*! exports provided: dragDropLibrary */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dragDropLibrary", function() { return dragDropLibrary; });
+
+
+const dragDropLibrary = {
+    dog: ['dog'],
+    restaurant: ['restaurant'],
+    nickname: ['nickname'],
+}
+
+/***/ }),
+
 /***/ "./js/game.js":
 /*!********************!*\
   !*** ./js/game.js ***!
@@ -86,7 +106,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./task */ "./js/task.js");
 /* harmony import */ var _score__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./score */ "./js/score.js");
 
+
 const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
 
 
 
@@ -150,12 +172,12 @@ class Game {
             this.spellType = "health";
             this.task.random();
         });
-        this.taskForm.addEventListener('submit', () => {
+        this.taskAnswerButton.addEventListener('click', () => {
+            this.taskExpressionResult = this.task.getTaskResult();
             if (this.taskInput.value !== "") {
                 this.taskSolveCheck();
                 this.taskInput.value = "";
             }
-            event.preventDefault();
         })
 
         this.cancelTaskButton.addEventListener('click', () => {
@@ -188,7 +210,6 @@ class Game {
     }
 
     taskSolveCheck() {
-        this.taskExpressionResult = this.task.getTaskResult();
         if (this.spellType === "attack" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
             this.taskWindow.style.display = "none";
             this.player.attack();
@@ -211,11 +232,13 @@ class Game {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.player.healthIncrease();
+            this.player.health()
         };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.monster.healthIncrease();
+            this.monster.health();
         };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
@@ -227,6 +250,7 @@ class Game {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.monster.healthIncrease()
+            this.monster.health();
         };
     }
 
@@ -287,7 +311,6 @@ const newGame = new Game();
 
 window.addEventListener('load', () => {
     newGame.newGameCreate();
-    console.log(34);
 });
 
 /***/ }),
@@ -361,6 +384,19 @@ class Monster {
             this.monsterBlock.classList.remove('monster-damage-animation');
             this.monsterBlock.classList.add('monster-idle-animation');
         }, 200)
+    }
+
+    health() {
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-health-sprite`);
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.add('monster-health-animation');
+        setTimeout(() => {
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-health-sprite`);
+            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+            this.monsterBlock.classList.remove('monster-health-animation');
+            this.monsterBlock.classList.add('monster-idle-animation');
+        }, 2100)
     }
 
     dead() {
@@ -460,6 +496,19 @@ class Player {
     }, 200)
   }
 
+  health() {
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-health-sprite');
+    this.playerBlock.classList.remove('player-idle-animation');
+    this.playerBlock.classList.add('player-health-animation');
+    setTimeout(() => {
+      this.playerBlock.classList.remove('player-health-sprite');
+      this.playerBlock.classList.add('player-idle-sprite');
+      this.playerBlock.classList.remove('player-health-animation');
+      this.playerBlock.classList.add('player-idle-animation');
+    }, 1500)
+  }
+
   dead() {
     this.playerBlock.classList.remove('player-idle-sprite');
     this.playerBlock.classList.add('player-dead-sprite');
@@ -481,6 +530,28 @@ class Player {
     this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
     this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
   }
+}
+
+/***/ }),
+
+/***/ "./js/riddleLibrary.js":
+/*!*****************************!*\
+  !*** ./js/riddleLibrary.js ***!
+  \*****************************/
+/*! exports provided: riddleLibrary */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "riddleLibrary", function() { return riddleLibrary; });
+
+
+const riddleLibrary = {
+    "I’m tall when I’m young and I’m short when I’m old. What am I?": ['Candle', 'candle'],
+    "What has hands but can not clap?": ['clock', 'Clock'],
+    "What gets wetter and wetter the more it dries?": ['Towel', 'towel'],
+    "How many months have 28 days?": ['12'],
+    "What’s full of holes but still holds water?": ['sponge', 'Sponge']
 }
 
 /***/ }),
@@ -584,9 +655,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Task; });
 /* harmony import */ var _wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./wordTranslateLibrary */ "./js/wordTranslateLibrary.js");
 /* harmony import */ var _wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./wordListeningLibrary */ "./js/wordListeningLibrary.js");
+/* harmony import */ var _riddleLibrary__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./riddleLibrary */ "./js/riddleLibrary.js");
+/* harmony import */ var _dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dragDropLibrary */ "./js/dragDropLibrary.js");
 
 
 const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
+
+
+
 
 
 
@@ -595,8 +672,8 @@ class Task {
         this.taskWindowConteiner = document.getElementById('taskWindowConteiner');
         this.mediaBlock = document.getElementById('mediaBlock');
         this.task = document.getElementById('taskHeading');
-        this.mathOperationsCollection = ['+', '-', '*', '/'];
-        this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask];
+        this.taskInput = document.getElementById('taskInput');
+        this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask, this.riddleTask, this.dragDropTask];
     }
 
     random() {
@@ -606,7 +683,10 @@ class Task {
 
     mathTask() {
         this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
         this.taskWindowConteiner.style.display = "flex";
+        this.mathOperationsCollection = ['+', '-', '*', '/'];
+        this.task.style.fontSize = "40px"
         this.mathOperationsCollectionIndex = _.random(0, this.mathOperationsCollection.length - 1);
         if (this.mathOperationsCollectionIndex === 3) {
             this.taskExpression = (_.random(0, 50) + _.random(0, 50)) + " " + "/" + " " + 2;
@@ -621,24 +701,59 @@ class Task {
 
     transateTask() {
         this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
         this.taskWindowConteiner.style.display = "flex";
+        this.task.style.fontSize = "40px"
         this.randomWord = Object.keys(_wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"])[_.random(0, Object.keys(_wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"]).length - 1)];
-        this.task.innerHTML = "Translate the word: " + '\"' + this.randomWord + '\"';
+        this.task.innerHTML = "Translate a word into Russian: " + " " + '\"' + this.randomWord + '\"';
         this.transateTaskResult = _wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"][this.randomWord];
     }
 
     listeningTask() {
         this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
         this.taskWindowConteiner.style.display = "flex";
         this.task.innerHTML = '\"' + "Type what you heard" + '\"';
         this.audioWordBlock = document.createElement('audio');
         this.audioWordBlock.setAttribute('controls', '');
+        this.task.style.fontSize = "40px"
         this.mediaBlock.appendChild(this.audioWordBlock);
         this.randomAudioWord = Object.keys(_wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"])[_.random(0, Object.keys(_wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"]).length - 1)];
         this.audioWordBlock.src = this.randomAudioWord;
         this.listeningTaskResult = _wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"][this.randomAudioWord];
     }
 
+    riddleTask() {
+        this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
+        this.taskWindowConteiner.style.display = "flex";
+        this.randomRiddle = Object.keys(_riddleLibrary__WEBPACK_IMPORTED_MODULE_2__["riddleLibrary"])[_.random(0, Object.keys(_riddleLibrary__WEBPACK_IMPORTED_MODULE_2__["riddleLibrary"]).length - 1)];
+        this.task.innerHTML = "Guess a riddle: " + " " + '\"' + this.randomRiddle + '\"';
+        this.task.style.fontSize = "25px"
+        this.riddleTaskResult = _riddleLibrary__WEBPACK_IMPORTED_MODULE_2__["riddleLibrary"][this.randomRiddle];
+    }
+
+    dragDropTask() {
+        this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'hidden';
+        this.taskWindowConteiner.style.display = "flex";
+        this.task.innerHTML = "Arrange in the right order";
+        this.dragDropRandomWord = Object.keys(_dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"])[_.random(0, Object.keys(_dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"]).length - 1)];
+        this.dragDropRandomWordLetters = this.dragDropRandomWord.split('').sort(function () {
+            return Math.random() - 0.5;
+        });;
+        this.dragDropRandomWordLetters.forEach((letter) => {
+            this.letterBlock = document.createElement('div');
+            this.letterBlock.classList.add('dd-letter-blocks');
+            this.letterBlock.innerHTML = letter;
+            this.mediaBlock.appendChild(this.letterBlock);
+        });
+        $(function () {
+            $('#mediaBlock').sortable();
+            $('#mediaBlock').disableSelection();
+        });
+        this.dragDropTaskResult = _dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"][this.dragDropRandomWord];
+    }
 
 
     getTaskResult() {
@@ -648,9 +763,18 @@ class Task {
             return this.transateTaskResult;
         } else if (this.taskRandomResult === this.listeningTask) {
             return this.listeningTaskResult;
-        }
+        } else if (this.taskRandomResult === this.riddleTask) {
+            return this.riddleTaskResult;
+        } else if (this.taskRandomResult === this.dragDropTask) {
+            this.dragDropLetters = document.querySelectorAll('.dd-letter-blocks');
+            this.dragDropInput = "";
+            this.dragDropLetters.forEach((letterBlock) => {
+                this.dragDropInput = this.dragDropInput + letterBlock.innerHTML;
+            });
+            this.taskInput.value = this.dragDropInput;
+            return this.dragDropTaskResult;
+        };
     }
-
 }
 
 /***/ }),

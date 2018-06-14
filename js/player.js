@@ -55,6 +55,19 @@ export default class Player {
     }, 200)
   }
 
+  health() {
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-health-sprite');
+    this.playerBlock.classList.remove('player-idle-animation');
+    this.playerBlock.classList.add('player-health-animation');
+    setTimeout(() => {
+      this.playerBlock.classList.remove('player-health-sprite');
+      this.playerBlock.classList.add('player-idle-sprite');
+      this.playerBlock.classList.remove('player-health-animation');
+      this.playerBlock.classList.add('player-idle-animation');
+    }, 1500)
+  }
+
   dead() {
     this.playerBlock.classList.remove('player-idle-sprite');
     this.playerBlock.classList.add('player-dead-sprite');

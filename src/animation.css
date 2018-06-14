@@ -461,6 +461,66 @@
     }
 }
 
+@-webkit-keyframes characterHealth {
+    0% {
+        background-position-x: 0px;
+    }
+    10% {
+        background-position-x: 0px;
+    }
+    10.001% {
+        background-position-x: -550px;
+    }
+    20% {
+        background-position-x: -550px;
+    }
+    20.001% {
+        background-position-x: -1100px;
+    }
+    30% {
+        background-position-x: -1100px;
+    }
+    30.001% {
+        background-position-x: -1650px;
+    }
+    40% {
+        background-position-x: -1650px;
+    }
+    40.001% {
+        background-position-x: -2200px;
+    }
+    50% {
+        background-position-x: -2200px;
+    }
+    50.001% {
+        background-position-x: -2750px;
+    }
+    60% {
+        background-position-x: -2750px;
+    }
+    60.001% {
+        background-position-x: -3300px;
+    }
+    70% {
+        background-position-x: -3300px;
+    }
+    70.001% {
+        background-position-x: -3850px;
+    }
+    80% {
+        background-position-x: -3850px;
+    }
+    80.001% {
+        background-position-x: -4400px;
+    }
+    99.999% {
+        background-position-x: -4400px;
+    }
+    100% {
+        background-position-x: -4400px;
+    }
+}
+
 @-webkit-keyframes playerDamage {
     0% {
         background-position-x: 0px;
@@ -573,6 +633,18 @@
     background-position-y: -50px;
 }
 
+.player-health-animation {
+    position: absolute;
+    left: -5%;
+    background-repeat: no-repeat;
+    top: 30%;
+    transform: scale(0.65);
+    -webkit-animation-name: characterHealth;
+    -webkit-animation-duration: 500ms;
+    animation-iteration-count: 3;
+    background-position-y: -100px;
+}
+
 .monster-idle-animation {
     position: absolute;
     right: 5%;
@@ -611,6 +683,17 @@
     transform: scale(0.7);
     -webkit-animation-name: monsterDamage;
     -webkit-animation-duration: 200ms;
+    background-repeat: no-repeat;
+}
+
+.monster-health-animation {
+    position: absolute;
+    right: 5%;
+    top: 32.5%;
+    transform: scale(0.65);
+    -webkit-animation-name: characterHealth;
+    -webkit-animation-duration: 700ms;
+    animation-iteration-count: 3;
     background-repeat: no-repeat;
 }
 

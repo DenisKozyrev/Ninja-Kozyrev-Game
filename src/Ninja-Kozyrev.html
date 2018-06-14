@@ -46,8 +46,8 @@
             </div>
           </div>
           <div class="rounds">
-            <button id="chooseSpellButton" type="button" class="choose-spell-button">Choose Your Spell</button>
             <h3 id="roundHeading" class="round-number"></h3>
+            <button id="chooseSpellButton" type="button" class="choose-spell-button">Choose Your Spell</button>
           </div>
           <div class="character-info">
             <h3 id="monsterName" class="character-name"></h3>
@@ -80,13 +80,13 @@
       <div id="taskWindow" class="task-window">
         <div id="mediaBlock" class="media-block"></div>
         <h3 id="taskHeading" class="task-heading"></h3>
-        <form id="taskForm" class="task-form">
-          <input type="text" class="task-input" id="taskInput" placeholder="answer*" autocomplete="off" autofocus required>
+        <div id="taskForm" class="task-form">
+          <input type="text" class="task-input" id="taskInput" placeholder="answer*" autocomplete="off" autofocus>
           <div class="task-buttons">
             <button id="cancelTaskButton" class="task-button" type="button">Back</button>
-            <button id="taskButton" class="task-button" type="submit">Answer</button>
+            <button id="taskButton" class="task-button" type="button">Answer</button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
     <div id="tableWindow" class="game-score-table-block">
@@ -95,6 +95,8 @@
       <button id="startAgainButton" type="button" class="game-button">Ones Again!!!</button>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script type="text/javascript" src="../dist/bundle.js"></script>
 </body>
 

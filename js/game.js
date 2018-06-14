@@ -1,5 +1,7 @@
 "use strict";
+
 const _ = require('lodash');
+
 import Player from "./player";
 import Monster from "./monster";
 import Spell from "./spell";
@@ -63,12 +65,12 @@ class Game {
             this.spellType = "health";
             this.task.random();
         });
-        this.taskForm.addEventListener('submit', () => {
+        this.taskAnswerButton.addEventListener('click', () => {
+            this.taskExpressionResult = this.task.getTaskResult();
             if (this.taskInput.value !== "") {
                 this.taskSolveCheck();
                 this.taskInput.value = "";
             }
-            event.preventDefault();
         })
 
         this.cancelTaskButton.addEventListener('click', () => {
@@ -101,7 +103,6 @@ class Game {
     }
 
     taskSolveCheck() {
-        this.taskExpressionResult = this.task.getTaskResult();
         if (this.spellType === "attack" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
             this.taskWindow.style.display = "none";
             this.player.attack();
@@ -124,11 +125,13 @@ class Game {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.player.healthIncrease();
+            this.player.health()
         };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.monster.healthIncrease();
+            this.monster.health();
         };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
@@ -140,6 +143,7 @@ class Game {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
             this.monster.healthIncrease()
+            this.monster.health();
         };
     }
 
@@ -200,5 +204,4 @@ const newGame = new Game();
 
 window.addEventListener('load', () => {
     newGame.newGameCreate();
-    console.log(34);
 });
