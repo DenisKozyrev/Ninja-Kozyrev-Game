@@ -17369,25 +17369,34 @@ class Game {
             this.spellWindowConteiner.style.display = "none";
             this.spellType = "attack";
             this.task.random();
+            this.taskInput.focus();
+            if (this.task.taskRandomResult !== this.task.dragDropTask) {
+                this.taskAnswerButton.disabled = true;
+            }
         });
         this.healingSpell.addEventListener('click', () => {
             this.spellWindowConteiner.style.display = "none";
             this.spellType = "health";
             this.task.random();
+            this.taskInput.focus();
+            if (this.task.taskRandomResult !== this.task.dragDropTask) {
+                this.taskAnswerButton.disabled = true;
+            }
         });
         this.taskAnswerButton.addEventListener('click', () => {
             this.taskExpressionResult = this.task.getTaskResult();
-            if (this.taskInput.value !== "") {
-                this.taskSolveCheck();
-                this.taskInput.value = "";
-            }
+            this.taskSolveCheck();
+            this.taskInput.value = "";
+            this.taskAnswerButton.disabled = true;
         });
-        this.taskInput.addEventListener('keydown', (e) => {
+        this.taskInput.addEventListener('keyup', (e) => {
+            this.taskAnswerButton.disabled = this.taskInput.value === "";
             if (e.keyCode == 13) {
                 this.taskExpressionResult = this.task.getTaskResult();
                 if (this.taskInput.value !== "") {
                     this.taskSolveCheck();
                     this.taskInput.value = "";
+                    this.taskAnswerButton.disabled = true;
                 }
             }
         });
@@ -17895,6 +17904,7 @@ class Task {
         this.mediaBlock = document.getElementById('mediaBlock');
         this.task = document.getElementById('taskHeading');
         this.taskInput = document.getElementById('taskInput');
+        this.taskAnswerButton = document.getElementById('taskButton');
         this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask, this.riddleTask, this.dragDropTask, this.edibleInedibleTask];
     }
 
@@ -17960,6 +17970,7 @@ class Task {
         this.taskInput.style.visibility = 'hidden';
         this.taskWindowConteiner.style.display = "flex";
         this.task.innerHTML = "Arrange in the right order";
+        this.taskAnswerButton.disabled = false;
         this.dragDropRandomWord = Object.keys(_dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"])[_.random(0, Object.keys(_dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"]).length - 1)];
         this.dragDropRandomWordLetters = this.dragDropRandomWord.split('').sort(function () {
             return Math.random() - 0.5;
@@ -18011,7 +18022,7 @@ class Task {
             return this.dragDropTaskResult;
         } else if (this.taskRandomResult === this.edibleInedibleTask) {
             return this.edibleInedibleResult;
-        }
+        };
     }
 }
 

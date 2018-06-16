@@ -26,6 +26,7 @@ export default class Task {
         this.mediaBlock = document.getElementById('mediaBlock');
         this.task = document.getElementById('taskHeading');
         this.taskInput = document.getElementById('taskInput');
+        this.taskAnswerButton = document.getElementById('taskButton');
         this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask, this.riddleTask, this.dragDropTask, this.edibleInedibleTask];
     }
 
@@ -91,6 +92,7 @@ export default class Task {
         this.taskInput.style.visibility = 'hidden';
         this.taskWindowConteiner.style.display = "flex";
         this.task.innerHTML = "Arrange in the right order";
+        this.taskAnswerButton.disabled = false;
         this.dragDropRandomWord = Object.keys(dragDropLibrary)[_.random(0, Object.keys(dragDropLibrary).length - 1)];
         this.dragDropRandomWordLetters = this.dragDropRandomWord.split('').sort(function () {
             return Math.random() - 0.5;
@@ -142,6 +144,6 @@ export default class Task {
             return this.dragDropTaskResult;
         } else if (this.taskRandomResult === this.edibleInedibleTask) {
             return this.edibleInedibleResult;
-        }
+        };
     }
 }

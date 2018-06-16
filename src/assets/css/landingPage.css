@@ -149,8 +149,8 @@ header {
 
 .author-foto {
     background-image: url(../images/DenisKozyrevfoto.jpg);
-    width: 75%;
-    height: 45%;
+    width: 350px;
+    height: 330px;
     display: inline-block;
     background-position: center;
     background-size: cover;
