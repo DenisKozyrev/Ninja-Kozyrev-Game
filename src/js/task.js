@@ -92,7 +92,6 @@ export default class Task {
         this.taskInput.style.visibility = 'hidden';
         this.taskWindowConteiner.style.display = "flex";
         this.task.innerHTML = "Arrange in the right order";
-        this.taskAnswerButton.disabled = false;
         this.dragDropRandomWord = Object.keys(dragDropLibrary)[_.random(0, Object.keys(dragDropLibrary).length - 1)];
         this.dragDropRandomWordLetters = this.dragDropRandomWord.split('').sort(function () {
             return Math.random() - 0.5;

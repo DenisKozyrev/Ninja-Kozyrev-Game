@@ -1,7 +1,6 @@
 "use strict";
 
 export const dragDropLibrary = {
-    afternoon: ['afternoon'],
     birthday: ['birthday'],
     chocolate: ['chocolate'],
     holiday: ['holiday'],

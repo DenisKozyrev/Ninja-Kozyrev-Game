@@ -102,7 +102,15 @@ body {
     letter-spacing: 2px;
 }
 
+.new-game-button {
+    margin-bottom: 0;
+}
+
 .start-button {
+    margin-bottom: 0;
+}
+
+.again-button {
     margin-bottom: 0;
 }
 
@@ -360,8 +368,8 @@ body {
 }
 
 .game-score-table-block {
-    width: 85%;
-    height: 85%;
+    width: 95%;
+    height: 95%;
     display: none;
     flex-direction: column;
     justify-content: flex-start;
@@ -382,7 +390,7 @@ body {
     font-family: Montresor;
     user-select: none;
     font-size: 60px;
-    margin: 60px 0;
+    margin: 50px 0;
 }
 
 .table,

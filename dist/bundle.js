@@ -17257,7 +17257,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const dragDropLibrary = {
-    afternoon: ['afternoon'],
     birthday: ['birthday'],
     chocolate: ['chocolate'],
     holiday: ['holiday'],
@@ -17370,33 +17369,26 @@ class Game {
             this.spellType = "attack";
             this.task.random();
             this.taskInput.focus();
-            if (this.task.taskRandomResult !== this.task.dragDropTask) {
-                this.taskAnswerButton.disabled = true;
-            }
         });
         this.healingSpell.addEventListener('click', () => {
             this.spellWindowConteiner.style.display = "none";
             this.spellType = "health";
             this.task.random();
             this.taskInput.focus();
-            if (this.task.taskRandomResult !== this.task.dragDropTask) {
-                this.taskAnswerButton.disabled = true;
-            }
         });
         this.taskAnswerButton.addEventListener('click', () => {
             this.taskExpressionResult = this.task.getTaskResult();
-            this.taskSolveCheck();
-            this.taskInput.value = "";
-            this.taskAnswerButton.disabled = true;
+            if (this.taskInput.value !== "") {
+                this.taskSolveCheck();
+                this.taskInput.value = "";
+            }
         });
-        this.taskInput.addEventListener('keyup', (e) => {
-            this.taskAnswerButton.disabled = this.taskInput.value === "";
+        this.taskInput.addEventListener('keydown', (e) => {
             if (e.keyCode == 13) {
                 this.taskExpressionResult = this.task.getTaskResult();
                 if (this.taskInput.value !== "") {
                     this.taskSolveCheck();
                     this.taskInput.value = "";
-                    this.taskAnswerButton.disabled = true;
                 }
             }
         });
@@ -17970,7 +17962,6 @@ class Task {
         this.taskInput.style.visibility = 'hidden';
         this.taskWindowConteiner.style.display = "flex";
         this.task.innerHTML = "Arrange in the right order";
-        this.taskAnswerButton.disabled = false;
         this.dragDropRandomWord = Object.keys(_dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"])[_.random(0, Object.keys(_dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"]).length - 1)];
         this.dragDropRandomWordLetters = this.dragDropRandomWord.split('').sort(function () {
             return Math.random() - 0.5;

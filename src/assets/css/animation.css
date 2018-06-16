@@ -591,7 +591,7 @@
     position: absolute;
     left: -5%;
     background-repeat: no-repeat;
-    top: 42%;
+    top: 38%;
     transform: scale(0.65);
     -webkit-animation-name: characterIdle;
     -webkit-animation-duration: 430ms;
@@ -604,7 +604,7 @@
     position: absolute;
     left: -5%;
     background-repeat: no-repeat;
-    top: 45%;
+    top: 41%;
     transform: scale(0.65);
     background-repeat: no-repeat;
     -webkit-animation-name: playerAttack;
@@ -615,7 +615,7 @@
     position: absolute;
     left: 0;
     background-repeat: no-repeat;
-    top: 47%;
+    top: 43%;
     transform: scale(0.65);
     -webkit-animation-name: characterDead;
     -webkit-animation-duration: 1000ms;
@@ -626,7 +626,7 @@
     position: absolute;
     left: -5%;
     background-repeat: no-repeat;
-    top: 47%;
+    top: 43%;
     transform: scale(0.65);
     -webkit-animation-name: playerDamage;
     -webkit-animation-duration: 200ms;
@@ -637,7 +637,7 @@
     position: absolute;
     left: -5%;
     background-repeat: no-repeat;
-    top: 42%;
+    top: 38%;
     transform: scale(0.65);
     -webkit-animation-name: characterHealth;
     -webkit-animation-duration: 500ms;
@@ -648,7 +648,7 @@
 .monster-idle-animation {
     position: absolute;
     right: 3%;
-    top: 44%;
+    top: 40%;
     transform: scale(0.65);
     -webkit-animation-name: characterIdle;
     -webkit-animation-duration: 430ms;
@@ -659,7 +659,7 @@
 .monster-attack-animation {
     position: absolute;
     right: 3%;
-    top: 44%;
+    top: 40%;
     transform: scale(0.6);
     background-repeat: no-repeat;
     -webkit-animation-name: monsterAttack;
@@ -669,7 +669,7 @@
 .monster-dead-animation {
     position: absolute;
     right: -3%;
-    top: 48.5%;
+    top: 44.5%;
     transform: scale(0.7);
     -webkit-animation-name: characterDead;
     -webkit-animation-duration: 1000ms;
@@ -679,7 +679,7 @@
 .monster-damage-animation {
     position: absolute;
     right: 3%;
-    top: 48.5%;
+    top: 44.5%;
     transform: scale(0.7);
     -webkit-animation-name: monsterDamage;
     -webkit-animation-duration: 200ms;
@@ -689,7 +689,7 @@
 .monster-health-animation {
     position: absolute;
     right: 3%;
-    top: 44%;
+    top: 40%;
     transform: scale(0.65);
     -webkit-animation-name: characterHealth;
     -webkit-animation-duration: 700ms;

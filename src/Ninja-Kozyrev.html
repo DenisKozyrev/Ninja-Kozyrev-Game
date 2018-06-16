@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ninja-Kozyrev Game</title>
+  <title>Ninja-Kozyrev Mind</title>
   <link href="../src/assets/css/style.css" rel="stylesheet">
   <link href="../src/assets/css/animation.css" rel="stylesheet">
   <link href="../src/assets/css/backgroundImages.css" rel="stylesheet">
@@ -31,7 +31,7 @@
         <button type="button" class="game-button">
           <a class="new-game-link" href="../index.html">About</a>
         </button>
-        <button type="button" id="newGameButton" class="game-button">New Game</button>
+        <button type="button" id="newGameButton" class="game-button new-game-button">New Game</button>
       </div>
     </div>
     <div id="gameFild" class="game-fild">
@@ -66,11 +66,11 @@
       <div id="spellWindow" class="spell-window">
         <h3 class="spell-heading">Choose Your Spell</h3>
         <div class="spell-buttons-block">
-          <button id="healingSpell" class="spell-button" type="button">
-            <img class="spell-img" src="../src/assets/images/healing-spell.png ">
-          </button>
           <button id="attackSpell" class="spell-button" type="button">
             <img class="spell-img" src="../src/assets/images/rage-spell.png ">
+          </button>
+          <button id="healingSpell" class="spell-button" type="button">
+            <img class="spell-img" src="../src/assets/images/healing-spell.png ">
           </button>
         </div>
       </div>
@@ -90,7 +90,7 @@
     <div id="tableWindow" class="game-score-table-block">
       <h3 class="score-table-heading">Game Over</h3>
       <table id="scoreTable" class="game-score-table"></table>
-      <button id="startAgainButton" type="button" class="game-button">Ones Again!!!</button>
+      <button id="startAgainButton" type="button" class="game-button again-button">Ones Again!!!</button>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

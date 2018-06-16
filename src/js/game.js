@@ -61,33 +61,26 @@ class Game {
             this.spellType = "attack";
             this.task.random();
             this.taskInput.focus();
-            if (this.task.taskRandomResult !== this.task.dragDropTask) {
-                this.taskAnswerButton.disabled = true;
-            }
         });
         this.healingSpell.addEventListener('click', () => {
             this.spellWindowConteiner.style.display = "none";
             this.spellType = "health";
             this.task.random();
             this.taskInput.focus();
-            if (this.task.taskRandomResult !== this.task.dragDropTask) {
-                this.taskAnswerButton.disabled = true;
-            }
         });
         this.taskAnswerButton.addEventListener('click', () => {
             this.taskExpressionResult = this.task.getTaskResult();
-            this.taskSolveCheck();
-            this.taskInput.value = "";
-            this.taskAnswerButton.disabled = true;
+            if (this.taskInput.value !== "") {
+                this.taskSolveCheck();
+                this.taskInput.value = "";
+            }
         });
-        this.taskInput.addEventListener('keyup', (e) => {
-            this.taskAnswerButton.disabled = this.taskInput.value === "";
+        this.taskInput.addEventListener('keydown', (e) => {
             if (e.keyCode == 13) {
                 this.taskExpressionResult = this.task.getTaskResult();
                 if (this.taskInput.value !== "") {
                     this.taskSolveCheck();
                     this.taskInput.value = "";
-                    this.taskAnswerButton.disabled = true;
                 }
             }
         });
