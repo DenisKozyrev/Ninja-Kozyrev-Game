@@ -8,7 +8,6 @@ export default class Score {
     render() {
         this.scoreTable.innerHTML = "";
         this.localObjectCollection = Object.entries(localStorage).sort((a, b) => b[1] - a[1]);
-        console.log(this.localObjectCollection);
         if (this.localObjectCollection.length > 10) {
             this.localObjectCollection.splice(10);
         }

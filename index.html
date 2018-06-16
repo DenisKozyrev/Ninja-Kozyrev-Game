@@ -10,28 +10,42 @@
 
 <body>
     <div id="contentWrapper" class="content-wrapper">
-        <h2 class="game-heading">Ninja-Kozyrev Game</h2>
-        <div class="game-screenshots">
-            <img class="game-screenshot" src="./src/assets/images/gameScreenshots/game-screenshot(1).png">
-            <img class="game-screenshot" src="./src/assets/images/gameScreenshots/game-screenshot(2).png">
-            <img class="game-screenshot" src="./src/assets/images/gameScreenshots/game-screenshot(3).png">
-        </div>
-        <div class="about-game">
+        <header>
+            <nav class="game-navigation">
+                <a href="index.html" class="navigation-link">Home</a>
+                <a href="#screenshots-anchor" class="navigation-link">Screenshots</a>
+                <a href="#author-anchor" class="navigation-link">Author</a>
+                <a href="./src/Ninja-Kozyrev.html" class="navigation-link" target="_blank">Play</a>
+            </nav>
+            <h2 class="game-heading">Ninja-Kozyrev Mind</h2>
             <p class="about-game-text">"This game about cool Ninja who tries to solve all tasks and defeat all his enemies."</p>
-        </div>
-        <div class="about-author">
-            <p class="about-author-text">Created by:</p>
-            <p class="about-author-text">Denis Kozyrev</p>
-            <p class="about-author-text">Skype: bugninkas1</p>
-        </div>
-        <button type="text" id="startButton" class="play-game-button">
-            <a class="play-game-link" href="./src/Ninja-Kozyrev.html" target="_blank">Play</a>
-        </button>
+        </header>
+        <section class="screenshots-section">
+            <a name="screenshots-anchor"></a>
+            <h3 class="game-screenshot-heading">Game Screenshots</h2>
+                <div class="game-screenshots">
+                    <img class="game-screenshot" src="./src/assets/images/gameScreenshots/game-screenshot(1).png">
+                    <img class="game-screenshot" src="./src/assets/images/gameScreenshots/game-screenshot(2).png">
+                    <img class="game-screenshot" src="./src/assets/images/gameScreenshots/game-screenshot(3).png">
+                    <img class="game-screenshot" src="./src/assets/images/gameScreenshots/game-screenshot(4).png">
+                    <img class="game-screenshot" src="./src/assets/images/gameScreenshots/game-screenshot(5).png">
+                    <img class="game-screenshot" src="./src/assets/images/gameScreenshots/game-screenshot(6).png">
+                </div>
+        </section>
+        <section class="screenshots-section">
+            <a name="author-anchor"></a>
+            <h3 class="author-heading">Created by Denis Kozyrev</h3>
+            <div class="author-foto"></div>
+            <p class="about-author-text">
+                Skype: bugninkas1
+                <br>Mail: deniskozyrev55@gmail.com
+            </p>
+        </section>
     </div>
     <script>
         window.onload = function () {
             document.getElementById('contentWrapper').style.display = "flex";
-        }
+        };
     </script>
 </body>
 

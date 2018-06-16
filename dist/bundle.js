@@ -17335,6 +17335,7 @@ class Game {
         this.gameFild = document.getElementById('gameFild');
         this.roundHeading = document.getElementById('roundHeading');
         this.roundCounter;
+        this.gameBackground = 0;
         this.spellType = "";
         this.chooseSpellButton = document.getElementById('chooseSpellButton');
         this.spellWindowConteiner = document.getElementById('spellWindowConteiner');
@@ -17344,7 +17345,6 @@ class Game {
         this.monsterHealthPoints = document.getElementById('monsterHealthPoints');
         this.taskInput = document.getElementById('taskInput');
         this.taskAnswerButton = document.getElementById('taskButton');
-        // this.cancelTaskButton = document.getElementById('cancelTaskButton');
         this.taskForm = document.getElementById('taskForm');
         this.taskWindow = document.getElementById('taskWindowConteiner');
         this.tableWindow = document.getElementById('tableWindow');
@@ -17390,11 +17390,7 @@ class Game {
                     this.taskInput.value = "";
                 }
             }
-        })
-        // this.cancelTaskButton.addEventListener('click', () => {
-        //     this.taskWindow.style.display = "none";
-        //     this.spellWindowConteiner.style.display = "flex";
-        // });
+        });
         this.startAgainButton.addEventListener('click', () => {
             this.tableWindow.style.display = "none";
             this.startGame();
@@ -17408,6 +17404,7 @@ class Game {
         this.playerProfilePage.style.display = "none";
         this.gameFild.style.display = "flex";
         this.roundCounter = 0;
+        this.gameBackground = 0;
         this.player.healthPoints = 100;
         this.player.healthPointsLine = 250;
         this.player.hpGreenLine.style.width = '250px';
@@ -17416,6 +17413,14 @@ class Game {
     }
 
     newRound() {
+        if (this.gameBackground === 4) {
+            this.gameBackground = 1;
+        } else {
+            this.gameBackground += 1;
+        };
+        this.spellWindowConteiner.style.display = "none";
+        this.gameFild.classList.remove(`game-fild-background${this.gameBackground - 1}`)
+        this.gameFild.classList.add(`game-fild-background${this.gameBackground}`);
         this.monster.healthPoints = 100;
         this.monster.healthPointsLine = 250;
         this.monster.hpGreenLine.style.width = '250px'
@@ -17495,6 +17500,7 @@ class Game {
 
     showScorePage() {
         this.gameFild.style.display = "none";
+        this.spellWindowConteiner.style.display = "none";
         this.tableWindow.style.display = "flex";
         if (
             localStorage.hasOwnProperty(
@@ -17790,7 +17796,6 @@ class Score {
     render() {
         this.scoreTable.innerHTML = "";
         this.localObjectCollection = Object.entries(localStorage).sort((a, b) => b[1] - a[1]);
-        console.log(this.localObjectCollection);
         if (this.localObjectCollection.length > 10) {
             this.localObjectCollection.splice(10);
         }

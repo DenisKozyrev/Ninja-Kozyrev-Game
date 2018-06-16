@@ -1,3 +1,7 @@
+body {
+    background-image: url(../images/landingPageBackground.png);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,20 +12,27 @@
     src: url(../fonts/Montresor.ttf);
 }
 
+@font-face {
+    font-family: "Beyond";
+    src: url(../fonts/BeyondWonderland.ttf);
+}
+
 .content-wrapper {
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(124, 121, 129);
+    background-color: rgba(37, 0, 104, 0.5);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .profile-page {
     text-align: center;
     width: 85%;
     height: 85%;
-    background-color: rgba(75, 30, 158, 0.7);
+    /* background-color: rgba(75, 30, 158, 0.7); */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,8 +41,14 @@
 
 .game-heading {
     color: #ffd890;
-    font-size: 50px;
-    margin: 7% 0;
+    margin-bottom: 40px;
+    font-family: Montresor;
+    background-image: url(../images/ninjaLogo.png);
+    background-repeat: no-repeat;
+    background-position-x: right;
+    user-select: none;
+    font-size: 100px;
+    padding-top: 200px;
 }
 
 .checkin-block {
@@ -48,6 +65,7 @@
     color: #ffd890;
     font-size: 30px;
     margin-bottom: 40px;
+    font-family: Montresor;
 }
 
 .profile-input-box {
@@ -81,6 +99,8 @@
     color: #ffd890;
     cursor: pointer;
     user-select: none;
+    font-family: Montresor;
+    letter-spacing: 2px;
 }
 
 .game-button:active {
@@ -254,6 +274,7 @@
     outline: none;
     color: #ffd890;
     cursor: pointer;
+    user-select: none;
 }
 
 .task-window-conteiner {
@@ -351,6 +372,14 @@
     text-align: center;
     width: 70%;
     margin-bottom: 5%;
+}
+
+.score-table-heading {
+    color: #ffd890;
+    font-family: Montresor;
+    user-select: none;
+    font-size: 60px;
+    margin: 60px 0;
 }
 
 .table,
