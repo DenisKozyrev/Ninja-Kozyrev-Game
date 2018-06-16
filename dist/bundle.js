@@ -66,784 +66,10 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./js/game.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/game.js");
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ "./js/dragDropLibrary.js":
-/*!*******************************!*\
-  !*** ./js/dragDropLibrary.js ***!
-  \*******************************/
-/*! exports provided: dragDropLibrary */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dragDropLibrary", function() { return dragDropLibrary; });
-
-
-const dragDropLibrary = {
-    dog: ['dog'],
-    restaurant: ['restaurant'],
-    nickname: ['nickname'],
-}
-
-/***/ }),
-
-/***/ "./js/game.js":
-/*!********************!*\
-  !*** ./js/game.js ***!
-  \********************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./js/player.js");
-/* harmony import */ var _monster__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./monster */ "./js/monster.js");
-/* harmony import */ var _spell__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./spell */ "./js/spell.js");
-/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./task */ "./js/task.js");
-/* harmony import */ var _score__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./score */ "./js/score.js");
-
-
-const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-
-
-
-
-
-
-
-class Game {
-    constructor() {
-        this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"]();
-        this.monster = new _monster__WEBPACK_IMPORTED_MODULE_1__["default"]();
-        this.spell = new _spell__WEBPACK_IMPORTED_MODULE_2__["default"]();
-        this.task = new _task__WEBPACK_IMPORTED_MODULE_3__["default"]();
-        this.score = new _score__WEBPACK_IMPORTED_MODULE_4__["default"]();
-        this.newGameButton = document.querySelector('#newGameButton');
-        this.newGameButtons = document.querySelector('#newGameButtons');
-        this.checkinBlock = document.querySelector('#checkinBlock');
-        this.playerProfilePage = document.getElementById('playerProfilePage');
-        this.profileForm = document.getElementById('profileForm');
-        this.playerFirstName = document.getElementById('playerFirstName');
-        this.playerLastName = document.getElementById('playerLastName');
-        this.gameFild = document.getElementById('gameFild');
-        this.roundHeading = document.getElementById('roundHeading');
-        this.roundCounter;
-        this.spellType = "";
-        this.chooseSpellButton = document.getElementById('chooseSpellButton');
-        this.spellWindowConteiner = document.getElementById('spellWindowConteiner');
-        this.attackSpellButton = document.getElementById('attackSpell');
-        this.healingSpell = document.getElementById('healingSpell');
-        this.playerHealthPoints = document.getElementById('playerHealthPoints');
-        this.monsterHealthPoints = document.getElementById('monsterHealthPoints');
-        this.taskInput = document.getElementById('taskInput');
-        this.taskAnswerButton = document.getElementById('taskButton');
-        this.cancelTaskButton = document.getElementById('cancelTaskButton');
-        this.taskForm = document.getElementById('taskForm');
-        this.taskWindow = document.getElementById('taskWindowConteiner');
-        this.tableWindow = document.getElementById('tableWindow');
-        this.startAgainButton = document.getElementById('startAgainButton');
-    }
-
-    newGameCreate() {
-        newGameButton.addEventListener('click', () => {
-            this.newGameButtons.style.display = "none";
-            this.checkinBlock.style.display = "block";
-        });
-        this.profileForm.addEventListener('submit', () => {
-            if (this.playerFirstName.value != "" && this.playerLastName.value != "") {
-                this.startGame();
-            };
-            event.preventDefault();
-        });
-        this.chooseSpellButton.addEventListener('click', () => {
-            this.spell.spellRender();
-        })
-        this.attackSpellButton.addEventListener('click', () => {
-            this.spellWindowConteiner.style.display = "none";
-            this.spellType = "attack";
-            this.task.random();
-        });
-        this.healingSpell.addEventListener('click', () => {
-            this.spellWindowConteiner.style.display = "none";
-            this.spellType = "health";
-            this.task.random();
-        });
-        this.taskAnswerButton.addEventListener('click', () => {
-            this.taskExpressionResult = this.task.getTaskResult();
-            if (this.taskInput.value !== "") {
-                this.taskSolveCheck();
-                this.taskInput.value = "";
-            }
-        })
-
-        this.cancelTaskButton.addEventListener('click', () => {
-            this.taskWindow.style.display = "none";
-            this.spellWindowConteiner.style.display = "flex";
-        });
-        this.startAgainButton.addEventListener('click', () => {
-            this.tableWindow.style.display = "none";
-            this.startGame();
-        });
-    }
-
-    startGame() {
-        this.playerProfilePage.style.display = "none";
-        this.gameFild.style.display = "flex";
-        this.roundCounter = 0;
-        this.player.healthPoints = 100;
-        this.player.healthPointsLine = 250;
-        this.player.hpGreenLine.style.width = '250px'
-        this.player.render();
-        this.newRound();
-    }
-
-    newRound() {
-        this.monster.healthPoints = 100;
-        this.monster.healthPointsLine = 250;
-        this.monster.hpGreenLine.style.width = '250px'
-        this.roundHeading.innerHTML = `Round ${this.roundCounter + 1}`
-        this.monster.render();
-    }
-
-    taskSolveCheck() {
-        if (this.spellType === "attack" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
-            this.taskWindow.style.display = "none";
-            this.player.attack();
-            this.spell.attackSpellAudioPlay();
-            setTimeout(() => {
-                this.monster.healthDecrease();
-                this.monsterHealthCheck()
-            }, 1100);
-        };
-        if (this.spellType === "attack" && this.taskExpressionResult.includes(this.taskInput.value) === false) {
-            this.taskWindow.style.display = "none";
-            this.monster.attack();
-            this.spell.attackSpellAudioPlay();
-            setTimeout(() => {
-                this.player.healthDecrease()
-                this.playerHealthCheck()
-            }, 1100)
-        };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
-            this.taskWindow.style.display = "none";
-            this.spell.healthAudioPlay();
-            this.player.healthIncrease();
-            this.player.health()
-        };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
-            this.taskWindow.style.display = "none";
-            this.spell.healthAudioPlay();
-            this.monster.healthIncrease();
-            this.monster.health();
-        };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
-            this.taskWindow.style.display = "none";
-        };
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML === "100hp") {
-            this.taskWindow.style.display = "none";
-        }
-        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
-            this.taskWindow.style.display = "none";
-            this.spell.healthAudioPlay();
-            this.monster.healthIncrease()
-            this.monster.health();
-        };
-    }
-
-    playerHealthCheck() {
-        if (this.player.healthPoints === 0) {
-            this.player.dead();
-            this.spell.deadAudioPlay()
-            setTimeout(() => {
-                this.showScorePage();
-            }, 1000);
-        } else {
-            this.player.damage();
-        };
-    }
-
-    monsterHealthCheck() {
-        if (this.monster.healthPoints === 0) {
-            this.monster.dead();
-            this.spell.deadAudioPlay()
-            setTimeout(() => {
-                this.roundCounter += 1;
-                this.newRound();
-            }, 1000)
-        } else {
-            this.monster.damage();
-        };
-    }
-
-    showScorePage() {
-        this.gameFild.style.display = "none";
-        this.tableWindow.style.display = "flex";
-        if (
-            localStorage.hasOwnProperty(
-                this.playerFirstName.value + " " + this.playerLastName.value
-            )
-        ) {
-            if (
-                this.roundCounter >=
-                localStorage[this.playerFirstName.value + " " + this.playerLastName.value]
-            ) {
-                localStorage.setItem(
-                    this.playerFirstName.value + " " + this.playerLastName.value,
-                    this.roundCounter
-                );
-            }
-        } else {
-            localStorage.setItem(
-                this.playerFirstName.value + " " + this.playerLastName.value,
-                this.roundCounter
-            );
-        }
-        this.score.render();
-    }
-
-}
-
-const newGame = new Game();
-
-window.addEventListener('load', () => {
-    newGame.newGameCreate();
-});
-
-/***/ }),
-
-/***/ "./js/monster.js":
-/*!***********************!*\
-  !*** ./js/monster.js ***!
-  \***********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Monster; });
-
-
-const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-
-class Monster {
-    constructor() {
-        this.fullNameBlock = document.getElementById('monsterName');
-        this.nameCollection = [
-            ['Slyunyavyiy', 'Moydodyirnyiy', 'Zlovonnyiy', 'Podmyishachnyiy', 'Podnozhnyiy'],
-            ['Giperslizen', 'Kamnezmey', 'Tigrokruis', 'Svinozayats', 'Zloboglaz'],
-            ['Artem', 'Denis', 'Andrey', 'Yura', 'Vanya']
-        ];
-        this.healthPointsBlock = document.getElementById('monsterHealthPoints');
-        this.healthPoints = 0;
-        this.healthPointsLine = 0;
-        this.hpGreenLine = document.getElementById('monsterHpGreenLine');
-        this.monsterBlock = document.getElementById('monsterBlock');
-        this.monsterSpritesCollection = ['robot', 'dino', 'freeknight', 'jack', 'dog', 'cat'];
-    }
-
-    render() {
-        this.monsterSprite = this.monsterSpritesCollection[_.random(0, this.monsterSpritesCollection.length - 1)];
-        this.monsterName = this.nameCollection[0][_.random(0, this.nameCollection[0].length - 1)] + " " + this.nameCollection[1][_.random(0, this.nameCollection[1].length - 1)] + " " + this.nameCollection[2][_.random(0, this.nameCollection[2].length - 1)];
-        this.fullNameBlock.innerHTML = this.monsterName;
-        this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
-        if (this.healthPoints === 100) {
-            this.hpGreenLine.classList.add('character-health-render');
-        }
-        this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
-        this.monsterBlock.classList.remove('monster-damage-animation');
-        this.monsterBlock.classList.remove('monster-attack-animation');
-        this.monsterBlock.classList.remove('monster-dead-animation');
-        this.monsterBlock.classList.add('monster-idle-animation');
-    }
-
-    attack() {
-        this.monsterBlock.classList.add('monster-attack-animation');
-        this.monsterBlock.classList.remove('monster-idle-animation');
-        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
-        this.monsterBlock.classList.add(`${this.monsterSprite}-attack-sprite`);
-        setTimeout(() => {
-            this.monsterBlock.classList.remove(`${this.monsterSprite}-attack-sprite`);
-            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
-            this.monsterBlock.classList.remove('monster-attack-animation');
-            this.monsterBlock.classList.add('monster-idle-animation');
-        }, 1500)
-    }
-
-    damage() {
-        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
-        this.monsterBlock.classList.add(`${this.monsterSprite}-damage-sprite`);
-        this.monsterBlock.classList.remove('monster-idle-animation');
-        this.monsterBlock.classList.add('monster-damage-animation');
-        setTimeout(() => {
-            this.monsterBlock.classList.remove(`${this.monsterSprite}-damage-sprite`);
-            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
-            this.monsterBlock.classList.remove('monster-damage-animation');
-            this.monsterBlock.classList.add('monster-idle-animation');
-        }, 200)
-    }
-
-    health() {
-        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
-        this.monsterBlock.classList.add(`${this.monsterSprite}-health-sprite`);
-        this.monsterBlock.classList.remove('monster-idle-animation');
-        this.monsterBlock.classList.add('monster-health-animation');
-        setTimeout(() => {
-            this.monsterBlock.classList.remove(`${this.monsterSprite}-health-sprite`);
-            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
-            this.monsterBlock.classList.remove('monster-health-animation');
-            this.monsterBlock.classList.add('monster-idle-animation');
-        }, 2100)
-    }
-
-    dead() {
-        this.monsterBlock.classList.add('monster-dead-animation');
-        this.monsterBlock.classList.remove('monster-idle-animation');
-        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
-        this.monsterBlock.classList.add(`${this.monsterSprite}-dead-sprite`);
-        setTimeout(() => {
-            this.monsterBlock.classList.remove(`${this.monsterSprite}-dead-sprite`);
-        }, 1000)
-    }
-
-    healthDecrease() {
-        this.healthPoints -= 20;
-        this.healthPointsLine -= 50;
-        this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
-        this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
-        this.hpGreenLine.classList.remove('character-health-render');
-    }
-
-    healthIncrease() {
-        this.healthPoints += 20;
-        this.healthPointsLine += 50;
-        this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
-        this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
-    }
-
-}
-
-/***/ }),
-
-/***/ "./js/player.js":
-/*!**********************!*\
-  !*** ./js/player.js ***!
-  \**********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Player; });
-/* harmony import */ var _monster__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./monster */ "./js/monster.js");
-
-
-
-
-class Player {
-  constructor() {
-    this.firstName = document.getElementById('playerFirstName');
-    this.lastName = document.getElementById('playerLastName');
-    this.fullNameBlock = document.getElementById('playerName');
-    this.playerBlock = document.getElementById('playerBlock');
-    this.healthPointsBlock = document.getElementById('playerHealthPoints');
-    this.hpGreenLine = document.getElementById('playerHpGreenLine');
-    this.healthPoints = 0;
-    this.healthPointsLine = 0;
-    this.monster = new _monster__WEBPACK_IMPORTED_MODULE_0__["default"]();
-  }
-
-  render() {
-    this.fullNameBlock.innerHTML = this.firstName.value + " " + this.lastName.value;
-    this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
-    if (this.healthPoints === 100) {
-      this.hpGreenLine.classList.add('character-health-render');
-    }
-    this.playerBlock.classList.remove('player-dead-sprite');
-    this.playerBlock.classList.add('player-idle-sprite');
-    this.playerBlock.classList.remove('player-dead-animation');
-    this.playerBlock.classList.remove('player-damage-animation');
-    this.playerBlock.classList.remove('player-attack-animation');
-    this.playerBlock.classList.add('player-idle-animation');
-  }
-
-  attack() {
-    this.playerBlock.classList.remove('player-idle-sprite');
-    this.playerBlock.classList.add('player-attack-sprite');
-    this.playerBlock.classList.remove('player-idle-animation');
-    this.playerBlock.classList.add('player-attack-animation');
-    setTimeout(() => {
-      this.playerBlock.classList.remove('player-attack-sprite');
-      this.playerBlock.classList.add('player-idle-sprite');
-      this.playerBlock.classList.remove('player-attack-animation');
-      this.playerBlock.classList.add('player-idle-animation');
-    }, 1500)
-  }
-
-  damage() {
-    this.playerBlock.classList.remove('player-idle-sprite');
-    this.playerBlock.classList.add('player-damage-sprite');
-    this.playerBlock.classList.remove('player-idle-animation');
-    this.playerBlock.classList.add('player-damage-animation');
-    setTimeout(() => {
-      this.playerBlock.classList.remove('player-damage-sprite');
-      this.playerBlock.classList.add('player-idle-sprite');
-      this.playerBlock.classList.remove('player-damage-animation');
-      this.playerBlock.classList.add('player-idle-animation');
-    }, 200)
-  }
-
-  health() {
-    this.playerBlock.classList.remove('player-idle-sprite');
-    this.playerBlock.classList.add('player-health-sprite');
-    this.playerBlock.classList.remove('player-idle-animation');
-    this.playerBlock.classList.add('player-health-animation');
-    setTimeout(() => {
-      this.playerBlock.classList.remove('player-health-sprite');
-      this.playerBlock.classList.add('player-idle-sprite');
-      this.playerBlock.classList.remove('player-health-animation');
-      this.playerBlock.classList.add('player-idle-animation');
-    }, 1500)
-  }
-
-  dead() {
-    this.playerBlock.classList.remove('player-idle-sprite');
-    this.playerBlock.classList.add('player-dead-sprite');
-    this.playerBlock.classList.add('player-dead-animation');
-    this.playerBlock.classList.remove('player-damage-animation');
-    this.playerBlock.classList.remove('player-idle-animation');
-  }
-
-  healthDecrease() {
-    this.healthPoints -= 20;
-    this.healthPointsLine -= 50;
-    this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
-    this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
-  }
-
-  healthIncrease() {
-    this.healthPoints += 20;
-    this.healthPointsLine += 50;
-    this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
-    this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
-  }
-}
-
-/***/ }),
-
-/***/ "./js/riddleLibrary.js":
-/*!*****************************!*\
-  !*** ./js/riddleLibrary.js ***!
-  \*****************************/
-/*! exports provided: riddleLibrary */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "riddleLibrary", function() { return riddleLibrary; });
-
-
-const riddleLibrary = {
-    "I’m tall when I’m young and I’m short when I’m old. What am I?": ['Candle', 'candle'],
-    "What has hands but can not clap?": ['clock', 'Clock'],
-    "What gets wetter and wetter the more it dries?": ['Towel', 'towel'],
-    "How many months have 28 days?": ['12'],
-    "What’s full of holes but still holds water?": ['sponge', 'Sponge']
-}
-
-/***/ }),
-
-/***/ "./js/score.js":
-/*!*********************!*\
-  !*** ./js/score.js ***!
-  \*********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Score; });
-
-
-class Score {
-    constructor() {
-        this.scoreTable = document.getElementById('scoreTable');
-    }
-
-    render() {
-        this.scoreTable.innerHTML = "";
-        this.localObjectCollection = Object.entries(localStorage).sort((a, b) => b[1] - a[1]);
-        console.log(this.localObjectCollection);
-        if (this.localObjectCollection.length > 10) {
-            this.localObjectCollection.splice(10);
-        }
-        this.localObjectCollection.forEach(player => {
-            this.playerScoreInfoRow = document.createElement("tr");
-            this.playerScoreFullName = document.createElement("td");
-            this.playerScoreRound = document.createElement("td");
-            this.scoreTable.appendChild(this.playerScoreInfoRow);
-            this.playerScoreInfoRow.appendChild(this.playerScoreFullName);
-            this.playerScoreInfoRow.appendChild(this.playerScoreRound);
-            this.playerScoreFullName.innerHTML = player[0];
-            if (player[1] == 1) {
-                this.playerScoreRound.innerHTML = player[1] + " " + "Monster";
-            } else {
-                this.playerScoreRound.innerHTML = player[1] + " " + "Monsters";
-            }
-        });
-    }
-
-}
-
-/***/ }),
-
-/***/ "./js/spell.js":
-/*!*********************!*\
-  !*** ./js/spell.js ***!
-  \*********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Spell; });
-/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task */ "./js/task.js");
-
-
-
-
-class Spell {
-    constructor() {
-        this.spellWindowConteiner = document.getElementById('spellWindowConteiner');
-        this.attackSpellAudio = new Audio('../audio/attackSpellAudio.mp3');
-        this.deadAudio = new Audio('../audio/deadAudio.mp3');
-        this.healthAudio = new Audio('../audio/healthAudio.mp3');
-    }
-
-    spellRender() {
-        this.spellWindowConteiner.style.display = "flex";
-    }
-
-    attackSpellAudioPlay() {
-        this.attackSpellAudio.play();
-    }
-
-    deadAudioPlay() {
-        this.deadAudio.play();
-    }
-
-    healthAudioPlay() {
-        this.healthAudio.play();
-    }
-
-}
-
-/***/ }),
-
-/***/ "./js/task.js":
-/*!********************!*\
-  !*** ./js/task.js ***!
-  \********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Task; });
-/* harmony import */ var _wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./wordTranslateLibrary */ "./js/wordTranslateLibrary.js");
-/* harmony import */ var _wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./wordListeningLibrary */ "./js/wordListeningLibrary.js");
-/* harmony import */ var _riddleLibrary__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./riddleLibrary */ "./js/riddleLibrary.js");
-/* harmony import */ var _dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dragDropLibrary */ "./js/dragDropLibrary.js");
-
-
-const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-
-
-
-
-
-
-
-class Task {
-    constructor() {
-        this.taskWindowConteiner = document.getElementById('taskWindowConteiner');
-        this.mediaBlock = document.getElementById('mediaBlock');
-        this.task = document.getElementById('taskHeading');
-        this.taskInput = document.getElementById('taskInput');
-        this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask, this.riddleTask, this.dragDropTask];
-    }
-
-    random() {
-        this.taskRandomResult = this.taskCollection[_.random(0, this.taskCollection.length - 1)];
-        this.taskRandomResult.call(this);
-    }
-
-    mathTask() {
-        this.mediaBlock.innerHTML = "";
-        this.taskInput.style.visibility = 'visible';
-        this.taskWindowConteiner.style.display = "flex";
-        this.mathOperationsCollection = ['+', '-', '*', '/'];
-        this.task.style.fontSize = "40px"
-        this.mathOperationsCollectionIndex = _.random(0, this.mathOperationsCollection.length - 1);
-        if (this.mathOperationsCollectionIndex === 3) {
-            this.taskExpression = (_.random(0, 50) + _.random(0, 50)) + " " + "/" + " " + 2;
-        } else if (this.mathOperationsCollectionIndex === 2) {
-            this.taskExpression = _.random(0, 50) + " " + "*" + " " + 3;
-        } else {
-            this.taskExpression = _.random(0, 50) + " " + this.mathOperationsCollection[this.mathOperationsCollectionIndex] + " " + _.random(0, 50);
-        }
-        this.task.innerHTML = "Solve The Task: " + '\"' + this.taskExpression + '\"';
-        this.taskExpressionResult = [String(eval(this.taskExpression))];
-    }
-
-    transateTask() {
-        this.mediaBlock.innerHTML = "";
-        this.taskInput.style.visibility = 'visible';
-        this.taskWindowConteiner.style.display = "flex";
-        this.task.style.fontSize = "40px"
-        this.randomWord = Object.keys(_wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"])[_.random(0, Object.keys(_wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"]).length - 1)];
-        this.task.innerHTML = "Translate a word into Russian: " + " " + '\"' + this.randomWord + '\"';
-        this.transateTaskResult = _wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"][this.randomWord];
-    }
-
-    listeningTask() {
-        this.mediaBlock.innerHTML = "";
-        this.taskInput.style.visibility = 'visible';
-        this.taskWindowConteiner.style.display = "flex";
-        this.task.innerHTML = '\"' + "Type what you heard" + '\"';
-        this.audioWordBlock = document.createElement('audio');
-        this.audioWordBlock.setAttribute('controls', '');
-        this.task.style.fontSize = "40px"
-        this.mediaBlock.appendChild(this.audioWordBlock);
-        this.randomAudioWord = Object.keys(_wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"])[_.random(0, Object.keys(_wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"]).length - 1)];
-        this.audioWordBlock.src = this.randomAudioWord;
-        this.listeningTaskResult = _wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"][this.randomAudioWord];
-    }
-
-    riddleTask() {
-        this.mediaBlock.innerHTML = "";
-        this.taskInput.style.visibility = 'visible';
-        this.taskWindowConteiner.style.display = "flex";
-        this.randomRiddle = Object.keys(_riddleLibrary__WEBPACK_IMPORTED_MODULE_2__["riddleLibrary"])[_.random(0, Object.keys(_riddleLibrary__WEBPACK_IMPORTED_MODULE_2__["riddleLibrary"]).length - 1)];
-        this.task.innerHTML = "Guess a riddle: " + " " + '\"' + this.randomRiddle + '\"';
-        this.task.style.fontSize = "25px"
-        this.riddleTaskResult = _riddleLibrary__WEBPACK_IMPORTED_MODULE_2__["riddleLibrary"][this.randomRiddle];
-    }
-
-    dragDropTask() {
-        this.mediaBlock.innerHTML = "";
-        this.taskInput.style.visibility = 'hidden';
-        this.taskWindowConteiner.style.display = "flex";
-        this.task.innerHTML = "Arrange in the right order";
-        this.dragDropRandomWord = Object.keys(_dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"])[_.random(0, Object.keys(_dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"]).length - 1)];
-        this.dragDropRandomWordLetters = this.dragDropRandomWord.split('').sort(function () {
-            return Math.random() - 0.5;
-        });;
-        this.dragDropRandomWordLetters.forEach((letter) => {
-            this.letterBlock = document.createElement('div');
-            this.letterBlock.classList.add('dd-letter-blocks');
-            this.letterBlock.innerHTML = letter;
-            this.mediaBlock.appendChild(this.letterBlock);
-        });
-        $(function () {
-            $('#mediaBlock').sortable();
-            $('#mediaBlock').disableSelection();
-        });
-        this.dragDropTaskResult = _dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"][this.dragDropRandomWord];
-    }
-
-
-    getTaskResult() {
-        if (this.taskRandomResult === this.mathTask) {
-            return this.taskExpressionResult;
-        } else if (this.taskRandomResult === this.transateTask) {
-            return this.transateTaskResult;
-        } else if (this.taskRandomResult === this.listeningTask) {
-            return this.listeningTaskResult;
-        } else if (this.taskRandomResult === this.riddleTask) {
-            return this.riddleTaskResult;
-        } else if (this.taskRandomResult === this.dragDropTask) {
-            this.dragDropLetters = document.querySelectorAll('.dd-letter-blocks');
-            this.dragDropInput = "";
-            this.dragDropLetters.forEach((letterBlock) => {
-                this.dragDropInput = this.dragDropInput + letterBlock.innerHTML;
-            });
-            this.taskInput.value = this.dragDropInput;
-            return this.dragDropTaskResult;
-        };
-    }
-}
-
-/***/ }),
-
-/***/ "./js/wordListeningLibrary.js":
-/*!************************************!*\
-  !*** ./js/wordListeningLibrary.js ***!
-  \************************************/
-/*! exports provided: listeningWordLibrary */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "listeningWordLibrary", function() { return listeningWordLibrary; });
-
-
-const listeningWordLibrary = {
-    '../audio/listeningTaskAudio/word(flower).mp3': ['flower'],
-    '../audio/listeningTaskAudio/word(dictionary).mp3': ['dictionary'],
-    '../audio/listeningTaskAudio/word(environment).mp3': ['environment'],
-    '../audio/listeningTaskAudio/word(horror).mp3': ['horror'],
-    '../audio/listeningTaskAudio/word(lucky).mp3': ['lucky'],
-    '../audio/listeningTaskAudio/word(activity).mp3': ['activity'],
-    '../audio/listeningTaskAudio/word(message).mp3': ['message'],
-    '../audio/listeningTaskAudio/word(blind).mp3': ['blind'],
-    '../audio/listeningTaskAudio/word(inspiration).mp3': ['inspiration'],
-    '../audio/listeningTaskAudio/word(mysterious).mp3': ['mysterious']
-}
-
-/***/ }),
-
-/***/ "./js/wordTranslateLibrary.js":
-/*!************************************!*\
-  !*** ./js/wordTranslateLibrary.js ***!
-  \************************************/
-/*! exports provided: translateWordLibrary */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "translateWordLibrary", function() { return translateWordLibrary; });
-
-
-const translateWordLibrary = {
-    dog: ['собака', 'пес', 'собачка'],
-    restaurant: ['ресторан'],
-    nickname: ['прозвище', 'кличка'],
-    flower: ['цветок', 'цвет', 'цветение'],
-    shoes: ['обувь'],
-    skirt: ['юбка', 'подол', 'край'],
-    coat: ['пальто', 'слой', 'пиджак'],
-    activity: ['активность', 'деятельность', 'энергия'],
-    amount: ['количество', 'сумма', 'итог'],
-    blind: ['слепой', 'слепить', 'штора'],
-    cartoon: ['мультфильм', 'карикатура', 'комикс', 'мультик'],
-    congratulate: ['поздравлять', 'поздравить'],
-    dictionary: ['словарь'],
-    environment: ['окружающая среда', 'окружение', 'среда'],
-    famous: ['известный', 'знаменитый', 'замечательный'],
-    horror: ['ужас', 'ужастик'],
-    inspiration: ['вдохновение', 'воодушевление', 'вдох'],
-    jealous: ['завистливый', 'ревнивый', 'заботливый', 'зависть', 'ревность'],
-    lucky: ['счастливый', 'везучий', 'удачливый'],
-    message: ['сообщение', 'послание', 'письмо'],
-    mysterious: ['загадочный', 'таинственный', 'непостижимый'],
-    realize: ['реализовать', 'понимать', 'осуществлять']
-};
-
-/***/ }),
 
 /***/ "./node_modules/lodash/lodash.js":
 /*!***************************************!*\
@@ -18015,6 +17241,840 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+
+/***/ "./src/js/dragDropLibrary.js":
+/*!***********************************!*\
+  !*** ./src/js/dragDropLibrary.js ***!
+  \***********************************/
+/*! exports provided: dragDropLibrary */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dragDropLibrary", function() { return dragDropLibrary; });
+
+
+const dragDropLibrary = {
+    afternoon: ['afternoon'],
+    birthday: ['birthday'],
+    chocolate: ['chocolate'],
+    holiday: ['holiday'],
+    mushroom: ['mushroom'],
+    porridge: ['porridge'],
+    pumpkin: ['pumpkin'],
+    promise: ['promise'],
+    umbrella: ['umbrella']
+}
+
+/***/ }),
+
+/***/ "./src/js/edibleInedibleLibrary.js":
+/*!*****************************************!*\
+  !*** ./src/js/edibleInedibleLibrary.js ***!
+  \*****************************************/
+/*! exports provided: edibleInedibleLibrary */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "edibleInedibleLibrary", function() { return edibleInedibleLibrary; });
+
+
+const edibleInedibleLibrary = {
+    "apple": ["../src/assets/images/edibleInedibleImages/apple.png", "../src/assets/images/edibleInedibleImages/ball.png"],
+    "burger": ["../src/assets/images/edibleInedibleImages/car.png", "../src/assets/images/edibleInedibleImages/burger.png"],
+    "cherry": ["../src/assets/images/edibleInedibleImages/cherry.png", "../src/assets/images/edibleInedibleImages/clock.png"],
+    "orange": ["../src/assets/images/edibleInedibleImages/iphone.png", "../src/assets/images/edibleInedibleImages/orange.png"],
+    "pizza": ["../src/assets/images/edibleInedibleImages/pizza.png", "../src/assets/images/edibleInedibleImages/keys.png"],
+    "salad": ["../src/assets/images/edibleInedibleImages/woody.png", "../src/assets/images/edibleInedibleImages/salad.png"]
+}
+
+/***/ }),
+
+/***/ "./src/js/game.js":
+/*!************************!*\
+  !*** ./src/js/game.js ***!
+  \************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/js/player.js");
+/* harmony import */ var _monster__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./monster */ "./src/js/monster.js");
+/* harmony import */ var _spell__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./spell */ "./src/js/spell.js");
+/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./task */ "./src/js/task.js");
+/* harmony import */ var _score__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./score */ "./src/js/score.js");
+
+
+const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
+
+
+
+
+
+
+class Game {
+    constructor() {
+        this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"]();
+        this.monster = new _monster__WEBPACK_IMPORTED_MODULE_1__["default"]();
+        this.spell = new _spell__WEBPACK_IMPORTED_MODULE_2__["default"]();
+        this.task = new _task__WEBPACK_IMPORTED_MODULE_3__["default"]();
+        this.score = new _score__WEBPACK_IMPORTED_MODULE_4__["default"]();
+        this.gameSoundtreck = new Audio('../src/assets/audio/gameSoundtreck.mp3');
+        this.newGameButton = document.querySelector('#newGameButton');
+        this.newGameButtons = document.querySelector('#newGameButtons');
+        this.checkinBlock = document.querySelector('#checkinBlock');
+        this.playerProfilePage = document.getElementById('playerProfilePage');
+        this.profileForm = document.getElementById('profileForm');
+        this.playerFirstName = document.getElementById('playerFirstName');
+        this.playerLastName = document.getElementById('playerLastName');
+        this.gameFild = document.getElementById('gameFild');
+        this.roundHeading = document.getElementById('roundHeading');
+        this.roundCounter;
+        this.spellType = "";
+        this.chooseSpellButton = document.getElementById('chooseSpellButton');
+        this.spellWindowConteiner = document.getElementById('spellWindowConteiner');
+        this.attackSpellButton = document.getElementById('attackSpell');
+        this.healingSpell = document.getElementById('healingSpell');
+        this.playerHealthPoints = document.getElementById('playerHealthPoints');
+        this.monsterHealthPoints = document.getElementById('monsterHealthPoints');
+        this.taskInput = document.getElementById('taskInput');
+        this.taskAnswerButton = document.getElementById('taskButton');
+        // this.cancelTaskButton = document.getElementById('cancelTaskButton');
+        this.taskForm = document.getElementById('taskForm');
+        this.taskWindow = document.getElementById('taskWindowConteiner');
+        this.tableWindow = document.getElementById('tableWindow');
+        this.startAgainButton = document.getElementById('startAgainButton');
+    }
+
+    newGameCreate() {
+        newGameButton.addEventListener('click', () => {
+            this.newGameButtons.style.display = "none";
+            this.checkinBlock.style.display = "block";
+        });
+        this.profileForm.addEventListener('submit', () => {
+            if (this.playerFirstName.value != "" && this.playerLastName.value != "") {
+                this.startGame();
+            };
+            event.preventDefault();
+        });
+        this.chooseSpellButton.addEventListener('click', () => {
+            this.spell.spellRender();
+        });
+        this.attackSpellButton.addEventListener('click', () => {
+            this.spellWindowConteiner.style.display = "none";
+            this.spellType = "attack";
+            this.task.random();
+        });
+        this.healingSpell.addEventListener('click', () => {
+            this.spellWindowConteiner.style.display = "none";
+            this.spellType = "health";
+            this.task.random();
+        });
+        this.taskAnswerButton.addEventListener('click', () => {
+            this.taskExpressionResult = this.task.getTaskResult();
+            if (this.taskInput.value !== "") {
+                this.taskSolveCheck();
+                this.taskInput.value = "";
+            }
+        });
+        this.taskInput.addEventListener('keydown', (e) => {
+            if (e.keyCode == 13) {
+                this.taskExpressionResult = this.task.getTaskResult();
+                if (this.taskInput.value !== "") {
+                    this.taskSolveCheck();
+                    this.taskInput.value = "";
+                }
+            }
+        })
+        // this.cancelTaskButton.addEventListener('click', () => {
+        //     this.taskWindow.style.display = "none";
+        //     this.spellWindowConteiner.style.display = "flex";
+        // });
+        this.startAgainButton.addEventListener('click', () => {
+            this.tableWindow.style.display = "none";
+            this.startGame();
+        });
+    }
+
+    startGame() {
+        this.gameSoundtreck.play();
+        this.gameSoundtreck.loop = true;
+        this.gameSoundtreck.volume = 0.8;
+        this.playerProfilePage.style.display = "none";
+        this.gameFild.style.display = "flex";
+        this.roundCounter = 0;
+        this.player.healthPoints = 100;
+        this.player.healthPointsLine = 250;
+        this.player.hpGreenLine.style.width = '250px';
+        this.player.render();
+        this.newRound();
+    }
+
+    newRound() {
+        this.monster.healthPoints = 100;
+        this.monster.healthPointsLine = 250;
+        this.monster.hpGreenLine.style.width = '250px'
+        this.roundHeading.innerHTML = `Round ${this.roundCounter + 1}`;
+        this.monster.render();
+    }
+
+    taskSolveCheck() {
+        if (this.spellType === "attack" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
+            this.taskWindow.style.display = "none";
+            this.player.attack();
+            this.spell.attackSpellAudioPlay();
+            setTimeout(() => {
+                this.monster.healthDecrease();
+                this.monsterHealthCheck();
+            }, 1100);
+        };
+        if (this.spellType === "attack" && this.taskExpressionResult.includes(this.taskInput.value) === false) {
+            this.taskWindow.style.display = "none";
+            this.monster.attack();
+            this.spell.attackSpellAudioPlay();
+            setTimeout(() => {
+                this.player.healthDecrease();
+                this.playerHealthCheck();
+            }, 1100)
+        };
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
+            this.taskWindow.style.display = "none";
+            this.spell.healthAudioPlay();
+            this.player.healthIncrease();
+            this.player.health();
+        };
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
+            this.taskWindow.style.display = "none";
+            this.spell.healthAudioPlay();
+            this.monster.healthIncrease();
+            this.monster.health();
+        };
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
+            this.taskWindow.style.display = "none";
+        };
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML === "100hp") {
+            this.taskWindow.style.display = "none";
+        }
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
+            this.taskWindow.style.display = "none";
+            this.spell.healthAudioPlay();
+            this.monster.healthIncrease();
+            this.monster.health();
+        };
+    }
+
+    playerHealthCheck() {
+        if (this.player.healthPoints === 0) {
+            this.player.dead();
+            this.spell.deadAudioPlay();
+            setTimeout(() => {
+                this.showScorePage();
+            }, 1000);
+        } else {
+            this.player.damage();
+        };
+    }
+
+    monsterHealthCheck() {
+        if (this.monster.healthPoints === 0) {
+            this.monster.dead();
+            this.spell.deadAudioPlay();
+            setTimeout(() => {
+                this.roundCounter += 1;
+                this.newRound();
+            }, 1000)
+        } else {
+            this.monster.damage();
+        };
+    }
+
+    showScorePage() {
+        this.gameFild.style.display = "none";
+        this.tableWindow.style.display = "flex";
+        if (
+            localStorage.hasOwnProperty(
+                this.playerFirstName.value + " " + this.playerLastName.value
+            )
+        ) {
+            if (
+                this.roundCounter >=
+                localStorage[this.playerFirstName.value + " " + this.playerLastName.value]
+            ) {
+                localStorage.setItem(
+                    this.playerFirstName.value + " " + this.playerLastName.value,
+                    this.roundCounter
+                );
+            }
+        } else {
+            localStorage.setItem(
+                this.playerFirstName.value + " " + this.playerLastName.value,
+                this.roundCounter
+            );
+        }
+        this.score.render();
+    }
+
+}
+
+const newGame = new Game();
+
+window.addEventListener('load', () => {
+    newGame.newGameCreate();
+});
+
+/***/ }),
+
+/***/ "./src/js/monster.js":
+/*!***************************!*\
+  !*** ./src/js/monster.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Monster; });
+
+
+const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
+class Monster {
+    constructor() {
+        this.fullNameBlock = document.getElementById('monsterName');
+        this.nameCollection = [
+            ['Slyunyavyiy', 'Moydodyirnyiy', 'Zlovonnyiy', 'Podmyishachnyiy', 'Podnozhnyiy'],
+            ['Giperslizen', 'Kamnezmey', 'Tigrokruis', 'Svinozayats', 'Zloboglaz'],
+            ['Artem', 'Denis', 'Andrey', 'Yura', 'Vanya']
+        ];
+        this.healthPointsBlock = document.getElementById('monsterHealthPoints');
+        this.healthPoints = 0;
+        this.healthPointsLine = 0;
+        this.hpGreenLine = document.getElementById('monsterHpGreenLine');
+        this.monsterBlock = document.getElementById('monsterBlock');
+        this.monsterSpritesCollection = ['robot', 'dino', 'freeknight', 'jack', 'dog', 'cat'];
+    }
+
+    render() {
+        this.monsterSprite = this.monsterSpritesCollection[_.random(0, this.monsterSpritesCollection.length - 1)];
+        this.monsterName = this.nameCollection[0][_.random(0, this.nameCollection[0].length - 1)] + " " + this.nameCollection[1][_.random(0, this.nameCollection[1].length - 1)] + " " + this.nameCollection[2][_.random(0, this.nameCollection[2].length - 1)];
+        this.fullNameBlock.innerHTML = this.monsterName;
+        this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+        if (this.healthPoints === 100) {
+            this.hpGreenLine.classList.add('character-health-render');
+        }
+        this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.remove('monster-damage-animation');
+        this.monsterBlock.classList.remove('monster-attack-animation');
+        this.monsterBlock.classList.remove('monster-dead-animation');
+        this.monsterBlock.classList.add('monster-idle-animation');
+    }
+
+    attack() {
+        this.monsterBlock.classList.add('monster-attack-animation');
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-attack-sprite`);
+        setTimeout(() => {
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-attack-sprite`);
+            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+            this.monsterBlock.classList.remove('monster-attack-animation');
+            this.monsterBlock.classList.add('monster-idle-animation');
+        }, 1500)
+    }
+
+    damage() {
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-damage-sprite`);
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.add('monster-damage-animation');
+        setTimeout(() => {
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-damage-sprite`);
+            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+            this.monsterBlock.classList.remove('monster-damage-animation');
+            this.monsterBlock.classList.add('monster-idle-animation');
+        }, 200)
+    }
+
+    health() {
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-health-sprite`);
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.add('monster-health-animation');
+        setTimeout(() => {
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-health-sprite`);
+            this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+            this.monsterBlock.classList.remove('monster-health-animation');
+            this.monsterBlock.classList.add('monster-idle-animation');
+        }, 2100)
+    }
+
+    dead() {
+        this.monsterBlock.classList.add('monster-dead-animation');
+        this.monsterBlock.classList.remove('monster-idle-animation');
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add(`${this.monsterSprite}-dead-sprite`);
+        setTimeout(() => {
+            this.monsterBlock.classList.remove(`${this.monsterSprite}-dead-sprite`);
+        }, 1000)
+    }
+
+    healthDecrease() {
+        this.healthPoints -= 20;
+        this.healthPointsLine -= 50;
+        this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+        this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
+        this.hpGreenLine.classList.remove('character-health-render');
+    }
+
+    healthIncrease() {
+        this.healthPoints += 20;
+        this.healthPointsLine += 50;
+        this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+        this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
+    }
+
+}
+
+/***/ }),
+
+/***/ "./src/js/player.js":
+/*!**************************!*\
+  !*** ./src/js/player.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Player; });
+/* harmony import */ var _monster__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./monster */ "./src/js/monster.js");
+
+
+
+
+class Player {
+  constructor() {
+    this.firstName = document.getElementById('playerFirstName');
+    this.lastName = document.getElementById('playerLastName');
+    this.fullNameBlock = document.getElementById('playerName');
+    this.playerBlock = document.getElementById('playerBlock');
+    this.healthPointsBlock = document.getElementById('playerHealthPoints');
+    this.hpGreenLine = document.getElementById('playerHpGreenLine');
+    this.healthPoints = 0;
+    this.healthPointsLine = 0;
+    this.monster = new _monster__WEBPACK_IMPORTED_MODULE_0__["default"]();
+  }
+
+  render() {
+    this.fullNameBlock.innerHTML = this.firstName.value + " " + this.lastName.value;
+    this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+    if (this.healthPoints === 100) {
+      this.hpGreenLine.classList.add('character-health-render');
+    }
+    this.playerBlock.classList.remove('player-dead-sprite');
+    this.playerBlock.classList.add('player-idle-sprite');
+    this.playerBlock.classList.remove('player-dead-animation');
+    this.playerBlock.classList.remove('player-damage-animation');
+    this.playerBlock.classList.remove('player-attack-animation');
+    this.playerBlock.classList.add('player-idle-animation');
+  }
+
+  attack() {
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-attack-sprite');
+    this.playerBlock.classList.remove('player-idle-animation');
+    this.playerBlock.classList.add('player-attack-animation');
+    setTimeout(() => {
+      this.playerBlock.classList.remove('player-attack-sprite');
+      this.playerBlock.classList.add('player-idle-sprite');
+      this.playerBlock.classList.remove('player-attack-animation');
+      this.playerBlock.classList.add('player-idle-animation');
+    }, 1500)
+  }
+
+  damage() {
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-damage-sprite');
+    this.playerBlock.classList.remove('player-idle-animation');
+    this.playerBlock.classList.add('player-damage-animation');
+    setTimeout(() => {
+      this.playerBlock.classList.remove('player-damage-sprite');
+      this.playerBlock.classList.add('player-idle-sprite');
+      this.playerBlock.classList.remove('player-damage-animation');
+      this.playerBlock.classList.add('player-idle-animation');
+    }, 200)
+  }
+
+  health() {
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-health-sprite');
+    this.playerBlock.classList.remove('player-idle-animation');
+    this.playerBlock.classList.add('player-health-animation');
+    setTimeout(() => {
+      this.playerBlock.classList.remove('player-health-sprite');
+      this.playerBlock.classList.add('player-idle-sprite');
+      this.playerBlock.classList.remove('player-health-animation');
+      this.playerBlock.classList.add('player-idle-animation');
+    }, 1500)
+  }
+
+  dead() {
+    this.playerBlock.classList.remove('player-idle-sprite');
+    this.playerBlock.classList.add('player-dead-sprite');
+    this.playerBlock.classList.add('player-dead-animation');
+    this.playerBlock.classList.remove('player-damage-animation');
+    this.playerBlock.classList.remove('player-idle-animation');
+  }
+
+  healthDecrease() {
+    this.healthPoints -= 20;
+    this.healthPointsLine -= 50;
+    this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+    this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
+  }
+
+  healthIncrease() {
+    this.healthPoints += 20;
+    this.healthPointsLine += 50;
+    this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
+    this.hpGreenLine.style.width = `${this.healthPointsLine}px`;
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/riddleLibrary.js":
+/*!*********************************!*\
+  !*** ./src/js/riddleLibrary.js ***!
+  \*********************************/
+/*! exports provided: riddleLibrary */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "riddleLibrary", function() { return riddleLibrary; });
+
+
+const riddleLibrary = {
+    "I’m tall when I’m young and I’m short when I’m old. What am I?": ['Candle', 'candle'],
+    "What has hands but can not clap?": ['clock', 'Clock'],
+    "What gets wetter and wetter the more it dries?": ['Towel', 'towel'],
+    "How many months have 28 days?": ['12'],
+    "What’s full of holes but still holds water?": ['sponge', 'Sponge']
+}
+
+/***/ }),
+
+/***/ "./src/js/score.js":
+/*!*************************!*\
+  !*** ./src/js/score.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Score; });
+
+
+class Score {
+    constructor() {
+        this.scoreTable = document.getElementById('scoreTable');
+    }
+
+    render() {
+        this.scoreTable.innerHTML = "";
+        this.localObjectCollection = Object.entries(localStorage).sort((a, b) => b[1] - a[1]);
+        console.log(this.localObjectCollection);
+        if (this.localObjectCollection.length > 10) {
+            this.localObjectCollection.splice(10);
+        }
+        this.localObjectCollection.forEach(player => {
+            this.playerScoreInfoRow = document.createElement("tr");
+            this.playerScoreFullName = document.createElement("td");
+            this.playerScoreRound = document.createElement("td");
+            this.scoreTable.appendChild(this.playerScoreInfoRow);
+            this.playerScoreInfoRow.appendChild(this.playerScoreFullName);
+            this.playerScoreInfoRow.appendChild(this.playerScoreRound);
+            this.playerScoreFullName.innerHTML = player[0];
+            if (player[1] == 1) {
+                this.playerScoreRound.innerHTML = player[1] + " " + "Monster";
+            } else {
+                this.playerScoreRound.innerHTML = player[1] + " " + "Monsters";
+            }
+        });
+    }
+
+}
+
+/***/ }),
+
+/***/ "./src/js/spell.js":
+/*!*************************!*\
+  !*** ./src/js/spell.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Spell; });
+/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task */ "./src/js/task.js");
+
+
+
+
+class Spell {
+    constructor() {
+        this.spellWindowConteiner = document.getElementById('spellWindowConteiner');
+        this.attackSpellAudio = new Audio('../src/assets/audio/attackSpellAudio.mp3');
+        this.deadAudio = new Audio('../src/assets/audio/deadAudio.mp3');
+        this.healthAudio = new Audio('../src/assets/audio/healthAudio.mp3');
+    }
+
+    spellRender() {
+        this.spellWindowConteiner.style.display = "flex";
+    }
+
+    attackSpellAudioPlay() {
+        this.attackSpellAudio.play();
+    }
+
+    deadAudioPlay() {
+        this.deadAudio.play();
+    }
+
+    healthAudioPlay() {
+        this.healthAudio.play();
+    }
+
+}
+
+/***/ }),
+
+/***/ "./src/js/task.js":
+/*!************************!*\
+  !*** ./src/js/task.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Task; });
+/* harmony import */ var _wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./wordTranslateLibrary */ "./src/js/wordTranslateLibrary.js");
+/* harmony import */ var _wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./wordListeningLibrary */ "./src/js/wordListeningLibrary.js");
+/* harmony import */ var _riddleLibrary__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./riddleLibrary */ "./src/js/riddleLibrary.js");
+/* harmony import */ var _dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dragDropLibrary */ "./src/js/dragDropLibrary.js");
+/* harmony import */ var _edibleInedibleLibrary__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edibleInedibleLibrary */ "./src/js/edibleInedibleLibrary.js");
+
+
+const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
+
+
+
+
+
+
+
+
+class Task {
+    constructor() {
+        this.taskWindowConteiner = document.getElementById('taskWindowConteiner');
+        this.mediaBlock = document.getElementById('mediaBlock');
+        this.task = document.getElementById('taskHeading');
+        this.taskInput = document.getElementById('taskInput');
+        this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask, this.riddleTask, this.dragDropTask, this.edibleInedibleTask];
+    }
+
+    random() {
+        this.taskRandomResult = this.taskCollection[_.random(0, this.taskCollection.length - 1)];
+        this.taskRandomResult.call(this);
+    }
+
+    mathTask() {
+        this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
+        this.taskWindowConteiner.style.display = "flex";
+        this.mathOperationsCollection = ['+', '-', '*', '/'];
+        this.task.style.fontSize = "40px"
+        this.mathOperationsCollectionIndex = _.random(0, this.mathOperationsCollection.length - 1);
+        if (this.mathOperationsCollectionIndex === 3) {
+            this.taskExpression = (_.random(0, 50) + _.random(0, 50)) + " " + "/" + " " + 2;
+        } else if (this.mathOperationsCollectionIndex === 2) {
+            this.taskExpression = _.random(0, 50) + " " + "*" + " " + 3;
+        } else {
+            this.taskExpression = _.random(0, 50) + " " + this.mathOperationsCollection[this.mathOperationsCollectionIndex] + " " + _.random(0, 50);
+        }
+        this.task.innerHTML = "Solve The Task:<br>" + '\"' + this.taskExpression + '\"';
+        this.taskExpressionResult = String(eval(this.taskExpression));
+    }
+
+    transateTask() {
+        this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
+        this.taskWindowConteiner.style.display = "flex";
+        this.task.style.fontSize = "40px"
+        this.randomWord = Object.keys(_wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"])[_.random(0, Object.keys(_wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"]).length - 1)];
+        this.task.innerHTML = "Translate a word into Russian:<br>" + " " + '\"' + this.randomWord + '\"';
+        this.transateTaskResult = _wordTranslateLibrary__WEBPACK_IMPORTED_MODULE_0__["translateWordLibrary"][this.randomWord];
+    }
+
+    listeningTask() {
+        this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
+        this.taskWindowConteiner.style.display = "flex";
+        this.task.innerHTML = '\"' + "Type what you heard" + '\"';
+        this.audioWordBlock = document.createElement('audio');
+        this.audioWordBlock.setAttribute('controls', '');
+        this.task.style.fontSize = "40px"
+        this.mediaBlock.appendChild(this.audioWordBlock);
+        this.randomAudioWord = Object.keys(_wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"])[_.random(0, Object.keys(_wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"]).length - 1)];
+        this.audioWordBlock.src = this.randomAudioWord;
+        this.listeningTaskResult = _wordListeningLibrary__WEBPACK_IMPORTED_MODULE_1__["listeningWordLibrary"][this.randomAudioWord];
+    }
+
+    riddleTask() {
+        this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
+        this.taskWindowConteiner.style.display = "flex";
+        this.randomRiddle = Object.keys(_riddleLibrary__WEBPACK_IMPORTED_MODULE_2__["riddleLibrary"])[_.random(0, Object.keys(_riddleLibrary__WEBPACK_IMPORTED_MODULE_2__["riddleLibrary"]).length - 1)];
+        this.task.innerHTML = "Guess a riddle:<br>" + " " + '\"' + this.randomRiddle + '\"';
+        this.task.style.fontSize = "30px"
+        this.riddleTaskResult = _riddleLibrary__WEBPACK_IMPORTED_MODULE_2__["riddleLibrary"][this.randomRiddle];
+    }
+
+    dragDropTask() {
+        this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'hidden';
+        this.taskWindowConteiner.style.display = "flex";
+        this.task.innerHTML = "Arrange in the right order";
+        this.dragDropRandomWord = Object.keys(_dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"])[_.random(0, Object.keys(_dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"]).length - 1)];
+        this.dragDropRandomWordLetters = this.dragDropRandomWord.split('').sort(function () {
+            return Math.random() - 0.5;
+        });;
+        this.dragDropRandomWordLetters.forEach((letter) => {
+            this.letterBlock = document.createElement('div');
+            this.letterBlock.classList.add('dd-letter-blocks');
+            this.letterBlock.innerHTML = letter;
+            this.mediaBlock.appendChild(this.letterBlock);
+        });
+        $(function () {
+            $('#mediaBlock').sortable();
+            $('#mediaBlock').disableSelection();
+        });
+        this.dragDropTaskResult = _dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__["dragDropLibrary"][this.dragDropRandomWord];
+    }
+
+    edibleInedibleTask() {
+        this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
+        this.taskWindowConteiner.style.display = "flex";
+        this.task.innerHTML = "Enter an edible item";
+        this.randomEdibleItem = Object.keys(_edibleInedibleLibrary__WEBPACK_IMPORTED_MODULE_4__["edibleInedibleLibrary"])[_.random(0, Object.keys(_edibleInedibleLibrary__WEBPACK_IMPORTED_MODULE_4__["edibleInedibleLibrary"]).length - 1)];
+        _edibleInedibleLibrary__WEBPACK_IMPORTED_MODULE_4__["edibleInedibleLibrary"][this.randomEdibleItem].forEach((elem) => {
+            this.edableImage = document.createElement('img');
+            this.edableImage.src = elem;
+            this.mediaBlock.appendChild(this.edableImage);
+        });
+        this.edibleInedibleResult = [this.randomEdibleItem];
+    }
+
+
+    getTaskResult() {
+        if (this.taskRandomResult === this.mathTask) {
+            return this.taskExpressionResult;
+        } else if (this.taskRandomResult === this.transateTask) {
+            return this.transateTaskResult;
+        } else if (this.taskRandomResult === this.listeningTask) {
+            return this.listeningTaskResult;
+        } else if (this.taskRandomResult === this.riddleTask) {
+            return this.riddleTaskResult;
+        } else if (this.taskRandomResult === this.dragDropTask) {
+            this.dragDropLetters = document.querySelectorAll('.dd-letter-blocks');
+            this.dragDropInput = "";
+            this.dragDropLetters.forEach((letterBlock) => {
+                this.dragDropInput = this.dragDropInput + letterBlock.innerHTML;
+            });
+            this.taskInput.value = this.dragDropInput;
+            return this.dragDropTaskResult;
+        } else if (this.taskRandomResult === this.edibleInedibleTask) {
+            return this.edibleInedibleResult;
+        }
+    }
+}
+
+/***/ }),
+
+/***/ "./src/js/wordListeningLibrary.js":
+/*!****************************************!*\
+  !*** ./src/js/wordListeningLibrary.js ***!
+  \****************************************/
+/*! exports provided: listeningWordLibrary */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "listeningWordLibrary", function() { return listeningWordLibrary; });
+
+
+const listeningWordLibrary = {
+    '../src/assets/audio/listeningTaskAudio/word(flower).mp3': ['flower'],
+    '../src/assets/audio/listeningTaskAudio/word(dictionary).mp3': ['dictionary'],
+    '../src/assets/audio/listeningTaskAudio/word(environment).mp3': ['environment'],
+    '../src/assets/audio/listeningTaskAudio/word(horror).mp3': ['horror'],
+    '../src/assets/audio/listeningTaskAudio/word(lucky).mp3': ['lucky'],
+    '../src/assets/audio/listeningTaskAudio/word(activity).mp3': ['activity'],
+    '../src/assets/audio/listeningTaskAudio/word(message).mp3': ['message'],
+    '../src/assets/audio/listeningTaskAudio/word(blind).mp3': ['blind'],
+    '../src/assets/audio/listeningTaskAudio/word(inspiration).mp3': ['inspiration'],
+    '../src/assets/audio/listeningTaskAudio/word(mysterious).mp3': ['mysterious']
+}
+
+/***/ }),
+
+/***/ "./src/js/wordTranslateLibrary.js":
+/*!****************************************!*\
+  !*** ./src/js/wordTranslateLibrary.js ***!
+  \****************************************/
+/*! exports provided: translateWordLibrary */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "translateWordLibrary", function() { return translateWordLibrary; });
+
+
+const translateWordLibrary = {
+    dog: ['собака', 'пес', 'собачка'],
+    restaurant: ['ресторан'],
+    nickname: ['прозвище', 'кличка'],
+    flower: ['цветок', 'цвет', 'цветение'],
+    shoes: ['обувь'],
+    skirt: ['юбка', 'подол', 'край'],
+    coat: ['пальто', 'слой', 'пиджак'],
+    activity: ['активность', 'деятельность', 'энергия'],
+    amount: ['количество', 'сумма', 'итог'],
+    blind: ['слепой', 'слепить', 'штора'],
+    cartoon: ['мультфильм', 'карикатура', 'комикс', 'мультик'],
+    congratulate: ['поздравлять', 'поздравить'],
+    dictionary: ['словарь'],
+    environment: ['окружающая среда', 'окружение', 'среда'],
+    famous: ['известный', 'знаменитый', 'замечательный'],
+    horror: ['ужас', 'ужастик'],
+    inspiration: ['вдохновение', 'воодушевление', 'вдох'],
+    jealous: ['завистливый', 'ревнивый', 'заботливый', 'зависть', 'ревность'],
+    lucky: ['счастливый', 'везучий', 'удачливый'],
+    message: ['сообщение', 'послание', 'письмо'],
+    mysterious: ['загадочный', 'таинственный', 'непостижимый'],
+    realize: ['реализовать', 'понимать', 'осуществлять']
+};
 
 /***/ })
 

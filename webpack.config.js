@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: './js/game',
+    entry: './src/js/game',
     output: {
         path: __dirname + '/dist',
         filename: "bundle.js"
