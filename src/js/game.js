@@ -16,6 +16,7 @@ class Game {
         this.task = new Task();
         this.score = new Score();
         this.gameSoundtreck = new Audio('../src/assets/audio/gameSoundtreck.mp3');
+        this.contentWrapper = document.getElementById('contentWrapper');
         this.loadingSpriteBlock = document.querySelector('loadingSpriteBlock');
         this.newGameButton = document.querySelector('#newGameButton');
         this.newGameButtons = document.querySelector('#newGameButtons');
@@ -225,6 +226,6 @@ const newGame = new Game();
 
 window.onload = function () {
     this.loadingSpriteBlock.style.display = "none";
-    this.playerProfilePage.style.display = "flex";
+    this.contentWrapper.style.display = "flex";
     newGame.newGameCreate();
 };

@@ -17324,6 +17324,7 @@ class Game {
         this.task = new _task__WEBPACK_IMPORTED_MODULE_3__["default"]();
         this.score = new _score__WEBPACK_IMPORTED_MODULE_4__["default"]();
         this.gameSoundtreck = new Audio('../src/assets/audio/gameSoundtreck.mp3');
+        this.contentWrapper = document.getElementById('contentWrapper');
         this.loadingSpriteBlock = document.querySelector('loadingSpriteBlock');
         this.newGameButton = document.querySelector('#newGameButton');
         this.newGameButtons = document.querySelector('#newGameButtons');
@@ -17533,7 +17534,7 @@ const newGame = new Game();
 
 window.onload = function () {
     this.loadingSpriteBlock.style.display = "none";
-    this.playerProfilePage.style.display = "flex";
+    this.contentWrapper.style.display = "flex";
     newGame.newGameCreate();
 };
 
