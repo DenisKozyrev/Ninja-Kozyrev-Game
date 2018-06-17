@@ -5,21 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ninja-Kozyrev Mind</title>
-    <link rel="stylesheet" type="text/css" href="./src/assets/css/landingPage.css">
-    <link href="./src/assets/css/animation.css" rel="stylesheet">
     <script>
         const loadingImage = new Image();
         loadingImage.src = "./src/assets/images/loadingSprite.png";
         window.onload = function () {
             document.getElementById('loadingSpriteBlock').style.display = "none";
-            document.getElementById('contentWrapper').style.display = "flex";
         };
     </script>
+    <link rel="stylesheet" type="text/css" href="./src/assets/css/landingPage.css">
+    <link href="./src/assets/css/animation.css" rel="stylesheet">
 </head>
 
 <body>
+    <div id="loadingSpriteBlock" class="loading-page">
+        <div class="character loading-animation"></div>
+    </div>
     <div id="contentWrapper" class="content-wrapper">
-        <div id="loadingSpriteBlock" class="character loading-animation"></div>
         <a class="home-anchor" name="home-anchor">home</a>
         <nav class="game-navigation">
             <a href="#home-anchor" class="navigation-link">Home</a>

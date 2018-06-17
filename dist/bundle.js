@@ -17532,7 +17532,6 @@ class Game {
 const newGame = new Game();
 
 window.onload = function () {
-    this.loadingSpriteBlock.classList.remove('loading-animation');
     this.loadingSpriteBlock.style.display = "none";
     this.playerProfilePage.style.display = "flex";
     newGame.newGameCreate();
