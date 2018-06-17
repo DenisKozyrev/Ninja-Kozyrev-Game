@@ -19,6 +19,13 @@ body {
     src: url(../fonts/BeyondWonderland.ttf);
 }
 
+.character {
+    width: 550px;
+    height: 500px;
+    margin: 0 auto;
+    background-image: url(../images/loadingSprite.png);
+}
+
 .content-wrapper {
     background-color: rgba(37, 0, 104, 0.5);
     height: 100%;

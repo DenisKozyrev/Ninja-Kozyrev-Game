@@ -13,6 +13,10 @@
     src: url(../fonts/BeyondWonderland.ttf);
 }
 
+.loading-sprite {
+    background-image: url(../images/loadingSprite.png);
+}
+
 .content-wrapper {
     width: 100vw;
     min-height: 100vh;

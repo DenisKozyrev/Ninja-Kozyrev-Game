@@ -6,20 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ninja-Kozyrev Mind</title>
     <link rel="stylesheet" type="text/css" href="./src/assets/css/landingPage.css">
+    <link href="./src/assets/css/animation.css" rel="stylesheet">
+    <script>
+        const loadingImage = new Image();
+        loadingImage.src = "./src/assets/images/loadingSprite.png";
+        window.onload = function () {
+            document.getElementById('loadingSpriteBlock').style.display = "none";
+            document.getElementById('contentWrapper').style.display = "flex";
+        };
+    </script>
 </head>
 
 <body>
     <div id="contentWrapper" class="content-wrapper">
-        <header>
-            <a class="home-anchor" name="home-anchor">home</a>
-            <nav class="game-navigation">
-                <a href="#home-anchor" class="navigation-link">Home</a>
-                <a href="#screenshots-anchor" class="navigation-link">Screenshots</a>
-                <a href="#author-anchor" class="navigation-link">Author</a>
-                <a href="./src/Ninja-Kozyrev.html" class="navigation-link" target="_blank">Play</a>
-            </nav>
-            <h2 class="game-heading">Ninja-Kozyrev Mind</h2>
-            <p class="about-game-text">"This game about cool Ninja who tries to solve all tasks and defeat all his enemies."</p>
+        <div id="loadingSpriteBlock" class="character loading-animation"></div>
+        <a class="home-anchor" name="home-anchor">home</a>
+        <nav class="game-navigation">
+            <a href="#home-anchor" class="navigation-link">Home</a>
+            <a href="#screenshots-anchor" class="navigation-link">Screenshots</a>
+            <a href="#author-anchor" class="navigation-link">Author</a>
+            <a href="./src/Ninja-Kozyrev.html" class="navigation-link" target="_blank">Play</a>
+        </nav>
+        <h2 class="game-heading">Ninja-Kozyrev Mind</h2>
+        <p class="about-game-text">"This game about cool Ninja who tries to solve all tasks and defeat all his enemies."</p>
         </header>
         <section class="screenshots-section">
             <a name="screenshots-anchor"></a>
@@ -43,11 +52,6 @@
             </p>
         </section>
     </div>
-    <script>
-        window.onload = function () {
-            document.getElementById('contentWrapper').style.display = "flex";
-        };
-    </script>
 </body>
 
 </html>
