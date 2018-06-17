@@ -21,17 +21,15 @@ body {
 
 .content-wrapper {
     background-color: rgba(37, 0, 104, 0.5);
-    min-height: 100vh;
-    min-width: 100vw;
+    height: 100%;
+    width: 100%;
     text-align: center;
     display: none;
     flex-direction: column;
-    align-items: center;
 }
 
 header {
-    width: 100%;
-    height: 100vh;
+    margin-bottom: 10%;
 }
 
 .home-anchor {
@@ -90,11 +88,11 @@ header {
 }
 
 .screenshots-section {
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 10%;
 }
 
 .game-screenshot-heading {
@@ -117,6 +115,14 @@ header {
     max-width: 30%;
     max-height: 230px;
     margin-bottom: 25px;
+}
+
+.about-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 7%;
 }
 
 .about-game-text {

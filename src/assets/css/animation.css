@@ -587,11 +587,82 @@
     }
 }
 
+@-webkit-keyframes loadingAnimation {
+    0.001% {
+        background-position-x: 0px;
+    }
+    0% {
+        background-position-x: 0px;
+    }
+    10% {
+        background-position-x: 0px;
+    }
+    10.001% {
+        background-position-x: -550px;
+    }
+    20% {
+        background-position-x: -550px;
+    }
+    20.001% {
+        background-position-x: -1100px;
+    }
+    30% {
+        background-position-x: -1100px;
+    }
+    30.001% {
+        background-position-x: -1650px;
+    }
+    40% {
+        background-position-x: -1650px;
+    }
+    40.001% {
+        background-position-x: -2200px;
+    }
+    50% {
+        background-position-x: -2200px;
+    }
+    50.001% {
+        background-position-x: -2750px;
+    }
+    60% {
+        background-position-x: -2750px;
+    }
+    60.001% {
+        background-position-x: -3300px;
+    }
+    70% {
+        background-position-x: -3300px;
+    }
+    70.001% {
+        background-position-x: -3850px;
+    }
+    80% {
+        background-position-x: -3850px;
+    }
+    80.001% {
+        background-position-x: -4403px;
+    }
+    99.999% {
+        background-position-x: -4403px;
+    }
+    100% {
+        background-position-x: -4403px;
+    }
+}
+
+.loading-animation {
+    background-repeat: no-repeat;
+    transform: scale(0.65);
+    -webkit-animation-name: loadingAnimation;
+    -webkit-animation-duration: 500ms;
+    animation-iteration-count: infinite;
+}
+
 .player-idle-animation {
     position: absolute;
-    left: -5%;
+    left: -10%;
     background-repeat: no-repeat;
-    top: 38%;
+    bottom: -8%;
     transform: scale(0.65);
     -webkit-animation-name: characterIdle;
     -webkit-animation-duration: 430ms;
@@ -602,9 +673,9 @@
 .player-attack-animation {
     background-position-y: -75px;
     position: absolute;
-    left: -5%;
+    left: -8%;
     background-repeat: no-repeat;
-    top: 41%;
+    bottom: -10%;
     transform: scale(0.65);
     background-repeat: no-repeat;
     -webkit-animation-name: playerAttack;
@@ -613,9 +684,9 @@
 
 .player-dead-animation {
     position: absolute;
-    left: 0;
+    left: -5;
     background-repeat: no-repeat;
-    top: 43%;
+    bottom: -10%;
     transform: scale(0.65);
     -webkit-animation-name: characterDead;
     -webkit-animation-duration: 1000ms;
@@ -624,9 +695,9 @@
 
 .player-damage-animation {
     position: absolute;
-    left: -5%;
+    left: -10%;
     background-repeat: no-repeat;
-    top: 43%;
+    bottom: -13%;
     transform: scale(0.65);
     -webkit-animation-name: playerDamage;
     -webkit-animation-duration: 200ms;
@@ -635,9 +706,9 @@
 
 .player-health-animation {
     position: absolute;
-    left: -5%;
+    left: -10%;
     background-repeat: no-repeat;
-    top: 38%;
+    bottom: -5%;
     transform: scale(0.65);
     -webkit-animation-name: characterHealth;
     -webkit-animation-duration: 500ms;
@@ -647,8 +718,8 @@
 
 .monster-idle-animation {
     position: absolute;
-    right: 3%;
-    top: 40%;
+    right: -2%;
+    bottom: -12%;
     transform: scale(0.65);
     -webkit-animation-name: characterIdle;
     -webkit-animation-duration: 430ms;
@@ -658,8 +729,8 @@
 
 .monster-attack-animation {
     position: absolute;
-    right: 3%;
-    top: 40%;
+    right: -2%;
+    bottom: -12%;
     transform: scale(0.6);
     background-repeat: no-repeat;
     -webkit-animation-name: monsterAttack;
@@ -668,8 +739,8 @@
 
 .monster-dead-animation {
     position: absolute;
-    right: -3%;
-    top: 44.5%;
+    right: -8%;
+    bottom: -16.5%;
     transform: scale(0.7);
     -webkit-animation-name: characterDead;
     -webkit-animation-duration: 1000ms;
@@ -678,8 +749,8 @@
 
 .monster-damage-animation {
     position: absolute;
-    right: 3%;
-    top: 44.5%;
+    right: -2%;
+    bottom: -16.5%;
     transform: scale(0.7);
     -webkit-animation-name: monsterDamage;
     -webkit-animation-duration: 200ms;
@@ -688,8 +759,8 @@
 
 .monster-health-animation {
     position: absolute;
-    right: 3%;
-    top: 40%;
+    right: -2%;
+    bottom: -12%;
     transform: scale(0.65);
     -webkit-animation-name: characterHealth;
     -webkit-animation-duration: 700ms;

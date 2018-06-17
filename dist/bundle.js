@@ -17324,6 +17324,7 @@ class Game {
         this.task = new _task__WEBPACK_IMPORTED_MODULE_3__["default"]();
         this.score = new _score__WEBPACK_IMPORTED_MODULE_4__["default"]();
         this.gameSoundtreck = new Audio('../src/assets/audio/gameSoundtreck.mp3');
+        this.loadingSpriteBlock = document.querySelector('loadingSpriteBlock');
         this.newGameButton = document.querySelector('#newGameButton');
         this.newGameButtons = document.querySelector('#newGameButtons');
         this.checkinBlock = document.querySelector('#checkinBlock');
@@ -17530,9 +17531,12 @@ class Game {
 
 const newGame = new Game();
 
-window.addEventListener('load', () => {
+window.onload = function () {
+    this.loadingSpriteBlock.classList.remove('loading-animation');
+    this.loadingSpriteBlock.style.display = "none";
+    this.playerProfilePage.style.display = "flex";
     newGame.newGameCreate();
-});
+};
 
 /***/ }),
 
@@ -17567,6 +17571,7 @@ class Monster {
     }
 
     render() {
+        this.monsterBlock.classList.remove(`${this.monsterSprite}-idle-sprite`);
         this.monsterSprite = this.monsterSpritesCollection[_.random(0, this.monsterSpritesCollection.length - 1)];
         this.monsterName = this.nameCollection[0][_.random(0, this.nameCollection[0].length - 1)] + " " + this.nameCollection[1][_.random(0, this.nameCollection[1].length - 1)] + " " + this.nameCollection[2][_.random(0, this.nameCollection[2].length - 1)];
         this.fullNameBlock.innerHTML = this.monsterName;
@@ -17575,10 +17580,10 @@ class Monster {
             this.hpGreenLine.classList.add('character-health-render');
         }
         this.monsterBlock.classList.add(`${this.monsterSprite}-idle-sprite`);
+        this.monsterBlock.classList.add('monster-idle-animation');
         this.monsterBlock.classList.remove('monster-damage-animation');
         this.monsterBlock.classList.remove('monster-attack-animation');
         this.monsterBlock.classList.remove('monster-dead-animation');
-        this.monsterBlock.classList.add('monster-idle-animation');
     }
 
     attack() {

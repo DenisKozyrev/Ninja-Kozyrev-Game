@@ -16,6 +16,7 @@ class Game {
         this.task = new Task();
         this.score = new Score();
         this.gameSoundtreck = new Audio('../src/assets/audio/gameSoundtreck.mp3');
+        this.loadingSpriteBlock = document.querySelector('loadingSpriteBlock');
         this.newGameButton = document.querySelector('#newGameButton');
         this.newGameButtons = document.querySelector('#newGameButtons');
         this.checkinBlock = document.querySelector('#checkinBlock');
@@ -222,6 +223,9 @@ class Game {
 
 const newGame = new Game();
 
-window.addEventListener('load', () => {
+window.onload = function () {
+    this.loadingSpriteBlock.classList.remove('loading-animation');
+    this.loadingSpriteBlock.style.display = "none";
+    this.playerProfilePage.style.display = "flex";
     newGame.newGameCreate();
-});
+};
