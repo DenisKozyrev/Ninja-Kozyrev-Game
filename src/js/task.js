@@ -19,6 +19,10 @@ import {
     edibleInedibleLibrary
 } from "./edibleInedibleLibrary";
 
+import {
+    capitalsLibrary
+} from "./capitalsLibrary";
+
 
 export default class Task {
     constructor() {
@@ -26,8 +30,7 @@ export default class Task {
         this.mediaBlock = document.getElementById('mediaBlock');
         this.task = document.getElementById('taskHeading');
         this.taskInput = document.getElementById('taskInput');
-        this.taskAnswerButton = document.getElementById('taskButton');
-        this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask, this.riddleTask, this.dragDropTask, this.edibleInedibleTask];
+        this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask, this.riddleTask, this.dragDropTask, this.edibleInedibleTask, this.capitalsTask];
     }
 
     random() {
@@ -113,7 +116,7 @@ export default class Task {
         this.mediaBlock.innerHTML = "";
         this.taskInput.style.visibility = 'visible';
         this.taskWindowConteiner.style.display = "flex";
-        this.task.innerHTML = "Enter an edible item";
+        this.task.innerHTML = "Enter name of an edible item";
         this.randomEdibleItem = Object.keys(edibleInedibleLibrary)[_.random(0, Object.keys(edibleInedibleLibrary).length - 1)];
         edibleInedibleLibrary[this.randomEdibleItem].forEach((elem) => {
             this.edableImage = document.createElement('img');
@@ -121,6 +124,19 @@ export default class Task {
             this.mediaBlock.appendChild(this.edableImage);
         });
         this.edibleInedibleResult = [this.randomEdibleItem];
+    }
+
+    capitalsTask() {
+        this.mediaBlock.innerHTML = "";
+        this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
+        this.taskWindowConteiner.style.display = "flex";
+        this.task.innerHTML = "Enter the capital of this country";
+        this.randomEdibleItem = Object.keys(capitalsLibrary)[_.random(0, Object.keys(capitalsLibrary).length - 1)];
+        this.countryFlagImg = document.createElement('img');
+        this.countryFlagImg.src = this.randomEdibleItem;
+        this.mediaBlock.appendChild(this.countryFlagImg);
+        this.capitalsTaskResult = capitalsLibrary[this.randomEdibleItem];
     }
 
 
@@ -143,6 +159,8 @@ export default class Task {
             return this.dragDropTaskResult;
         } else if (this.taskRandomResult === this.edibleInedibleTask) {
             return this.edibleInedibleResult;
-        };
+        } else if (this.taskRandomResult === this.capitalsTask) {
+            return this.capitalsTaskResult;
+        }
     }
 }

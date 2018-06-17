@@ -38,7 +38,6 @@ class Game {
         this.monsterHealthPoints = document.getElementById('monsterHealthPoints');
         this.taskInput = document.getElementById('taskInput');
         this.taskAnswerButton = document.getElementById('taskButton');
-        this.taskForm = document.getElementById('taskForm');
         this.taskWindow = document.getElementById('taskWindowConteiner');
         this.tableWindow = document.getElementById('tableWindow');
         this.startAgainButton = document.getElementById('startAgainButton');
@@ -157,9 +156,12 @@ class Game {
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
         };
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
+            this.taskWindow.style.display = "none";
+        };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
-        }
+        };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();

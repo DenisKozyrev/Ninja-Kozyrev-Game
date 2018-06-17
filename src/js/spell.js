@@ -1,7 +1,5 @@
 "use strict";
 
-import Task from "./task";
-
 export default class Spell {
     constructor() {
         this.spellWindowConteiner = document.getElementById('spellWindowConteiner');

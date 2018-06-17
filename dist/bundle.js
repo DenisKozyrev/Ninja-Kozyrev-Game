@@ -17244,6 +17244,30 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./src/js/capitalsLibrary.js":
+/*!***********************************!*\
+  !*** ./src/js/capitalsLibrary.js ***!
+  \***********************************/
+/*! exports provided: capitalsLibrary */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "capitalsLibrary", function() { return capitalsLibrary; });
+
+
+const capitalsLibrary = {
+    "../src/assets/images/capitalsFlags/greeceFlag.png": ['Athens', 'athens'],
+    "../src/assets/images/capitalsFlags/spainFlag.png": ['Madrid', 'madrid'],
+    "../src/assets/images/capitalsFlags/czechRepublicFlag.png": ['Prague', 'prague'],
+    "../src/assets/images/capitalsFlags/englandFlag.png": ['London', 'london'],
+    "../src/assets/images/capitalsFlags/franceFlag.png": ['Paris', 'paris'],
+    "../src/assets/images/capitalsFlags/usaFlag.png": ['Washington', 'washington'],
+    "../src/assets/images/capitalsFlags/italyFlag.png": ['Rome', 'rome']
+}
+
+/***/ }),
+
 /***/ "./src/js/dragDropLibrary.js":
 /*!***********************************!*\
   !*** ./src/js/dragDropLibrary.js ***!
@@ -17346,7 +17370,6 @@ class Game {
         this.monsterHealthPoints = document.getElementById('monsterHealthPoints');
         this.taskInput = document.getElementById('taskInput');
         this.taskAnswerButton = document.getElementById('taskButton');
-        this.taskForm = document.getElementById('taskForm');
         this.taskWindow = document.getElementById('taskWindowConteiner');
         this.tableWindow = document.getElementById('tableWindow');
         this.startAgainButton = document.getElementById('startAgainButton');
@@ -17465,9 +17488,12 @@ class Game {
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
         };
+        if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.monsterHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === true) {
+            this.taskWindow.style.display = "none";
+        };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML !== "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML === "100hp") {
             this.taskWindow.style.display = "none";
-        }
+        };
         if (this.spellType === "health" && this.playerHealthPoints.innerHTML === "100hp" && this.taskExpressionResult.includes(this.taskInput.value) === false && this.monsterHealthPoints.innerHTML !== "100hp") {
             this.taskWindow.style.display = "none";
             this.spell.healthAudioPlay();
@@ -17835,9 +17861,6 @@ class Score {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Spell; });
-/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task */ "./src/js/task.js");
-
-
 
 
 class Spell {
@@ -17883,9 +17906,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _riddleLibrary__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./riddleLibrary */ "./src/js/riddleLibrary.js");
 /* harmony import */ var _dragDropLibrary__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dragDropLibrary */ "./src/js/dragDropLibrary.js");
 /* harmony import */ var _edibleInedibleLibrary__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edibleInedibleLibrary */ "./src/js/edibleInedibleLibrary.js");
+/* harmony import */ var _capitalsLibrary__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./capitalsLibrary */ "./src/js/capitalsLibrary.js");
 
 
 const _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
+
 
 
 
@@ -17901,8 +17927,7 @@ class Task {
         this.mediaBlock = document.getElementById('mediaBlock');
         this.task = document.getElementById('taskHeading');
         this.taskInput = document.getElementById('taskInput');
-        this.taskAnswerButton = document.getElementById('taskButton');
-        this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask, this.riddleTask, this.dragDropTask, this.edibleInedibleTask];
+        this.taskCollection = [this.mathTask, this.transateTask, this.listeningTask, this.riddleTask, this.dragDropTask, this.edibleInedibleTask, this.capitalsTask];
     }
 
     random() {
@@ -17988,7 +18013,7 @@ class Task {
         this.mediaBlock.innerHTML = "";
         this.taskInput.style.visibility = 'visible';
         this.taskWindowConteiner.style.display = "flex";
-        this.task.innerHTML = "Enter an edible item";
+        this.task.innerHTML = "Enter name of an edible item";
         this.randomEdibleItem = Object.keys(_edibleInedibleLibrary__WEBPACK_IMPORTED_MODULE_4__["edibleInedibleLibrary"])[_.random(0, Object.keys(_edibleInedibleLibrary__WEBPACK_IMPORTED_MODULE_4__["edibleInedibleLibrary"]).length - 1)];
         _edibleInedibleLibrary__WEBPACK_IMPORTED_MODULE_4__["edibleInedibleLibrary"][this.randomEdibleItem].forEach((elem) => {
             this.edableImage = document.createElement('img');
@@ -17996,6 +18021,19 @@ class Task {
             this.mediaBlock.appendChild(this.edableImage);
         });
         this.edibleInedibleResult = [this.randomEdibleItem];
+    }
+
+    capitalsTask() {
+        this.mediaBlock.innerHTML = "";
+        this.mediaBlock.innerHTML = "";
+        this.taskInput.style.visibility = 'visible';
+        this.taskWindowConteiner.style.display = "flex";
+        this.task.innerHTML = "Enter the capital of this country";
+        this.randomEdibleItem = Object.keys(_capitalsLibrary__WEBPACK_IMPORTED_MODULE_5__["capitalsLibrary"])[_.random(0, Object.keys(_capitalsLibrary__WEBPACK_IMPORTED_MODULE_5__["capitalsLibrary"]).length - 1)];
+        this.countryFlagImg = document.createElement('img');
+        this.countryFlagImg.src = this.randomEdibleItem;
+        this.mediaBlock.appendChild(this.countryFlagImg);
+        this.capitalsTaskResult = _capitalsLibrary__WEBPACK_IMPORTED_MODULE_5__["capitalsLibrary"][this.randomEdibleItem];
     }
 
 
@@ -18018,7 +18056,9 @@ class Task {
             return this.dragDropTaskResult;
         } else if (this.taskRandomResult === this.edibleInedibleTask) {
             return this.edibleInedibleResult;
-        };
+        } else if (this.taskRandomResult === this.capitalsTask) {
+            return this.capitalsTaskResult;
+        }
     }
 }
 

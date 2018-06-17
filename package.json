@@ -16,7 +16,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
-    "prod": "webpack --mode production"
+    "prod": "webpack --mode poduction"
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/DenisKozyrev/Rss-Prodigy-Game/issues"
   },
-  "homepage": "https://github.com/DenisKozyrev/Rss-Prodigy-Game#readme"
+  "homepage": "https://github.com/DenisKozyrev/Rss-Prodigy-Game#readme",
+  "devDependencies": {
+    "file-loader": "^1.1.11"
+  }
 }

@@ -27,7 +27,7 @@ body {
     z-index: 1;
 }
 
-.character {
+.loading-sprite {
     width: 550px;
     height: 500px;
     margin: 0 auto;
