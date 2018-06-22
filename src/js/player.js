@@ -16,7 +16,7 @@ export default class Player {
   }
 
   render() {
-    this.fullNameBlock.innerHTML = this.firstName.value + " " + this.lastName.value;
+    this.fullNameBlock.innerHTML = `${this.firstName.value} ${this.lastName.value}`;
     this.healthPointsBlock.innerHTML = `${this.healthPoints}hp`;
     if (this.healthPoints === 100) {
       this.hpGreenLine.classList.add('character-health-render');
